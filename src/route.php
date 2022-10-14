@@ -1,16 +1,12 @@
 <?php
 
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-class Routing {
+class Routing 
+{
     
-    public static function buildRoute() {
+    public static function buildRoute() 
+    {
         
-        /*Контроллер и action по умолчанию*/
+        //Контроллер и action по умолчанию
         $controllerName = "IndexController";
         $modelName = "IndexModel";
         $action = "index";
@@ -18,7 +14,7 @@ class Routing {
         $route = explode("/", $_SERVER['REQUEST_URI']);     
         $route = str_replace(".php", "", $route);
                 
-                /*Определяем контроллер*/
+        //Определяем контроллер
         if ($route[2] != '') {
             $controllerName = ucfirst($route[2]. "Controller");
             $modelName = ucfirst($route[2]. "Model");
@@ -26,9 +22,8 @@ class Routing {
         
         include CONTROLLER_PATH . $controllerName . ".php";
         include MODEL_PATH . $modelName . ".php";
-        
-        
-               /*Определяем action */
+                
+        //Определяем action
         if (isset($route[3]) && $route[3] !=''){
             $action = $route[3];
         }
@@ -38,7 +33,8 @@ class Routing {
         
     }
     
-    public function errorPage(){
+    public function errorPage()
+    {
         
     }
 }
