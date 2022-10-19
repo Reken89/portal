@@ -1,55 +1,46 @@
 <?php
 
-class TableController extends Controller {
-
+class TableController extends Controller 
+{
     private $pageTpl = "/views/table.php";
     private $pageTpl_back = "/views/table_back.php";
     private $pageExcel = "/views/excel.php";
     private $test;
 
-    public function __construct() {
-
+    public function __construct() 
+    {       
         $this->model = new TableModel();
         $this->view = new View();
     }
 
-    public function index() {
-
-        if (!$_SESSION['user']) {
+    public function index() 
+    {
+        if (!$_SESSION['user']){
             header("Location: /portal");
         }
-
+        
         $this->pageData['title'] = "Таблица";
-
         $this->view->render($this->pageTpl, $this->pageData);
     }
 
-    public function back() {
-
+    public function back() 
+    {
         if (!$_SESSION['user']) {
             header("Location: /portal");
         }
 
         $year = $_SESSION['year'];
-
-
-        if (!empty($_POST['svod'])) {
-        
-        
+        if (!empty($_POST['svod'])){               
             $svod = $_POST['svod'];
             $_SESSION['svod'] = $svod;
-            $quantity = count($svod);
-                     
-         
+            $quantity = count($svod);                             
         } else {
-
             #$svod = ['1'];
             $svod = $_SESSION['svod'];
             $quantity = count($svod);
         }
 
         $a = $this->model->back($svod, $quantity, $year);
-
         $this->pageData['info'] = $a;
 
         $_SESSION['for_excel'] = $a;
@@ -64,41 +55,36 @@ class TableController extends Controller {
         $this->pageData['total2'] = $this->model->total2($user, $year);
         
         $this->view->render($this->pageTpl_back, $this->pageData);
-
     }
 
-    public function year() {
-
+    public function year() 
+    {
         if (!$_SESSION['user']) {
             header("Location: /portal");
         }
 
-
-
         $_SESSION['year'] = $_POST['year'];
-
 
         $this->view->render($this->pageTpl, $this->pageData);
     }
 
-    public function update_status() {
-
+    public function update_status()
+    {
         if (!$_SESSION['user']) {
             header("Location: /portal");
         }
 
         $variant = $_POST['variant'];
-
         $id = $_POST['id'];
-
         $mounth = $_POST['mounth'];
+        $year = $_SESSION['year'];
 
-        $this->model->update_status($id, $variant, $mounth);
-        echo "Информация отправленна";
+        $this->model->update_status($id, $variant, $mounth, $year);
+        //echo "Информация отправленна";
     }
 
-    public function update_info() {
-
+    public function update_info() 
+    {
         if (!$_SESSION['user']) {
             header("Location: /portal");
         }
@@ -141,34 +127,27 @@ class TableController extends Controller {
         $sum6 = $_POST["sum6"];
         $sum7 = $_POST["sum7"];
 
-
         $sum1 = str_replace(" ", "", $sum1);
         $sum1 = str_replace(",", ".", $sum1);
-
 
         $sum2 = str_replace(" ", "", $sum2);
         $sum2 = str_replace(",", ".", $sum2);
 
-
         $sum3 = str_replace(" ", "", $sum3);
         $sum3 = str_replace(",", ".", $sum3);
-
 
         $sum4 = str_replace(" ", "", $sum4);
         $sum4 = str_replace(",", ".", $sum4);
 
-
         $sum5 = str_replace(" ", "", $sum5);
         $sum5 = str_replace(",", ".", $sum5);
-
 
         $sum6 = str_replace(" ", "", $sum6);
         $sum6 = str_replace(",", ".", $sum6);
 
-
         $sum7 = str_replace(" ", "", $sum7);
         $sum7 = str_replace(",", ".", $sum7);
-
+        
         $total = $sum1 + $sum2 + $sum3 + $sum4 + $sum5 + $sum6 + $sum7;
         $total = str_replace(" ", "", $total);
         $total = str_replace(",", ".", $total);
@@ -177,33 +156,24 @@ class TableController extends Controller {
         echo "Данные обновлены";
     }
 
-
-
-    public function excel() {
-
+    public function excel() 
+    {
         if (!$_SESSION['user']) {
             header("Location: /portal");
         }
 
-
-
-
         $this->view->render($this->pageExcel, $this->pageData);
     }
-
-    
-    public function email() {
-        
-                if (!$_SESSION['user']) {
+   
+    public function email() 
+    {        
+        if (!$_SESSION['user']) {
             header("Location: /portal");
         }
         
         $year = $_SESSION['year'];
         $svod = $_SESSION['svod'];
         
-        $this->model->email($year, $svod);
-        
-        
-    }
-    
+        $this->model->email($year, $svod);              
+    } 
 }

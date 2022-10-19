@@ -84,6 +84,7 @@ foreach ($pageData['info'] as $key => $value) {
     if ($value['status'] == 2) {
         echo "<tr>";
         echo "<input type=hidden class='id' value=" . $value['id'] . ">";
+        echo "<input type=hidden class='mounth' value=" . $value['mounth'] . ">";
         echo "<td>" . $mounth[$value['mounth']] . "</td>";
         echo <<<HTML
             <td><input type=text id='user' class='volume1' value="$value[volume1]"></td>

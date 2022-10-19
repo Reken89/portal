@@ -155,13 +155,16 @@ if ($_SESSION['id'] !== '1') {
 
            var tr = this.closest('tr');
            var id = $('.id', tr).val();
+    
+           var tr = this.closest('tr');
+           var mounth = $('.mounth', tr).val();
 
            var variant = 30;
 
        $.ajax({  
                 url:"/portal/table/update_status",  
                 method:"POST",  
-                data:{ id:id, variant:variant },
+                data:{ id:id, variant:variant, mounth:mounth },
                 dataType:"text",  
                 success:function(data)  
                 {  
