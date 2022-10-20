@@ -54,6 +54,8 @@ class TableController extends Controller
         $user = $_SESSION['user'];
         $this->pageData['total2'] = $this->model->total2($user, $year);
         
+        $this->pageData['tarif'] = $this->model->tarif($year);
+        
         $this->view->render($this->pageTpl_back, $this->pageData);
     }
 

@@ -153,6 +153,65 @@ foreach ($pageData['total2'] as $key => $total_v) {
     echo "</tbody>";
     echo "</table>";
         
+    ?>    
+   
+    </br>    
+    <div class="div">
+        <p>Таблица с тарифами</p>
+        <p>Тарифы содержат значения "От" и "До"</p>
+        <p>Значение при делении суммы на объем, должно соответствовать диапазону тарифа</p>
+    </div> 
+ 
+    </br>
+    <table class="freeze-table" width="700px">
+    <thead>
+        <tr>
+            <th style="min-width: 100px; width: 100px;" rowspan="2">Месяц</th>
+            <th style="min-width: 200px; width: 200px;" colspan="2">Теплоснабжение</th>
+            <th style="min-width: 200px; width: 200px;" colspan="2">Водоотведение</th>
+            <th style="min-width: 200px; width: 200px;" colspan="2">Негативка</th>
+            <th style="min-width: 200px; width: 200px;" colspan="2">Водоснабжение</th>
+            <th style="min-width: 200px; width: 200px;" colspan="2">Электроснабжение</th>
+            <th style="min-width: 200px; width: 200px;" colspan="2">Вывоз мусора</th>
+        </tr>
+    </thead>
+    
+    <tbody>
+        <tr>
+            <td></td>
+            <td>От</td><td>До</td>
+            <td>От</td><td>До</td>
+            <td>От</td><td>До</td>
+            <td>От</td><td>До</td>
+            <td>От</td><td>До</td>
+            <td>От</td><td>До</td>
+        </tr>
+        
+    <?php
+    foreach ($pageData['tarif'] as $key => $tarif) {
+        echo "<tr>";
+        echo "<td>" . $mounth[$tarif['mounth']] . "</td>";
+        echo "<td>" . $tarif['heat_one'] . "</td>";
+        echo "<td>" . $tarif['heat_two'] . "</td>";
+        echo "<td>" . $tarif['drainage_one'] . "</td>";
+        echo "<td>" . $tarif['drainage_two'] . "</td>";
+        echo "<td>" . $tarif['negative_one'] . "</td>";
+        echo "<td>" . $tarif['negative_two'] . "</td>";
+        echo "<td>" . $tarif['water_one'] . "</td>";
+        echo "<td>" . $tarif['water_two'] . "</td>";
+        echo "<td>" . $tarif['electro_one'] . "</td>";
+        echo "<td>" . $tarif['electro_two'] . "</td>";
+        echo "<td>" . $tarif['trash_one'] . "</td>";
+        echo "<td>" . $tarif['trash_two'] . "</td>";
+        echo "</tr>";
+    }
+
+    ?>
+    </tbody>  
+    </table>
+    
+    <?php    
+    
 } 
 else{   
 ?>

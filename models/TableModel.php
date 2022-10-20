@@ -109,9 +109,6 @@ class TableModel extends Model
         }
        
         if($variant == 30){           
-            //$sql = "UPDATE portal_ku SET status = '1' WHERE id = '$id'";
-            //$stmt = $this->db->prepare($sql);
-            //$stmt->execute();
             //Получаем тарифы
             $sql = "SELECT * FROM tariffs WHERE year = '$year' AND mounth = '$mounth'";       
             $tarifs = [];
@@ -131,109 +128,39 @@ class TableModel extends Model
             }
             
             //Выполняем проверку
-            if($values['sum1'] == 0 && $values['volume1'] == 0){
-                $tarif_teplo = "NO";
-            } else {
-                if($values['volume1'] == 0){
-                    $tarif_teplo = "";
+            function examination($sum, $volume, $tarif_one, $tarif_two) 
+            {
+                if($sum == 0 && $volume == 0){                   
+                    $tarif = "NO";
                 } else {
-                    $tarif_teplo = $values['sum1'] / $values['volume1'];
-                    $tarif_teplo = number_format($tarif_teplo, 3, '.', ''); 
-                }
-            }
-            
-            if($values['sum2'] == 0 && $values['volume2'] == 0){
-                $tarif_stok = "NO";
-            } else {
-                if($values['volume2'] == 0){
-                    $tarif_stok = "";
+                if($volume == 0){
+                    $tarif = "";
                 } else {
-                    $tarif_stok = $values['sum2'] / $values['volume2'];
-                    $tarif_stok = number_format($tarif_stok, 3, '.', ''); 
+                    $tarif = $sum / $volume;
+                    $tarif = number_format($tarif, 3, '.', ''); 
                 }
-            }
-            
-            if($values['sum3'] == 0 && $values['volume3'] == 0){
-                $tarif_negative = "NO";
-            } else {
-                if($values['volume3'] == 0){
-                    $tarif_negative = "";
+                }
+                
+                if($tarif >= $tarif_one && $tarif <= $tarif_two || $tarif == "NO"){
+                    $status = "YES";
                 } else {
-                    $tarif_negative = $values['sum3'] / $values['volume3'];
-                    $tarif_negative = number_format($tarif_negative, 3, '.', ''); 
+                    $status = "NO";
                 }
+                return $status;    
             }
             
-            if($values['sum4'] == 0 && $values['volume4'] == 0){
-                $tarif_water = "NO";
-            } else {
-                if($values['volume4'] == 0){
-                    $tarif_water = "";
-                } else {
-                    $tarif_water = $values['sum4'] / $values['volume4'];
-                    $tarif_water = number_format($tarif_water, 3, '.', ''); 
-                }
-            }
-            
-            if($values['sum5'] == 0 && $values['volume5'] == 0){
-                $tarif_electro = "NO";
-            } else {
-                if($values['volume5'] == 0){
-                    $tarif_electro = "";
-                } else {
-                    $tarif_electro = $values['sum5'] / $values['volume5'];
-                    $tarif_electro = number_format($tarif_electro, 3, '.', ''); 
-                }
-            }
-            
-            if($values['sum6'] == 0 && $values['volume6'] == 0){
-                $tarif_trash = "NO";
-            } else {
-                if($values['volume6'] == 0){
-                    $tarif_trash = "";
-                } else {
-                    $tarif_trash = $values['sum6'] / $values['volume6'];
-                    $tarif_trash = number_format($tarif_trash, 3, '.', ''); 
-                }
-            }
-          
-            if($tarif_teplo >= $tarifs['heat_one'] && $tarif_teplo <= $tarifs['heat_two'] || $tarif_teplo == "NO"){
-                $status_teplo = "YES";
-            } else {
-                $status_teplo = "NO";
-            }
-            
-            if($tarif_stok >= $tarifs['drainage_one'] && $tarif_stok <= $tarifs['drainage_two'] || $tarif_stok == "NO"){
-                $status_stok = "YES";
-            } else {
-                $status_stok = "NO";
-            }
-            
-            if($tarif_negative >= $tarifs['negative_one'] && $tarif_negative <= $tarifs['negative_two'] || $tarif_negative == "NO"){
-                $status_negative = "YES";
-            } else {
-                $status_negative = "NO";
-            }
-            
-            if($tarif_water >= $tarifs['water_one'] && $tarif_water <= $tarifs['water_two'] || $tarif_water == "NO"){
-                $status_water = "YES";
-            } else {
-                $status_water = "NO";
-            }
-            
-            if($tarif_electro >= $tarifs['electro_one'] && $tarif_electro <= $tarifs['electro_two'] || $tarif_electro == "NO"){
-                $status_electro = "YES";
-            } else {
-                $status_electro = "NO";
-            }
-            
-            if($tarif_trash >= $tarifs['trash_one'] && $tarif_trash <= $tarifs['trash_two'] || $tarif_trash == "NO"){
-                $status_trash = "YES";
-            } else {
-                $status_trash = "NO";
-            }
+            $status_teplo = examination($values['sum1'], $values['volume1'], $tarifs['heat_one'], $tarifs['heat_two']);
+            $status_stok = examination($values['sum2'], $values['volume2'], $tarifs['drainage_one'], $tarifs['drainage_two']);
+            $status_negative = examination($values['sum3'], $values['volume3'], $tarifs['negative_one'], $tarifs['negative_two']);
+            $status_water = examination($values['sum4'], $values['volume4'], $tarifs['water_one'], $tarifs['water_two']);
+            $status_electro = examination($values['sum5'], $values['volume5'], $tarifs['electro_one'], $tarifs['electro_two']);
+            $status_trash = examination($values['sum6'], $values['volume6'], $tarifs['trash_one'], $tarifs['trash_two']);
             
             if($status_teplo == "YES" && $status_stok == "YES" && $status_negative == "YES" && $status_water == "YES" && $status_electro == "YES" && $status_trash == "YES"){
+                $sql = "UPDATE portal_ku SET status = '1' WHERE id = '$id'";
+                $stmt = $this->db->prepare($sql);
+                $stmt->execute();
+                
                 echo "Информация отправлена в Финуправление";
             } else {
                 echo "Обнаружена ошибка в расчете тарифа. Отправка в Финуправление невозможна!";
@@ -366,4 +293,28 @@ class TableModel extends Model
             }        
             return $res;        
         }
+        
+    public function tarif($year)
+    {
+        $sql = "SELECT * FROM tariffs WHERE year = '$year'";
+        $res = [];
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute();
+        while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $block = [
+                   'heat_one', 'heat_two',
+                   'drainage_one', 'drainage_two',
+                   'negative_one', 'negative_two',
+                   'water_one', 'water_two',
+                   'electro_one', 'electro_two',
+                   'trash_one', 'trash_two'
+                   ];
+            for ($num = 0 ; $num <= 11 ; ++$num){
+                $row[$block[$num]] = number_format($row[$block[$num]], 3, ',', ' ');
+            } 
+            $res[$row['id']] = $row;
+        }
+        
+        return $res;
+    }
 }
