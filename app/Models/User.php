@@ -45,4 +45,12 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+    
+    /**
+     * Определяем email пользователя
+     */
+    public function email()
+    {
+        return $this->email;
+    }
 }

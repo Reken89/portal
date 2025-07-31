@@ -57,7 +57,7 @@
       	<div class="row d-md-flex no-gutters slider-text align-items-center justify-content-center">
 	        <div class="col-md-10 d-flex align-items-center ftco-animate">
 	        	<div class="text text-center pt-5 mt-md-5">
-	        		<p class="mb-4">Портал находится в стадии разработки</p>
+                            <p class="mb-4">Вы вошли в систему как <b>{{ $email }}</b></p>
 	            <h1 class="mb-5">Выберите нужный раздел для работы</h1>
 							<div class="ftco-counter ftco-no-pt ftco-no-pb">
 			        	<div class="row">
@@ -68,8 +68,8 @@
 				              		<span class="flaticon-worldwide"></span>
 				              	</div>
 				              	<div class="desc text-left">
-					                <strong class="number" data-number="46">0</strong>
-					                <span>Countries</span>
+                                                    <strong class="number" data-number="100">0</strong>
+					                <span>Загрузка модулей</span>
 				                </div>
 				              </div>
 				            </div>
