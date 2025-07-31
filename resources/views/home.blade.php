@@ -38,7 +38,12 @@
 	      <div class="collapse navbar-collapse" id="ftco-nav">
 	        <ul class="navbar-nav ml-auto">
 	          <li class="nav-item"><a href="contact.html" class="nav-link">Контакты</a></li>
-	          <li class="nav-item cta cta-colored"><a href="job-post.html" class="nav-link">Выход</a></li>
+                  <li class="nav-item cta cta-colored"><a href="{{ route('logout') }}" class="nav-link" onclick="event.preventDefault();
+                                         document.getElementById('logout-form').submit();">Выход</a>
+                      <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                            @csrf
+                        </form>
+                  </li>
 
 	        </ul>
 	      </div>
