@@ -53,4 +53,12 @@ class User extends Authenticatable
     {
         return $this->email;
     }
+    
+    /**
+     * Определяем роль пользователя
+     */
+    public function role()
+    {
+        return $this->role;
+    }
 }
