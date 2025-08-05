@@ -4,7 +4,7 @@ namespace App\Modules\DeloSection\Controllers;
 
 use App\Core\Controllers\Controller;
 
-class DeloController extends Controller
+class DeloOutController extends Controller
 {
      /**
      * Front отрисовка страницы
@@ -12,9 +12,9 @@ class DeloController extends Controller
      * @param 
      * @return 
      */
-    public function FrontView(string $variant)
+    public function FrontView()
     {
-        return view('delo.delo', ['variant' => $variant]);   
+        return view('delo.out');   
     }
     
     /**
@@ -25,7 +25,7 @@ class DeloController extends Controller
      */
     public function ShowTable()
     {
-        return view('delo.templates.table');   
+        return view('delo.templates.out');   
     }
 }
 

@@ -6,12 +6,10 @@
    
         //Подгружаем BACK шаблон отрисовки
         function fetch_data(){
-            var variant = <?=json_encode($variant)?>;
             $.ajax({                
-                url:"/portal/public/delo/table", 
+                url:"/portal/public/delo/out/table", 
                 method:"GET",
                 data:{
-                    variant
                 },
                 dataType:"text",
                 success:function(data){  
