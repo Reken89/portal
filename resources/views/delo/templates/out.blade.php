@@ -70,9 +70,9 @@
        
           <div class="col-md-12 col-lg-8 mb-5">
           
-			     <form action="#" class="p-5 bg-white">
-              
-
+		<form action="#" id="document" method="post" class="p-5 bg-white">
+              <input type='hidden' name='author' value='{{ $info['author'] }}'>   
+              <input type='hidden' name='variant' value='{{ $info['variant'] }}'>  
                                  
               <div class="row form-group">
                 <div class="col-md-12 mb-3 mb-md-0">
@@ -80,13 +80,10 @@
                   <div class="form-group">
                         <div class="form-field">
                             <div class="select-wrap">
-                              <select name="" id="" class="form-control">
-                                <option value="">Category</option>
-                                <option value="">Full Time</option>
-                                <option value="">Part Time</option>
-                                <option value="">Freelance</option>
-                                <option value="">Internship</option>
-                                <option value="">Temporary</option>
+                              <select name="npa" class="form-control">
+                                  @foreach ($info['npa'] as $value) 
+                                    <option value="{{ $value['id'] }}">{{ $value['title'] }}</option>
+                                  @endforeach
                               </select>
                             </div>
                         </div>
@@ -100,13 +97,10 @@
                   <div class="form-group">
                         <div class="form-field">
                             <div class="select-wrap">
-                              <select name="" id="" class="form-control">
-                                <option value="">Category</option>
-                                <option value="">Full Time</option>
-                                <option value="">Part Time</option>
-                                <option value="">Freelance</option>
-                                <option value="">Internship</option>
-                                <option value="">Temporary</option>
+                              <select name="corr" class="form-control">
+                                  @foreach ($info['corr'] as $value) 
+                                      <option value="{{ $value['id'] }}">{{ $value['title'] }}</option>
+                                  @endforeach
                               </select>
                             </div>
                         </div>
@@ -119,13 +113,13 @@
               <div class="row form-group">
                 <div class="col-md-12"><h3>Описание</h3></div>
                 <div class="col-md-12 mb-3 mb-md-0">
-                  <textarea name="" class="form-control" id="" cols="30" rows="5"></textarea>
+                  <textarea name="content" class="form-control" cols="30" rows="5"></textarea>
                 </div>
               </div>
 
               <div class="row form-group">
                 <div class="col-md-12">
-                  <input type="submit" value="Добавить" class="btn btn-primary  py-2 px-5">
+                  <button class="btn btn-primary  py-2 px-5" id='btn_add' type="button">Добавить</button>
                 </div>
               </div>
 
@@ -159,7 +153,7 @@
                         </div>
                         <div class="job-post-item-body d-block d-md-flex">
                           <div class="mr-3"><span class="icon-layers"></span> <a href="#">{{ $value['date'] }}</a></div>
-                          <div><span class="icon-my_location"></span> <span>Кто</span></div>
+                          <div><span class="icon-my_location"></span> <span>{{ $value['user']['name'] }}</span></div>
                         </div>
                       </div>
 

@@ -61,4 +61,12 @@ class User extends Authenticatable
     {
         return $this->role;
     }
+    
+    /**
+     * Определяем имя пользователя
+     */
+    public function name()
+    {
+        return $this->name;
+    }
 }
