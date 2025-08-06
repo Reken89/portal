@@ -19,6 +19,7 @@ class AddDoc extends FormRequest
             'npa'     => 'required|integer',
             'corr'    => 'required|integer',
             'content' => 'required|string',
+            'user_id' => 'required|integer',
         ];
     }   
 }

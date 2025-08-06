@@ -24,6 +24,7 @@ class DeloSelect extends BaseAction
             'corr'      => $this->task(SelectCorr::class)->SelectAll(),
             'email'     => Auth::user()->email(),
             'author'    => Auth::user()->name(),
+            'user_id'   => Auth::user()->id(),
             'variant'   => $variant
         ];
     }

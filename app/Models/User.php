@@ -69,4 +69,12 @@ class User extends Authenticatable
     {
         return $this->name;
     }
+    
+    /**
+     * Определяем id пользователя
+     */
+    public function id()
+    {
+        return $this->id;
+    }
 }

@@ -28,5 +28,22 @@ class SelectDocuments extends BaseTask
             ->toArray();
         return $result;
     }
+    
+    /**
+     * Получаем номер для нового письма
+     *
+     * @param string $variant
+     * @return
+     */
+    public function GetNumber(string $variant)
+    {
+        $result = Document::select()      
+            ->whereDate('date', '>', '2025-01-01') 
+            ->where('type', $variant)     
+            ->orderBy('id', 'desc')    
+            ->first()
+            ->toArray();
+        return $result['number']+1;
+    }
 }    
 

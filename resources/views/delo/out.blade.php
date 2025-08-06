@@ -27,6 +27,7 @@
             let npa_ = [];
             let corr_ = [];
             let content_ = [];
+            let user_id_ = [];
             
             for (const item of info) {
                 const value = item.value;
@@ -40,6 +41,8 @@
                     corr_.push(value);
                 } else if (item.name === 'content') {
                     content_.push(value);
+                } else if (item.name === 'user_id') {
+                    user_id_.push(value);
                 }   
             }
             
@@ -48,17 +51,22 @@
             let npa = npa_[0];
             let corr = corr_[0];
             let content = content_[0];
+            let user_id = user_id_[0];
+            
+            if (content === "") {
+                content = "Текст отсутствует...";
+            }
             
             $.ajax({
                 url:"/portal/public/delo/doc/add",  
                 method:"post",
                 data:{
-                    author, variant, npa, corr, content,
+                    author, variant, npa, corr, content, user_id,
                     "_token": "{{ csrf_token() }}",
                 },
                 dataType:"text",  
                 success:function(data){  
-                    alert(data);
+                    //alert(data);
                     fetch_data();  
                 } 
             })               

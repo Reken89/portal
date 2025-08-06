@@ -12,6 +12,7 @@ class AddDocDto extends BaseDto
     public int    $npa;
     public int    $corr;
     public string $content;
+    public int    $user_id;
 
     /**
      * Возвращает DTO из объекта Request
@@ -27,6 +28,7 @@ class AddDocDto extends BaseDto
             'npa'     => $request->get('npa'),
             'corr'    => $request->get('corr'),
             'content' => $request->get('content'),
+            'user_id' => $request->get('user_id'),
         ]);
     }
 }
