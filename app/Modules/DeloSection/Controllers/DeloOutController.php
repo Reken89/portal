@@ -3,6 +3,7 @@
 namespace App\Modules\DeloSection\Controllers;
 
 use App\Core\Controllers\Controller;
+use App\Modules\DeloSection\Actions\DeloSelect;
 
 class DeloOutController extends Controller
 {
@@ -25,7 +26,8 @@ class DeloOutController extends Controller
      */
     public function ShowTable()
     {
-        return view('delo.templates.out');   
+        $info = $this->action(DeloSelect::class)->SelectAll("out"); 
+        return view('delo.templates.out', ['info' => $info]);   
     }
 }
 

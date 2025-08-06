@@ -57,7 +57,7 @@
       <div class="container">
         <div class="row no-gutters slider-text align-items-end justify-content-start">
           <div class="col-md-12 ftco-animate text-center mb-5">
-          	<p class="breadcrumbs mb-0"><span class="mr-3"></span> <span>Вы вошли как</span></p>
+          	<p class="breadcrumbs mb-0"><span class="mr-3"></span> <span>Вы вошли как {{ $info['email'] }}</span></p>
             <h1 class="mb-3 bread">Исходящая почта</h1>
           </div>
         </div>
@@ -145,18 +145,21 @@
         <div class="row">       
           <div class="col-md-12 col-lg-8 mb-5">
  
-                  
+                  @foreach ($info['documents'] as $value) 
+                  @php
+                      $correspondent = mb_substr($value['correspondent']['title'], 0, 40, "UTF-8");
+                  @endphp
                   <div class="col-md-12 ftco-animate">
                     <div class="job-post-item p-4 d-block d-lg-flex align-items-center">
                       <div class="one-third mb-4 mb-md-0">
                         <div class="job-post-item-header align-items-center">
-                                <span class="subadge">№ 110</span>
-                          <h2 class="mr-3 text-black"><a href="#">Кому (адресат)</a></h2>
-                          <p class="mb-4">Краткое содержание письма, краткое содержание письма, краткое содержание письма, краткое содержание письма</p>
+                                <span class="subadge">№ {{ $value['number'] }} ({{ $value['npa']['title'] }})</span>
+                                <p><b>{{ $correspondent }}</b></p>
+                          <p class="mb-4">{{ $value['content'] }}</p>
                         </div>
                         <div class="job-post-item-body d-block d-md-flex">
-                          <div class="mr-3"><span class="icon-layers"></span> <a href="#">04-06-2025</a></div>
-                          <div><span class="icon-my_location"></span> <span>Главный специалист</span></div>
+                          <div class="mr-3"><span class="icon-layers"></span> <a href="#">{{ $value['date'] }}</a></div>
+                          <div><span class="icon-my_location"></span> <span>Кто</span></div>
                         </div>
                       </div>
 
@@ -165,7 +168,8 @@
                         <a href="job-single.html" class="btn btn-primary py-2">Изменить</a>
                       </div>
                     </div>
-                  </div><!-- end -->   
+                  </div><!-- end -->  
+                  @endforeach
                   
           </div>                  
         </div>
