@@ -131,24 +131,112 @@
                                     @php
                                         $correspondent = mb_substr($value['correspondent']['title'], 0, 40, "UTF-8");
                                     @endphp
-                                    <div class="col-md-12 ftco-animate">
-                                        <div class="job-post-item p-4 d-block d-lg-flex align-items-center">
-                                            <div class="one-third mb-4 mb-md-0">
-                                                <div class="job-post-item-header align-items-center">
-                                                    <span class="subadge">№ {{ $value['number'] }} ({{ $value['npa']['title'] }})</span>
-                                                    <p><b>{{ $correspondent }}</b></p>
-                                                    <p class="mb-4">{{ $value['content'] }}</p>
+                                                                       
+                                    @if($value['user']['name'] == $info['author'])
+                                        @if($value['status']  == 10)
+                                            <div class="col-md-12 ftco-animate">
+                                                <div style="background-color: PeachPuff;" class="job-post-item p-4 d-block d-lg-flex align-items-center">
+                                                    <div class="one-third mb-4 mb-md-0">
+                                                        <div class="job-post-item-header align-items-center">
+                                                            <span class="subadge">№ {{ $value['number'] }} ({{ $value['npa']['title'] }})</span>
+                                                            <p><b>{{ $correspondent }}</b></p>
+                                                            <p class="mb-4">{{ $value['content'] }}</p>
+                                                        </div>
+                                                        <div class="job-post-item-body d-block d-md-flex">
+                                                            <div class="mr-3"><span class="icon-layers"></span>{{ $value['date'] }}</a></div>
+                                                            <div><span class="icon-my_location"></span> <span>{{ $value['user']['name'] }}</span></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="one-forth ml-auto d-flex align-items-center mt-4 md-md-0">
+                                                        <form id="status_update" method="post"> 
+                                                            <input type='hidden' name='id' value='{{ $value['id'] }}'>  
+                                                            <button class="btn btn-primary py-2" id='status' type="button">Изменить</button>
+                                                        </form>
+                                                    </div>
                                                 </div>
-                                                <div class="job-post-item-body d-block d-md-flex">
-                                                    <div class="mr-3"><span class="icon-layers"></span>{{ $value['date'] }}</a></div>
-                                                    <div><span class="icon-my_location"></span> <span>{{ $value['user']['name'] }}</span></div>
+                                            </div><!-- end -->  
+                                        @else
+                                            <div class="col-md-12 ftco-animate">  
+                                                <div class="job-post-item p-4 d-block d-lg-flex align-items-center">
+                                                    <form action="#" id="update" method="post" class="p-5 bg-white">
+                                                        <input type='hidden' name='id' value='{{ $value['id'] }}'>  
+                                                        
+                                                        <div class="row form-group">
+                                                            <div class="col-md-12 mb-3 mb-md-0">
+                                                                <label class="font-weight-bold" for="fullname">Вид документа</label>
+                                                                <div class="form-group">
+                                                                    <div class="form-field">
+                                                                        <div class="select-wrap">
+                                                                            <select name="npa" class="form-control">
+                                                                                <option selected value="{{ $value['npa']['id'] }}">{{ $value['npa']['title'] }}</option>
+                                                                                @foreach ($info['npa'] as $npa) 
+                                                                                    <option value="{{ $npa['id'] }}">{{ $npa['title'] }}</option>
+                                                                                @endforeach
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>  
+                                                        <div class="row form-group">
+                                                            <div class="col-md-12 mb-3 mb-md-0">
+                                                                <label class="font-weight-bold" for="fullname">Корреспондент</label>
+                                                                <div class="form-group">
+                                                                    <div class="form-field">
+                                                                        <div class="select-wrap">
+                                                                            <select name="corr" class="form-control">
+                                                                                <option selected value="{{ $value['correspondent']['id'] }}">{{ $value['correspondent']['title'] }}</option>
+                                                                                @foreach ($info['corr'] as $corr) 
+                                                                                    <option value="{{ $corr['id'] }}">{{ $corr['title'] }}</option>
+                                                                                @endforeach
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>  
+                                                        <div class="row form-group">
+                                                            <div class="col-md-12 mb-3 mb-md-0">
+                                                                <label class="font-weight-bold" for="fullname">Дата</label>
+                                                                <input type="date" value="{{ $value['date'] }}" id="date" name="date" class="date"/>    
+                                                            </div>
+                                                        </div>  
+                                                        <div class="row form-group">
+                                                            <div class="col-md-12"><h3>Содержание</h3></div>
+                                                            <div class="col-md-12 mb-3 mb-md-0">
+                                                                <textarea name="content" class="form-control" cols="30" rows="3">{{ $value['content'] }}</textarea>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row form-group">
+                                                            <div class="col-md-12">
+                                                                <button class="btn btn-primary  py-2 px-5" id='btn_save' type="button">Сохранить</button>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                    </br>
+                                                </div>    
+                                            </div>    
+                                        @endif
+                                    @else
+                                        <div class="col-md-12 ftco-animate">
+                                            <div style="background-color: PaleTurquoise;" class="job-post-item p-4 d-block d-lg-flex align-items-center">
+                                                <div class="one-third mb-4 mb-md-0">
+                                                    <div class="job-post-item-header align-items-center">
+                                                        <span class="subadge">№ {{ $value['number'] }} ({{ $value['npa']['title'] }})</span>
+                                                        <p><b>{{ $correspondent }}</b></p>
+                                                        <p class="mb-4">{{ $value['content'] }}</p>
+                                                    </div>
+                                                    <div class="job-post-item-body d-block d-md-flex">
+                                                        <div class="mr-3"><span class="icon-layers"></span>{{ $value['date'] }}</a></div>
+                                                        <div><span class="icon-my_location"></span> <span>{{ $value['user']['name'] }}</span></div>
+                                                    </div>
+                                                </div>
+                                                <div class="one-forth ml-auto d-flex align-items-center mt-4 md-md-0">
+                                                    <button class="btn btn-primary py-2" id='access' type="button">Изменить</button>
                                                 </div>
                                             </div>
-                                            <div class="one-forth ml-auto d-flex align-items-center mt-4 md-md-0">
-                                                <a href="job-single.html" class="btn btn-primary py-2">Изменить</a>
-                                            </div>
-                                        </div>
-                                    </div><!-- end -->  
+                                        </div><!-- end -->  
+                                    @endif
                                 @endforeach
                            </div>                  
                         </div>
@@ -163,7 +251,6 @@
                     <div class="row d-flex justify-content-center">
                         <div class="col-md-7 text-center heading-section heading-section-white ftco-animate">
                             <h2>Модуль "Делопроизводство"</h2>
-                            <p>Модуль разработан для финансово-экономического управления</p>
                             <div class="row d-flex justify-content-center mt-4 mb-4">
                                 <div class="col-md-12">
                                 </div>
