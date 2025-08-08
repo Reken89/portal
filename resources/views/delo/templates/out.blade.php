@@ -75,8 +75,8 @@
                                         <div class="form-field">
                                             <div class="select-wrap">
                                                 <select name="npa" class="form-control">
-                                                    @foreach ($info['npa'] as $value) 
-                                                        <option value="{{ $value['id'] }}">{{ $value['title'] }}</option>
+                                                    @foreach ($info['npa'] as $npa1) 
+                                                        <option value="{{ $npa1['id'] }}">{{ $npa1['title'] }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -92,8 +92,8 @@
                                         <div class="form-field">
                                             <div class="select-wrap">
                                                 <select name="corr" class="form-control">
-                                                    @foreach ($info['corr'] as $value) 
-                                                        <option value="{{ $value['id'] }}">{{ $value['title'] }}</option>
+                                                    @foreach ($info['corr'] as $corr1) 
+                                                        <option value="{{ $corr1['id'] }}">{{ $corr1['title'] }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -148,10 +148,14 @@
                                                         </div>
                                                     </div>
                                                     <div class="one-forth ml-auto d-flex align-items-center mt-4 md-md-0">
-                                                        <form id="status_update" method="post"> 
-                                                            <input type='hidden' name='id' value='{{ $value['id'] }}'>  
-                                                            <button class="btn btn-primary py-2" id='status' type="button">Изменить</button>
-                                                        </form>
+                                                        <table>
+                                                            <tr>
+                                                                <td>
+                                                                    <input type="hidden" class="id" value="{{ $value['id'] }}">
+                                                                    <td><input type=button class="btn btn-primary py-2" id='status' value='Изменить'></td>  
+                                                                </td>
+                                                            </tr>
+                                                        </table>     
                                                     </div>
                                                 </div>
                                             </div><!-- end -->  

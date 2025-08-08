@@ -84,17 +84,8 @@
         
         //Выполняем действие, обновляем статус письма
         $(document).on('click', '#status', function(){
-            let info = $('#status_update').serializeArray();
-            let id_ = [];
-            
-            for (const item of info) {
-                const value = item.value;
-                if (item.name === 'id') {
-                    id_.push(value);
-                }   
-            }
-            
-            let id = id_[0];
+            var tr = this.closest('tr');
+            var id = $('.id', tr).val();
             
             $.ajax({
                 url:"/portal/public/delo/doc/updatestatus",  
