@@ -25,6 +25,11 @@
         <link rel="stylesheet" href="{{ asset('assets/skillhunt/css/flaticon.css') }}">
         <link rel="stylesheet" href="{{ asset('assets/skillhunt/css/icomoon.css') }}">
         <link rel="stylesheet" href="{{ asset('assets/skillhunt/css/style.css') }}">
+        
+        <!-- Plugin chosen! -->
+        <link rel="stylesheet" href="{{ asset('assets/plugins/chosen/docsupport/prism.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/plugins/chosen/chosen.css') }}">
+        <!-- The end chosen! -->
     </head>
     <body>        
         <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
@@ -74,7 +79,7 @@
                                     <div class="form-group">
                                         <div class="form-field">
                                             <div class="select-wrap">
-                                                <select name="npa" class="form-control">
+                                                <select name="npa" class="form-control chosen-select">
                                                     @foreach ($info['npa'] as $npa1) 
                                                         <option value="{{ $npa1['id'] }}">{{ $npa1['title'] }}</option>
                                                     @endforeach
@@ -91,9 +96,9 @@
                                     <div class="form-group">
                                         <div class="form-field">
                                             <div class="select-wrap">
-                                                <select name="corr" class="form-control">
+                                                <select name="corr" class="form-control chosen-select">
                                                     @foreach ($info['corr'] as $corr1) 
-                                                        <option value="{{ $corr1['id'] }}">{{ $corr1['title'] }}</option>
+                                                    <option value="{{ $corr1['id'] }}">{{ $corr1['title'] }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -105,7 +110,7 @@
                             <div class="row form-group">
                                 <div class="col-md-12"><h3>Содержание</h3></div>
                                 <div class="col-md-12 mb-3 mb-md-0">
-                                    <textarea name="content" class="form-control" cols="30" rows="5"></textarea>
+                                    <textarea name="content" class="form-control" cols="30" rows="3"></textarea>
                                 </div>
                             </div>
 
@@ -122,8 +127,15 @@
                             <h3 class="h5 text-black mb-3">Информация:</h3>
                             <p class="mb-0 font-weight-bold">Номер и дата проставляются автоматически</p>
                         </div>
+                        
+                        <div class="sidebar-box bg-white p-4 ftco-animate">
+                            <h3 class="heading-sidebar">Фильтры</h3>
+                            <form action="#" class="browse-form">
+                                <label for="option-job-3"><input type="checkbox" id="filter" name="filter" value=""> Только Вашм письма</label><br>
+                            </form>
+                        </div>
                     </div>
-            
+                        
                     <div class="container">
                         <div class="row">       
                             <div class="col-md-12 col-lg-8 mb-5">
@@ -135,7 +147,7 @@
                                     @if($value['user']['name'] == $info['author'])
                                         @if($value['status']  == 10)
                                             <div class="col-md-12 ftco-animate">
-                                                <div style="background-color: PeachPuff;" class="job-post-item p-4 d-block d-lg-flex align-items-center">
+                                                <div style="background-color: PeachPuff;" class="job-post-item p-2 d-block d-lg-flex align-items-center">
                                                     <div class="one-third mb-4 mb-md-0">
                                                         <div class="job-post-item-header align-items-center">
                                                             <span class="subadge">№ {{ $value['number'] }} ({{ $value['npa']['title'] }})</span>
@@ -171,7 +183,7 @@
                                                                 <div class="form-group">
                                                                     <div class="form-field">
                                                                         <div class="select-wrap">
-                                                                            <select name="npa" class="form-control">
+                                                                            <select name="npa" class="form-control chosen-select">
                                                                                 <option selected value="{{ $value['npa']['id'] }}">{{ $value['npa']['title'] }}</option>
                                                                                 @foreach ($info['npa'] as $npa) 
                                                                                     <option value="{{ $npa['id'] }}">{{ $npa['title'] }}</option>
@@ -188,7 +200,7 @@
                                                                 <div class="form-group">
                                                                     <div class="form-field">
                                                                         <div class="select-wrap">
-                                                                            <select name="corr" class="form-control">
+                                                                            <select name="corr" class="form-control chosen-select">
                                                                                 <option selected value="{{ $value['correspondent']['id'] }}">{{ $value['correspondent']['title'] }}</option>
                                                                                 @foreach ($info['corr'] as $corr) 
                                                                                     <option value="{{ $corr['id'] }}">{{ $corr['title'] }}</option>
@@ -223,7 +235,7 @@
                                         @endif
                                     @else
                                         <div class="col-md-12 ftco-animate">
-                                            <div style="background-color: PaleTurquoise;" class="job-post-item p-4 d-block d-lg-flex align-items-center">
+                                            <div style="background-color: PaleTurquoise;" class="job-post-item p-2 d-block d-lg-flex align-items-center">
                                                 <div class="one-third mb-4 mb-md-0">
                                                     <div class="job-post-item-header align-items-center">
                                                         <span class="subadge">№ {{ $value['number'] }} ({{ $value['npa']['title'] }})</span>
@@ -285,6 +297,13 @@
         <script src="{{ asset('assets/skillhunt/js/scrollax.min.js') }}"></script>
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
         <script src="{{ asset('assets/skillhunt/js/google-map.js') }}"></script>
-        <script src="{{ asset('assets/skillhunt/js/main.js') }}"></script>    
+        <script src="{{ asset('assets/skillhunt/js/main.js') }}"></script> 
+        
+        <!-- Plugin chosen! -->
+        <script src="{{ asset('assets/plugins/chosen/docsupport/jquery-3.2.1.min.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('assets/plugins/chosen/chosen.jquery.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('assets/plugins/chosen/docsupport/prism.js') }}" type="text/javascript" charset="utf-8"></script>
+        <script src="{{ asset('assets/plugins/chosen/docsupport/init.js') }}" type="text/javascript" charset="utf-8"></script>
+        <!-- The end chosen! -->
     </body>
 </html>

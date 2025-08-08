@@ -4,7 +4,7 @@
 <script>
     $(document).ready(function(){
    
-        //Подгружаем BACK шаблон отрисовки
+        //Подгружаем BACK шаблон отрисовки       
         function fetch_data(){
             $.ajax({                
                 url:"/portal/public/delo/out/table", 
@@ -149,7 +149,7 @@
                 } 
             })               
         })
-                     
+                             
     });
 </script>
 
