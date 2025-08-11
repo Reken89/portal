@@ -130,8 +130,16 @@
                         
                         <div class="sidebar-box bg-white p-4 ftco-animate">
                             <h3 class="heading-sidebar">Фильтры</h3>
-                            <form action="#" class="browse-form">
-                                <label for="option-job-3"><input type="checkbox" id="filter" name="filter" value=""> Только Вашм письма</label><br>
+                            <form action="#" id="filters" method="post" class="browse-form">
+                                @if (session('user_filter') == NULL || session('user_filter') == FALSE || session('user_filter') == "no")
+                                    <label for="option-job-3"><input type="checkbox" id="user_filter" name="user_filter" value="yes"> Только Вашм письма</label><br>
+                                @else
+                                    <label for="option-job-3"><input type="checkbox" id="user_filter" name="user_filter" value="yes" checked> Только Вашм письма</label><br>
+                                @endif
+                                </br>
+                                <div class="col-md-12">
+                                    <button class="btn btn-primary  py-2 px-5" id='btn_filter' type="button">Применить</button>
+                                </div>
                             </form>
                         </div>
                     </div>

@@ -18,8 +18,16 @@ class DeloSelect extends BaseAction
      */
     public function SelectAll(string $variant): array
     {   
+        //Проверяем фильтры в сессии
+        if (session('user_filter') == NULL || session('user_filter') == FALSE || session('user_filter') == "no"){
+            $documents = $this->task(SelectDocuments::class)->SelectAll($variant);
+        }else{
+            $user_id = Auth::user()->id();
+            $documents = $this->task(SelectDocuments::class)->SelectFilter($variant, $user_id);
+        }
+        
         return [
-            'documents' => $this->task(SelectDocuments::class)->SelectAll($variant),
+            'documents' => $documents,
             'npa'       => $this->task(SelectNpa::class)->SelectAll(),
             'corr'      => $this->task(SelectCorr::class)->SelectAll(),
             'email'     => Auth::user()->email(),

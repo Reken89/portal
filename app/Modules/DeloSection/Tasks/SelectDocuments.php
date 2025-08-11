@@ -30,6 +30,30 @@ class SelectDocuments extends BaseTask
     }
     
     /**
+     * Возвращает таблицу documents
+     * Используя фильтр по пользователю
+     *
+     * @param string $variant, int $user_id
+     * @return
+     */
+    public function SelectFilter(string $variant, int $user_id)
+    {
+        $result = Document::select()      
+            ->with([
+                'user:id,name',
+                'npa',
+                'correspondent'
+                ]) 
+            ->where('type', $variant)  
+            ->where('user_id', $user_id)  
+            ->limit(100)
+            ->orderBy('id', 'desc')
+            ->get()
+            ->toArray();
+        return $result;
+    }
+    
+    /**
      * Получаем номер для нового письма
      *
      * @param string $variant

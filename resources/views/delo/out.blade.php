@@ -149,6 +149,39 @@
                 } 
             })               
         })
+        
+        //Выполняем действие, работа с фильтрами
+        $(document).on('click', '#btn_filter', function(){
+            let info = $('#filters').serializeArray();
+            let user_filter_ = [];
+            
+            for (const item of info) {
+                const value = item.value;
+                if (item.name === 'user_filter') {
+                    user_filter_.push(value);
+                } 
+            }
+            
+            let user_filter = user_filter_[0];
+            if(user_filter === undefined){
+                user_filter = "no";
+            }
+            
+            $.ajax({
+                url:"/portal/public/delo/doc/filters",  
+                method:"post",
+                data:{
+                    user_filter, 
+                    "_token": "{{ csrf_token() }}",
+                },
+                dataType:"text",  
+                success:function(data){  
+                    //alert(data);
+                    fetch_data();  
+                } 
+            })  
+                  
+        })
                              
     });
 </script>

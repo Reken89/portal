@@ -18,4 +18,5 @@ Route::get('/delo/out/table', [DeloOutController::class, 'ShowTable'])->middlewa
 Route::post('/delo/doc/add', [DeloController::class, 'AddDoc'])->middleware('auth');
 Route::post('/delo/doc/updatestatus', [DeloController::class, 'UpdateStatus'])->middleware('auth');
 Route::post('/delo/doc/update', [DeloController::class, 'UpdateDoc'])->middleware('auth');
+Route::post('/delo/doc/filters', [DeloController::class, 'ApplyFilter'])->middleware('auth');
 Route::get('/delo/out', [DeloOutController::class, 'FrontView'])->middleware('auth')->name('delo-out');

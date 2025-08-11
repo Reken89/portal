@@ -6,9 +6,11 @@ use App\Core\Controllers\Controller;
 use App\Modules\DeloSection\Dto\AddDocDto;
 use App\Modules\DeloSection\Dto\UpdateStatusDto;
 use App\Modules\DeloSection\Dto\UpdateDocDto;
+use App\Modules\DeloSection\Dto\FilterDocDto;
 use App\Modules\DeloSection\Requests\AddDoc;
 use App\Modules\DeloSection\Requests\UpdateStatus;
 use App\Modules\DeloSection\Requests\UpdateDoc;
+use App\Modules\DeloSection\Requests\FilterDoc;
 use App\Modules\DeloSection\Actions\DeloAdd;
 use App\Modules\DeloSection\Actions\DeloUpdate;
 
@@ -46,6 +48,17 @@ class DeloController extends Controller
     {
         $dto = UpdateDocDto::fromRequest($request);
         $this->action(DeloUpdate::class)->UpdateDoc($dto);
+    }
+    
+    /**
+     * Записываем фильтры в сессию
+     *
+     * @param 
+     */
+    public function ApplyFilter(FilterDoc $request)
+    {
+        $dto = FilterDocDto::fromRequest($request);
+        session(['user_filter' => $dto->user_filter]);
     }
 }
 
