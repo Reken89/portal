@@ -25,6 +25,7 @@ class AddDocuments extends BaseTask
             'content'          => $dto->content,
             'author'           => $dto->author,
             'type'             => $dto->variant,
+            'status'           => 10,
         ]);
         return $result == true ? true : false;
     }
