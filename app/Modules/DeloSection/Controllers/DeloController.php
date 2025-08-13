@@ -9,15 +9,18 @@ use App\Modules\DeloSection\Dto\UpdateDocDto;
 use App\Modules\DeloSection\Dto\FilterDocDto;
 use App\Modules\DeloSection\Dto\UpdateCorrDto;
 use App\Modules\DeloSection\Dto\AddCorrDto;
+use App\Modules\DeloSection\Dto\AddNpaDto;
 use App\Modules\DeloSection\Requests\AddDoc;
 use App\Modules\DeloSection\Requests\UpdateStatus;
 use App\Modules\DeloSection\Requests\UpdateDoc;
 use App\Modules\DeloSection\Requests\FilterDoc;
 use App\Modules\DeloSection\Requests\UpdateCorrDoc;
 use App\Modules\DeloSection\Requests\AddCorr;
+use App\Modules\DeloSection\Requests\AddNpa;
 use App\Modules\DeloSection\Actions\DeloAdd;
 use App\Modules\DeloSection\Actions\DeloUpdate;
 use App\Modules\DeloSection\Actions\CorrAdd;
+use App\Modules\DeloSection\Actions\NpaAdd;
 
 class DeloController extends Controller
 {
@@ -42,6 +45,17 @@ class DeloController extends Controller
     {
         $dto = AddCorrDto::fromRequest($request);
         $this->action(CorrAdd::class)->AddCorr($dto);       
+    }
+    
+    /**
+     * Добавляем справочник
+     *
+     * @param AddNpa $request
+     */
+    public function AddNpa(AddNpa $request)
+    {
+        $dto = AddNpaDto::fromRequest($request);
+        $this->action(NpaAdd::class)->AddNpa($dto);       
     }
     
     /**

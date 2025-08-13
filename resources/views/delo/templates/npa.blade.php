@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-    <title>Корреспонденты</title>
+    <title>Справочники</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -39,7 +39,7 @@
                         <li class="nav-item"><a href="/portal/public/home" class="nav-link">Главная</a></li>
                         <li class="nav-item"><a href="/portal/public/delo/out" class="nav-link">Исходящая почта</a></li>
                         <li class="nav-item"><a href="/portal/public/delo/in" class="nav-link">Входящая почта</a></li>
-                        <li class="nav-item"><a href="/portal/public/delo/npa" class="nav-link">Справочники</a></li>
+                        <li class="nav-item"><a href="/portal/public/delo/corr" class="nav-link">Корреспонденты</a></li>
                         <li class="nav-item cta cta-colored"><a href="{{ route('logout') }}" class="nav-link" onclick="event.preventDefault();
                             document.getElementById('logout-form').submit();">Выход</a>
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
@@ -58,7 +58,7 @@
                 <div class="row no-gutters slider-text align-items-end justify-content-start">
                     <div class="col-md-12 ftco-animate text-center mb-5">
                         <p class="breadcrumbs mb-0"><span class="mr-3"></span> <span>Вы вошли как {{ $info['email'] }}</span></p>
-                        <h1 class="mb-3 bread">Корреспонденты</h1>
+                        <h1 class="mb-3 bread">Справочники</h1>
                     </div>
                 </div>
             </div>
@@ -68,7 +68,7 @@
             <div class="container">
                 <div class="row">      
                     <div class="col-md-12 col-lg-8 mb-5">         
-                        <form action="#" id="correspondent" method="post" class="p-5 bg-white">
+                        <form action="#" id="npa" method="post" class="p-5 bg-white">
                   
                             <div class="row form-group">
                                 <div class="col-md-12"><h3>Название</h3></div>
@@ -92,68 +92,28 @@
                     <div class="col-lg-4">
                         <div class="p-4 mb-3 bg-white">
                             <h3 class="h5 text-black mb-3">Информация:</h3>
-                            <p class="mb-0 font-weight-bold">Только начальник отдела может добавлять и редактировать корреспондентов</p>
+                            <p class="mb-0 font-weight-bold">Только начальник отдела может добавлять справочники</p>
                         </div>
                     </div>
                         
                     <div class="container">
                         <div class="row">       
                             <div class="col-md-12 col-lg-8 mb-5">
-                                @foreach ($info['corr'] as $value) 
-                                    @php
-                                        $correspondent = mb_substr($value['title'], 0, 40, "UTF-8");
-                                    @endphp   
+                                @foreach ($info['npa'] as $value) 
                                     <style>
                                         .white-text {
                                             color: White;
                                         }
                                     </style>
-                                    @if($value['status']  == 10)
-                                        <div class="col-md-12 ftco-animate">
-                                            <div style="background-color: CornflowerBlue;" class="job-post-item p-2 d-block d-lg-flex align-items-center">
-                                                <div class="one-third mb-4 mb-md-0">
-                                                    <div class="job-post-item-header align-items-center">
-                                                        <p class="white-text"><b>{{ $correspondent }}</b></p>
-                                                    </div>
-                                                </div>
-                                                <div class="one-forth ml-auto d-flex align-items-center mt-4 md-md-0">
-                                                    <table>
-                                                        <tr>
-                                                            <td>
-                                                                <input type="hidden" class="id" value="{{ $value['id'] }}">
-                                                                @if($info['role'] == "deloadm")
-                                                                    <td><input type=button class="btn btn-primary py-2" id='status' value='Изменить'></td>  
-                                                                @else
-                                                                    <td><input type=button class="btn btn-primary py-2" id='plug' value='Изменить'></td> 
-                                                                @endif
-                                                            </td>
-                                                        </tr>
-                                                    </table>     
+                                    <div class="col-md-12 ftco-animate">
+                                        <div style="background-color: CornflowerBlue;" class="job-post-item p-2 d-block d-lg-flex align-items-center">
+                                            <div class="one-third mb-4 mb-md-0">
+                                                <div class="job-post-item-header align-items-center">
+                                                    <p class="white-text"><b>{{ $value['title'] }}</b></p>
                                                 </div>
                                             </div>
-                                        </div><!-- end --> 
-                                    @else
-                                        <div class="col-md-12 ftco-animate">  
-                                            <div class="job-post-item p-2 d-block d-lg-flex align-items-center">
-                                                <form action="#" id="update" method="post" class="p-5 bg-white">
-                                                    <input type='hidden' name='id' value='{{ $value['id'] }}'>  
-
-                                                    <div class="row form-group">
-                                                        <div class="col-md-12"><h3>Название</h3></div>
-                                                        <div class="col-md-12 mb-3 mb-md-0">
-                                                            <textarea name="title" class="form-control" cols="50" rows="2">{{ $value['title'] }}</textarea>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row form-group">
-                                                        <div class="col-md-12">
-                                                            <button class="btn btn-primary  py-2 px-5" id='btn_save' type="button">Сохранить</button>
-                                                        </div>
-                                                    </div>
-                                                </form>
-                                                </br>
-                                            </div>    
-                                        </div>  
-                                    @endif
+                                        </div>
+                                    </div><!-- end --> 
                                 @endforeach
                            </div>                  
                         </div>
@@ -208,5 +168,8 @@
         <!-- The end chosen! -->
     </body>
 </html>
+
+
+
 
 

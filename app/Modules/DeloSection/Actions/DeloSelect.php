@@ -52,5 +52,21 @@ class DeloSelect extends BaseAction
             'role'  => Auth::user()->role(),
         ];       
     }
+    
+    /**
+     * Получаем информацию
+     * по справочникам
+     *
+     * @param
+     * @return array
+     */
+    public function SelectNpa(): array
+    {
+        return [
+            'npa'   => $this->task(SelectNpa::class)->SelectAll(),
+            'email' => Auth::user()->email(),
+            'role'  => Auth::user()->role(),
+        ];       
+    }
 }
 
