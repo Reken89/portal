@@ -36,5 +36,21 @@ class DeloSelect extends BaseAction
             'variant'   => $variant
         ];
     }
+    
+    /**
+     * Получаем информацию
+     * по корреспондентам
+     *
+     * @param
+     * @return array
+     */
+    public function SelectCorr(): array
+    {
+        return [
+            'corr'  => $this->task(SelectCorr::class)->SelectAll(),
+            'email' => Auth::user()->email(),
+            'role'  => Auth::user()->role(),
+        ];       
+    }
 }
 

@@ -7,12 +7,17 @@ use App\Modules\DeloSection\Dto\AddDocDto;
 use App\Modules\DeloSection\Dto\UpdateStatusDto;
 use App\Modules\DeloSection\Dto\UpdateDocDto;
 use App\Modules\DeloSection\Dto\FilterDocDto;
+use App\Modules\DeloSection\Dto\UpdateCorrDto;
+use App\Modules\DeloSection\Dto\AddCorrDto;
 use App\Modules\DeloSection\Requests\AddDoc;
 use App\Modules\DeloSection\Requests\UpdateStatus;
 use App\Modules\DeloSection\Requests\UpdateDoc;
 use App\Modules\DeloSection\Requests\FilterDoc;
+use App\Modules\DeloSection\Requests\UpdateCorrDoc;
+use App\Modules\DeloSection\Requests\AddCorr;
 use App\Modules\DeloSection\Actions\DeloAdd;
 use App\Modules\DeloSection\Actions\DeloUpdate;
+use App\Modules\DeloSection\Actions\CorrAdd;
 
 class DeloController extends Controller
 {
@@ -29,6 +34,17 @@ class DeloController extends Controller
     }
     
     /**
+     * Добавляем корреспондента
+     *
+     * @param AddCorr $request
+     */
+    public function AddCorr(AddCorr $request)
+    {
+        $dto = AddCorrDto::fromRequest($request);
+        $this->action(CorrAdd::class)->AddCorr($dto);       
+    }
+    
+    /**
      * Обновляем статус письма
      *
      * @param UpdateStatus $request
@@ -37,6 +53,17 @@ class DeloController extends Controller
     {
         $dto = UpdateStatusDto::fromRequest($request);
         $this->action(DeloUpdate::class)->UpdateStatus($dto);   
+    }
+    
+     /**
+     * Обновляем статус корреспондента
+     *
+     * @param UpdateStatus $request
+     */
+    public function UpdateCorrStatus(UpdateStatus $request)
+    {
+        $dto = UpdateStatusDto::fromRequest($request);
+        $this->action(DeloUpdate::class)->UpdateCorrStatus($dto);   
     }
     
     /**
@@ -48,6 +75,17 @@ class DeloController extends Controller
     {
         $dto = UpdateDocDto::fromRequest($request);
         $this->action(DeloUpdate::class)->UpdateDoc($dto);
+    }
+    
+    /**
+     * Обновляем корреспондента
+     *
+     * @param UpdateCorrDoc $request
+     */
+    public function UpdateCorr(UpdateCorrDoc $request)
+    {
+        $dto = UpdateCorrDto::fromRequest($request);
+        $this->action(DeloUpdate::class)->UpdateCorr($dto);
     }
     
     /**

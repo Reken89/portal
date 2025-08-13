@@ -39,7 +39,7 @@
                         <li class="nav-item"><a href="/portal/public/home" class="nav-link">Главная</a></li>
                         <li class="nav-item"><a href="/portal/public/delo/out" class="nav-link">Исходящая почта</a></li>
                         <li class="nav-item"><a href="#" class="nav-link">Справочники</a></li>
-                        <li class="nav-item"><a href="#" class="nav-link">Корреспонденты</a></li>
+                        <li class="nav-item"><a href="/portal/public/delo/corr" class="nav-link">Корреспонденты</a></li>
                         <li class="nav-item cta cta-colored"><a href="{{ route('logout') }}" class="nav-link" onclick="event.preventDefault();
                             document.getElementById('logout-form').submit();">Выход</a>
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
