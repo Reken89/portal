@@ -32,7 +32,7 @@ class SelectInfoAction extends BaseAction
      */
     public function SelectTotal(array $year, array $mounth): array
     {   
-
+        return $this->task(SelectCommunalsTask::class)->SelectTotal($year, $mounth);
     }
         
     /**

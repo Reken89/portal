@@ -37,4 +37,5 @@ Route::get('/delo/out', [DeloOutController::class, 'FrontView'])->middleware('au
 
 //Группа адресов для модуля "КОММУНАЛЬНЫЕ УСЛУГИ"
 Route::get('/communal/admin/table', [CommunalAdminController::class, 'ShowTable'])->middleware('auth', 'admin');
+Route::get('/communal/admin/export', [CommunalAdminController::class, 'ExportTable'])->middleware('auth', 'admin');
 Route::get('/communal/admin', [CommunalAdminController::class, 'FrontView'])->middleware('auth', 'admin')->name('communal-admin');

@@ -1,0 +1,115 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 20 авг. 2025 г., 09:28:15
+    Author     : Administrator
+*/
+
+div.container_fix2 {
+    overflow: scroll;
+}
+
+.table2 {
+    width: 100%;
+    border: none;
+    margin-bottom: 20px;
+}
+.table2 thead th {
+    font-weight: bold;
+    text-align: left;
+    border: none;
+    padding: 10px 15px;
+    background: #0000FF;
+    font-size: 14px;
+    position: -webkit-sticky; /* for Safari */
+    position: sticky;
+    top: 0;
+}
+
+.table2 tbody th {
+    position: -webkit-sticky; /* for Safari */
+    position: sticky;
+    left: 0;
+}
+
+.table2 thead th:first-child {
+    left: 0;
+    z-index: 1;
+}
+/* Use overflow:scroll on your container to enable scrolling: */
+
+div.container_fix {
+    width: 1400px;
+    max-height: 600px;
+    overflow: scroll;
+}
+
+div.container_fix2 {
+    width: 100%;
+    height: 600px;
+    overflow: scroll;
+}
+
+/* Use position: sticky to have it stick to the edge
+ * and top, right, or left to choose which edge to stick to: */
+
+.table2 thead th {
+  position: -webkit-sticky; /* for Safari */
+  position: sticky;
+  top: 0;
+}
+
+.table2 tbody th {
+  position: -webkit-sticky; /* for Safari */
+  position: sticky;
+  left: 0;
+}
+
+
+/* To have the header in the first column stick to the left: */
+
+.table2 thead th:first-child {
+  left: 0;
+  z-index: 1;
+}
+
+.table2 thead tr th:first-child {
+	border-radius: 8px 0 0 8px;
+}
+.table2 thead tr th:last-child {
+	border-radius: 0 8px 8px 0;
+}
+.table2 tbody td {
+	text-align: left;
+	border: none;
+	padding: 10px 15px;
+	font-size: 14px;
+	vertical-align: top;
+}
+.table2 tbody tr:nth-child(even){
+	background: #f3f3f3;
+}
+.table2 tbody tr td:first-child {
+	border-radius: 8px 0 0 8px;
+}
+.table2 tbody tr td:last-child {
+	border-radius: 0 8px 8px 0;
+}
+
+/* Just to display it nicely: */
+.table2 tbody th {
+  background: #FFF;
+  border-right: 1px solid #CCC;
+}
+
+table2 {
+  border-collapse: collapse;
+}
+
+.table2 td,
+th {
+  padding: 0.5em;
+}
+

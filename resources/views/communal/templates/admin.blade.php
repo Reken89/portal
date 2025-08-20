@@ -25,6 +25,10 @@
         <link rel="stylesheet" href="{{ asset('assets/skillhunt/css/flaticon.css') }}">
         <link rel="stylesheet" href="{{ asset('assets/skillhunt/css/icomoon.css') }}">
         <link rel="stylesheet" href="{{ asset('assets/skillhunt/css/style.css') }}">
+        
+        <!-- Plugin table2! -->
+        <link rel="stylesheet" href="{{ asset('assets/plugins/table/table2.css') }}">
+        <!-- The end table2! -->
     </head>
     <body>        
         <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
@@ -104,8 +108,110 @@
             </div>
         </section>
         
+
+            <div class="container2">
+                <p><font color="RoyalBlue">*Выбранные параметры: <u>год</u> @foreach($info['year'] AS $value) {{ $value }}, @endforeach <u>месяц</u> @foreach($info['mounth_name'] AS $value) {{ $value }}, @endforeach</p>
+                <div class="container_fix2">
+                    <table class="table2">
+                        <thead>
+                            <tr>
+                                <th style="min-width: 80px; width: 80px;">Учреждение</th>
+                                <th style="min-width: 80px; width: 80px;">Статус</th>
+                                <th style="min-width: 200px; width: 200px;" colspan="2">Теплоснабжение</th> 
+                                <th style="min-width: 200px; width: 200px;" colspan="2">Водоотведение</th> 
+                                <th style="min-width: 200px; width: 200px;" colspan="2">Негативное воздействие</th> 
+                                <th style="min-width: 200px; width: 200px;" colspan="2">Водоснабжение</th> 
+                                <th style="min-width: 200px; width: 200px;" colspan="2">Электроснабжение</th> 
+                                <th style="min-width: 200px; width: 200px;" colspan="2">Вывоз мусора</th>    
+                                <th style="min-width: 150px; width: 150px;" rowspan="2">ИТОГО</th> 
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th><a href="/portal/public/communal/admin/export"><img src="{{ asset('assets/icons/excel-48.png') }}" alt=""></a></th>
+                                <td style="min-width: 100px; width: 100px;"></td>
+                                <td style="min-width: 150px; width: 150px;"><b>Объем</b></td><td style="min-width: 150px; width: 150px;"><b>Сумма</b></td>
+                                <td style="min-width: 150px; width: 150px;"><b>Объем</b></td><td style="min-width: 150px; width: 150px;"><b>Сумма</b></td>
+                                <td style="min-width: 150px; width: 150px;"><b>Объем</b></td><td style="min-width: 150px; width: 150px;"><b>Сумма</b></td>
+                                <td style="min-width: 150px; width: 150px;"><b>Объем</b></td><td style="min-width: 150px; width: 150px;"><b>Сумма</b></td>
+                                <td style="min-width: 150px; width: 150px;"><b>Объем</b></td><td style="min-width: 150px; width: 150px;"><b>Сумма</b></td>
+                                <td style="min-width: 150px; width: 150px;"><b>Объем</b></td><td style="min-width: 150px; width: 150px;"><b>Сумма</b></td>
+                                <td></td>
+                            </tr>
+                            @foreach ($info['communals'] as $value) 
+                                @if($info['variant'] == "one")
+                                    <tr>
+                                        <input type="hidden" class="id" value="{{ $value['id'] }}">
+                                        <th><font color="RoyalBlue">{{ $value['user']['name'] }}</th>
+                                        @if ($value['status'] == 1)
+                                            <td><font color="green">Отправлено</td>
+                                        @elseif ($value['status'] == 3)
+                                            <td><input type=button class="button" id='btn_two' value='Изменить'></td>  
+                                        @else
+                                            <td><font color="red">В работе</td>
+                                        @endif
+                                        <td><font color="blue">{{ number_format($value['heat-volume'], 4, ',', ' ') }}</td>
+                                        <td><font color="blue">{{ number_format($value['heat-sum'], 2, ',', ' ') }}</td>
+                                        <td><font color="blue">{{ number_format($value['drainage-volume'], 4, ',', ' ') }}</td>
+                                        <td><font color="blue">{{ number_format($value['drainage-sum'], 2, ',', ' ') }}</td>
+                                        <td><font color="blue">{{ number_format($value['negative-volume'], 4, ',', ' ') }}</td>
+                                        <td><font color="blue">{{ number_format($value['negative-sum'], 2, ',', ' ') }}</td>
+                                        <td><font color="blue">{{ number_format($value['water-volume'], 4, ',', ' ') }}</td>
+                                        <td><font color="blue">{{ number_format($value['water-sum'], 2, ',', ' ') }}</td>
+                                        <td><font color="blue">{{ number_format($value['power-volume'], 4, ',', ' ') }}</td>
+                                        <td><font color="blue">{{ number_format($value['power-sum'], 2, ',', ' ') }}</td>
+                                        <td><font color="blue">{{ number_format($value['trash-volume'], 4, ',', ' ') }}</td>
+                                        <td><font color="blue">{{ number_format($value['trash-sum'], 2, ',', ' ') }}</td>                                                
+                                        <td><font color="blue">{{ number_format($value['total'], 2, ',', ' ') }}</td>
+                                    </tr>
+                                @else
+                                    <tr>
+                                        <th><font color="RoyalBlue">{{ $value['user']['name'] }}</th>
+                                        <td></td>
+                                        <td><font color="blue">{{ number_format($value['heat_volume'], 4, ',', ' ') }}</td>
+                                        <td><font color="blue">{{ number_format($value['heat_sum'], 2, ',', ' ') }}</td>
+                                        <td><font color="blue">{{ number_format($value['drainage_volume'], 4, ',', ' ') }}</td>
+                                        <td><font color="blue">{{ number_format($value['drainage_sum'], 2, ',', ' ') }}</td>
+                                        <td><font color="blue">{{ number_format($value['negative_volume'], 4, ',', ' ') }}</td>
+                                        <td><font color="blue">{{ number_format($value['negative_sum'], 2, ',', ' ') }}</td>
+                                        <td><font color="blue">{{ number_format($value['water_volume'], 4, ',', ' ') }}</td>
+                                        <td><font color="blue">{{ number_format($value['water_sum'], 2, ',', ' ') }}</td>
+                                        <td><font color="blue">{{ number_format($value['power_volume'], 4, ',', ' ') }}</td>
+                                        <td><font color="blue">{{ number_format($value['power_sum'], 2, ',', ' ') }}</td>
+                                        <td><font color="blue">{{ number_format($value['trash_volume'], 4, ',', ' ') }}</td>
+                                        <td><font color="blue">{{ number_format($value['trash_sum'], 2, ',', ' ') }}</td>                                                
+                                        <td><font color="blue">{{ number_format($value['total'], 2, ',', ' ') }}</td>
+                                    </tr>
+                                @endif
+                            @endforeach
+                            <tr>
+                                <th><font color="RoyalBlue">Итог</th>
+                                <td></td>
+                                <td><font color="blue">{{ number_format($info['total']['heat_volume'], 4, ',', ' ') }}</td>
+                                <td><font color="blue">{{ number_format($info['total']['heat_sum'], 2, ',', ' ') }}</td>
+                                <td><font color="blue">{{ number_format($info['total']['drainage_volume'], 4, ',', ' ') }}</td>
+                                <td><font color="blue">{{ number_format($info['total']['drainage_sum'], 2, ',', ' ') }}</td>
+                                <td><font color="blue">{{ number_format($info['total']['negative_volume'], 4, ',', ' ') }}</td>
+                                <td><font color="blue">{{ number_format($info['total']['negative_sum'], 2, ',', ' ') }}</td>
+                                <td><font color="blue">{{ number_format($info['total']['water_volume'], 4, ',', ' ') }}</td>
+                                <td><font color="blue">{{ number_format($info['total']['water_sum'], 2, ',', ' ') }}</td>
+                                <td><font color="blue">{{ number_format($info['total']['power_volume'], 4, ',', ' ') }}</td>
+                                <td><font color="blue">{{ number_format($info['total']['power_sum'], 2, ',', ' ') }}</td>
+                                <td><font color="blue">{{ number_format($info['total']['trash_volume'], 4, ',', ' ') }}</td>
+                                <td><font color="blue">{{ number_format($info['total']['trash_sum'], 2, ',', ' ') }}</td>                                                
+                                <td><font color="blue">{{ number_format($info['total']['total'], 2, ',', ' ') }}</td>                                           
+                            </tr>
+                        </tbody>    
+                    </table>  
+                </div> 
+            </div>
+        
+        </br>
+
+        
+        
         @php
-            var_dump($info);
+            //var_dump($info);
         @endphp
         
         <section class="ftco-section-parallax">
