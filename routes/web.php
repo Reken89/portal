@@ -7,6 +7,7 @@ use App\Modules\DeloSection\Controllers\DeloInController;
 use App\Modules\DeloSection\Controllers\DeloCorrController;
 use App\Modules\DeloSection\Controllers\DeloNpaController;
 use App\Modules\CommunalSection\Admin\Controllers\CommunalAdminController;
+use App\Modules\CommunalSection\User\Controllers\CommunalUserController;
 
 Route::get('/', function () {
     return view('auth.login');
@@ -35,7 +36,12 @@ Route::get('/delo/corr', [DeloCorrController::class, 'FrontView'])->middleware('
 Route::get('/delo/in', [DeloInController::class, 'FrontView'])->middleware('auth', 'delo');
 Route::get('/delo/out', [DeloOutController::class, 'FrontView'])->middleware('auth', 'delo')->name('delo-out');
 
-//Группа адресов для модуля "КОММУНАЛЬНЫЕ УСЛУГИ"
+//Группа адресов для модуля "АРХИВ (коммунальные услуги)"
 Route::get('/communal/admin/table', [CommunalAdminController::class, 'ShowTable'])->middleware('auth', 'admin');
 Route::get('/communal/admin/export', [CommunalAdminController::class, 'ExportTable'])->middleware('auth', 'admin');
+
+Route::get('/communal/user/table', [CommunalUserController::class, 'ShowTable'])->middleware('auth');
+Route::get('/communal/user/export', [CommunalUserController::class, 'ExportTable'])->middleware('auth');
+
 Route::get('/communal/admin', [CommunalAdminController::class, 'FrontView'])->middleware('auth', 'admin')->name('communal-admin');
+Route::get('/communal/user', [CommunalUserController::class, 'FrontView'])->middleware('auth')->name('communal-user');

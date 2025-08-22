@@ -3,6 +3,7 @@
 namespace App\Modules\CommunalSection\Admin\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Core\Controllers\Controller;
 use App\Modules\CommunalSection\Admin\Actions\SelectInfoAction;
@@ -51,6 +52,7 @@ class CommunalAdminController extends Controller
         $info = [
             'communals'   => $this->action(SelectInfoAction::class)->SelectCommunals($year, $mounth),
             'variant'     => $this->action(SelectInfoAction::class)->DefineVariant($year, $mounth),
+            'email'       => Auth::user()->email(),
             'year'        => $year,
             'mounth_name' => $mounth_name,
             'total'       => $this->action(SelectInfoAction::class)->SelectTotal($year, $mounth),

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-    <title>Коммунальные услуги</title>
+    <title>Архив (коммунальные услуги)</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -36,8 +36,6 @@
                 <div class="collapse navbar-collapse" id="ftco-nav">
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item"><a href="/portal/public/home" class="nav-link">Главная</a></li>
-                        <li class="nav-item"><a href="#" class="nav-link">Тарифы</a></li>
-                        <li class="nav-item"><a href="#" class="nav-link">Диаграммы</a></li>
                         <li class="nav-item cta cta-colored"><a href="{{ route('logout') }}" class="nav-link" onclick="event.preventDefault();
                             document.getElementById('logout-form').submit();">Выход</a>
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
@@ -56,7 +54,7 @@
                 <div class="row no-gutters slider-text align-items-end justify-content-start">
                     <div class="col-md-12 ftco-animate text-center mb-5">
                         <p class="breadcrumbs mb-0"><span class="mr-3"></span> <span>Вы вошли как: {{ $info['email'] }}</span></p>
-                        <h1 class="mb-3 bread">Коммунальные услуги (таблица)</h1>
+                        <h1 class="mb-3 bread">Коммунальные услуги (архив)</h1>
                     </div>
                 </div>
             </div>
@@ -67,33 +65,23 @@
                 <form action="#" id="parameters" method="post">
                 <div class="row">                            
                     <div class="sidebar-box bg-white p-4 ftco-animate col-md-3">
-                        <h3 class="heading-sidebar">Год:</h3>
-                        <label for="option-job-3"><input type="checkbox" id="user_filter" name="year" value="2026"> 2026</label><br>        
+                        <h3 class="heading-sidebar">Год:</h3>      
                         <label for="option-job-3"><input type="checkbox" id="user_filter" name="year" value="2025"> 2025</label><br>  
                         <label for="option-job-3"><input type="checkbox" id="user_filter" name="year" value="2024"> 2024</label><br> 
                         <label for="option-job-3"><input type="checkbox" id="user_filter" name="year" value="2023"> 2023</label><br> 
-                        <label for="option-job-3"><input type="checkbox" id="user_filter" name="year" value="2022"> 2022</label><br> 
-                        <label for="option-job-3"><input type="checkbox" id="user_filter" name="year" value="2021"> 2021</label><br> 
                     </div>
 
                     <div class="sidebar-box bg-white p-4 ftco-animate col-md-3">
-                        <h3 class="heading-sidebar">Месяц:</h3>
-                        <label for="option-job-3"><input type="checkbox" id="user_filter" name="mounth" value="1"> Январь</label><br>        
-                        <label for="option-job-3"><input type="checkbox" id="user_filter" name="mounth" value="2"> Февраль</label><br>  
-                        <label for="option-job-3"><input type="checkbox" id="user_filter" name="mounth" value="3"> Март</label><br> 
-                        <label for="option-job-3"><input type="checkbox" id="user_filter" name="mounth" value="4"> Апрель</label><br> 
-                        <label for="option-job-3"><input type="checkbox" id="user_filter" name="mounth" value="5"> Май</label><br> 
-                        <label for="option-job-3"><input type="checkbox" id="user_filter" name="mounth" value="6"> Июнь</label><br> 
+                        <h3 class="heading-sidebar">Год:</h3>
+                        <label for="option-job-3"><input type="checkbox" id="user_filter" name="year" value="2022"> 2022</label><br> 
+                        <label for="option-job-3"><input type="checkbox" id="user_filter" name="year" value="2021"> 2021</label><br> 
+                        <label for="option-job-3"><input type="checkbox" id="user_filter" name="year" value="2020"> 2020</label><br> 
                     </div>
                        
                     <div class="sidebar-box bg-white p-4 ftco-animate col-md-3">
-                        <h3 class="heading-sidebar">Месяц:</h3>
-                        <label for="option-job-3"><input type="checkbox" id="user_filter" name="mounth" value="7"> Июль</label><br>        
-                        <label for="option-job-3"><input type="checkbox" id="user_filter" name="mounth" value="8"> Август</label><br>  
-                        <label for="option-job-3"><input type="checkbox" id="user_filter" name="mounth" value="9"> Сентябрь</label><br> 
-                        <label for="option-job-3"><input type="checkbox" id="user_filter" name="mounth" value="10"> Октябрь</label><br> 
-                        <label for="option-job-3"><input type="checkbox" id="user_filter" name="mounth" value="11"> Ноябрь</label><br> 
-                        <label for="option-job-3"><input type="checkbox" id="user_filter" name="mounth" value="12"> Декабрь</label><br> 
+                        <h3 class="heading-sidebar">Год:</h3>
+                        <label for="option-job-3"><input type="checkbox" id="user_filter" name="year" value="2019"> 2019</label><br> 
+                        <label for="option-job-3"><input type="checkbox" id="user_filter" name="year" value="2018"> 2018</label><br>  
                     </div>
                     
                     <div class="sidebar-box bg-white p-4 ftco-animate col-md-3">
@@ -107,13 +95,12 @@
         </section>
         
         <div class="container2">
-            <p><font color="RoyalBlue">*Выбранные параметры: <u>год</u> @foreach($info['year'] AS $value) {{ $value }}, @endforeach <u>месяц</u> @foreach($info['mounth_name'] AS $value) {{ $value }}, @endforeach</p>
+            <p><font color="RoyalBlue">*Выбранный год: @foreach($info['year'] AS $value) {{ $value }}, @endforeach</p>
             <div class="container_fix2">
                 <table class="table2">
                     <thead>
                         <tr>
-                            <th style="min-width: 80px; width: 80px;">Учреждение</th>
-                            <th style="min-width: 80px; width: 80px;">Статус</th>
+                            <th style="min-width: 80px; width: 80px;">Месяц</th>
                             <th style="min-width: 200px; width: 200px;" colspan="2">Теплоснабжение</th> 
                             <th style="min-width: 200px; width: 200px;" colspan="2">Водоотведение</th> 
                             <th style="min-width: 200px; width: 200px;" colspan="2">Негативное воздействие</th> 
@@ -125,8 +112,7 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <th><a href="/portal/public/communal/admin/export"><img src="{{ asset('assets/icons/excel-48.png') }}" alt=""></a></th>
-                            <td style="min-width: 100px; width: 100px;"></td>
+                            <th><a href="/portal/public/communal/user/export"><img src="{{ asset('assets/icons/excel-48.png') }}" alt=""></a></th>
                             <td style="min-width: 150px; width: 150px;"><b>Объем</b></td><td style="min-width: 150px; width: 150px;"><b>Сумма</b></td>
                             <td style="min-width: 150px; width: 150px;"><b>Объем</b></td><td style="min-width: 150px; width: 150px;"><b>Сумма</b></td>
                             <td style="min-width: 150px; width: 150px;"><b>Объем</b></td><td style="min-width: 150px; width: 150px;"><b>Сумма</b></td>
@@ -135,18 +121,10 @@
                             <td style="min-width: 150px; width: 150px;"><b>Объем</b></td><td style="min-width: 150px; width: 150px;"><b>Сумма</b></td>
                             <td></td>
                         </tr>
-                        @foreach ($info['communals'] as $value) 
+                        @foreach ($info['communals'] as $value)
                             @if($info['variant'] == "one")
                                 <tr>
-                                    <input type="hidden" class="id" value="{{ $value['id'] }}">
-                                    <th><font color="RoyalBlue">{{ $value['user']['name'] }}</th>
-                                    @if ($value['status'] == 1)
-                                        <td><font color="green">Отправлено</td>
-                                    @elseif ($value['status'] == 3)
-                                        <td><input type=button class="button" id='btn_two' value='Изменить'></td>  
-                                    @else
-                                        <td><font color="red">В работе</td>
-                                    @endif
+                                    <th><font color="RoyalBlue">{{ $info['mounth'][$value['mounth']] }}</th>
                                     <td><font color="blue">{{ number_format($value['heat-volume'], 4, ',', ' ') }}</td>
                                     <td><font color="blue">{{ number_format($value['heat-sum'], 2, ',', ' ') }}</td>
                                     <td><font color="blue">{{ number_format($value['drainage-volume'], 4, ',', ' ') }}</td>
@@ -163,8 +141,7 @@
                                 </tr>
                             @else
                                 <tr>
-                                    <th><font color="RoyalBlue">{{ $value['user']['name'] }}</th>
-                                    <td></td>
+                                    <th><font color="RoyalBlue">{{ $info['mounth'][$value['mounth']] }}</th>
                                     <td><font color="blue">{{ number_format($value['heat_volume'], 4, ',', ' ') }}</td>
                                     <td><font color="blue">{{ number_format($value['heat_sum'], 2, ',', ' ') }}</td>
                                     <td><font color="blue">{{ number_format($value['drainage_volume'], 4, ',', ' ') }}</td>
@@ -183,7 +160,6 @@
                         @endforeach
                         <tr>
                             <th><font color="RoyalBlue">Итог</th>
-                            <td></td>
                             <td><font color="blue">{{ number_format($info['total']['heat_volume'], 4, ',', ' ') }}</td>
                             <td><font color="blue">{{ number_format($info['total']['heat_sum'], 2, ',', ' ') }}</td>
                             <td><font color="blue">{{ number_format($info['total']['drainage_volume'], 4, ',', ' ') }}</td>
@@ -199,7 +175,10 @@
                             <td><font color="blue">{{ number_format($info['total']['total'], 2, ',', ' ') }}</td>                                           
                         </tr>
                     </tbody>    
-                </table>  
+                </table>
+                @php
+                    //var_dump($info);
+                @endphp
             </div> 
         </div>       
         </br>
@@ -209,7 +188,7 @@
                 <div class="container">
                     <div class="row d-flex justify-content-center">
                         <div class="col-md-7 text-center heading-section heading-section-white ftco-animate">
-                            <h2>Модуль "Коммунальные услуги"</h2>
+                            <h2>Модуль "Архив"</h2>
                             <div class="row d-flex justify-content-center mt-4 mb-4">
                                 <div class="col-md-12">
                                 </div>
@@ -241,6 +220,7 @@
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
         <script src="{{ asset('assets/skillhunt/js/google-map.js') }}"></script>
         <script src="{{ asset('assets/skillhunt/js/main.js') }}"></script> 
+
     </body>
 </html>
 

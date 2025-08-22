@@ -25,6 +25,7 @@ class HomeController extends Controller
     public function index()
     {
         $email = Auth::user()->email();
-        return view('home' , ['email' => $email]);
+        $role = Auth::user()->role();
+        return view('home' , ['email' => $email, 'role' => $role]);
     }
 }

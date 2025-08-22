@@ -112,48 +112,12 @@
                 <div class="col-md-12">
                     <div class="category-wrap">
                         <div class="row no-gutters">
-                            <div class="col-md-2">
-                                <div class="top-category text-center no-border-left">
-                                    <h3><a href="{{ route('delo-out')}}">Дело</a></h3>
-                                    <span class="icon flaticon-contact"></span>
-                                    <p><span class="number"></span> <span>Модуль готов к работе</span></p>
-                                </div>
-                            </div>
-                            <div class="col-md-2">
-                                <div class="top-category text-center active">
-                                    <h3><a href="{{ route('communal-admin')}}">Коммуналка</a></h3>
-                                    <span class="icon flaticon-accounting"></span>
-                                    <p><span class="number"></span> <span>Модуль в разработке</span></p>
-                                </div>
-                            </div>
-                            <div class="col-md-2">
-                                <div class="top-category text-center">
-                                    <h3><a href="#">ОФС 2026</a></h3>
-                                    <span class="icon flaticon-accounting"></span>
-                                    <p><span class="number"></span> <span>Модуль в разработке</span></p>
-                                </div>
-                            </div>
-                            <div class="col-md-2">
-                                <div class="top-category text-center">
-                                    <h3><a href="#">Архив ОФС</a></h3>
-                                    <span class="icon flaticon-accounting"></span>
-                                    <p><span class="number"></span> <span>Модуль в разработке</span></p>
-                                </div>
-                            </div>
-                            <div class="col-md-2">
-                                <div class="top-category text-center">
-                                    <h3><a href="#">Администратор</a></h3>
-                                    <span class="icon flaticon-contact"></span>
-                                    <p><span class="number"></span> <span>Модуль в разработке</span></p>
-                                </div>
-                            </div>
-                            <div class="col-md-2">
-                                <div class="top-category text-center">
-                                    <h3><a href="#">Разработка</a></h3>
-                                    <span class="icon flaticon-contact"></span>
-                                    <p><span class="number"></span> <span>Open position</span></p>
-                                </div>
-                            </div>
+                            @if($role == "admin" || $role == "delo" || $role == "deloadm")
+                                @include('admin_menu')
+                            @endif
+                            @if($role == "user")
+                                @include('user_menu')
+                            @endif
                         </div>
                     </div>
                 </div>
