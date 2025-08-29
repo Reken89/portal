@@ -9,6 +9,7 @@ use App\Modules\DeloSection\Controllers\DeloNpaController;
 use App\Modules\CommunalSection\Admin\Controllers\CommunalAdminController;
 use App\Modules\CommunalSection\User\Controllers\CommunalUserController;
 use App\Modules\UtilitiesSection\Admin\Controllers\UtilitiesTableAdminController;
+use App\Modules\UtilitiesSection\User\Controllers\UtilitiesTableUserController;
 
 Route::get('/', function () {
     return view('auth.login');
@@ -51,4 +52,7 @@ Route::get('/communal/user', [CommunalUserController::class, 'FrontView'])->midd
 Route::get('/utilities/admin/table', [UtilitiesTableAdminController::class, 'ShowTable'])->middleware('auth', 'admin');
 Route::get('/utilities/admin/export', [UtilitiesTableAdminController::class, 'ExportTable'])->middleware('auth', 'admin');
 
+Route::get('/utilities/user/table', [UtilitiesTableUserController::class, 'ShowTable'])->middleware('auth');
+
 Route::get('/utilities/admin', [UtilitiesTableAdminController::class, 'FrontView'])->middleware('auth', 'admin')->name('utilities-admin');
+Route::get('/utilities/user', [UtilitiesTableUserController::class, 'FrontView'])->middleware('auth')->name('utilities-user');

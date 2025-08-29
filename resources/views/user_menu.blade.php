@@ -1,6 +1,6 @@
 <div class="col-md-2">
     <div class="top-category text-center no-border-left">
-        <h3><a href="#">Коммуналка</a></h3>
+        <h3><a href="{{ route('utilities-user')}}">Коммуналка</a></h3>
         <span class="icon flaticon-accounting"></span>
         <p><span class="number"></span> <span>Модуль в разработке</span></p>
     </div>

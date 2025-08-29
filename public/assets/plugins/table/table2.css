@@ -11,6 +11,10 @@ div.container_fix2 {
     overflow: scroll;
 }
 
+div.container_fix3 {
+    overflow: scroll;
+}
+
 .table2 {
     width: 100%;
     border: none;
@@ -49,6 +53,12 @@ div.container_fix {
 div.container_fix2 {
     width: 100%;
     height: 600px;
+    overflow: scroll;
+}
+
+div.container_fix3 {
+    width: 100%;
+    height: 300px;
     overflow: scroll;
 }
 

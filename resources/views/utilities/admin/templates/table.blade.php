@@ -120,7 +120,9 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <th><a href="/portal/public/utilities/admin/export"><img src="{{ asset('assets/icons/excel-48.png') }}" alt=""></a></th><td></td><td></td>
+                            <th><a href="/portal/public/utilities/admin/export"><img src="{{ asset('assets/icons/excel-48.png') }}" alt=""></a></th>
+                            <td><img src="{{ asset('assets/icons/calendar.png') }}" alt=""></td>
+                            <td><a href="#"><img src="{{ asset('assets/icons/system.png') }}" alt=""></a></td>
                             <td style="min-width: 150px; width: 150px;"><b>Объём МБ</b></td><td style="min-width: 150px; width: 150px;"><b>Объём ПД</b></td>
                             <td style="min-width: 150px; width: 150px;"><b>Объем всего</b></td><td style="min-width: 150px; width: 150px;"><font color="Red"><b>Сумма МБ</b></td>
                             <td style="min-width: 150px; width: 150px;"><font color="Red"><b>Сумма ПД</b></td><td style="min-width: 150px; width: 150px;"><font color="Red"><b>Сумма всего</b></td>
