@@ -1,17 +1,20 @@
 <?php
 
-namespace App\Modules\UtilitiesSection\User\Controllers;
+namespace App\Modules\UtilitiesSection\Admin\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Maatwebsite\Excel\Facades\Excel;
 use App\Core\Controllers\Controller;
-use App\Modules\UtilitiesSection\User\Actions\SelectInfoAction;
+use App\Modules\UtilitiesSection\Admin\Dto\UpdateTariffsDto;
+use App\Modules\UtilitiesSection\Admin\Dto\SynchTariffsDto;
+use App\Modules\UtilitiesSection\Admin\Requests\UpdateTariffsRequest;
+use App\Modules\UtilitiesSection\Admin\Requests\SynchTariffsRequest;
+use App\Modules\UtilitiesSection\Admin\Actions\SelectInfoAction;
+use App\Modules\UtilitiesSection\Admin\Actions\UpdateInfoAction;
 
-class UtilitiesTableUserController extends Controller
+class UtilitiesTarifAdminController extends Controller
 {
     private array $mounth = ['null', 'январь', 'февраль', 'март', 'апрель', 'май', 'июнь', 'июль', 'август', 'сентябрь', 'октябрь', 'ноябрь', 'декабрь'];
-    private array $type = ['heat', 'water', 'drainage', 'power', 'trash', 'negative'];
     private array $name = ['Теплоснабжение', 'Водоснабжение', 'Водоотведение', 'Электроснабжение', 'Вывоз мусора', 'Негативное воздействие'];
     
      /**
@@ -40,8 +43,7 @@ class UtilitiesTableUserController extends Controller
             'year'        => $year,
             'mounth'      => $mounth,
         ];
-        session(['info' => $info]);
-        return view('utilities.user.table', ['info' => $info]);   
+        return view('utilities.admin.tariffs', ['info' => $info]);   
     }
     
     /**
@@ -51,7 +53,7 @@ class UtilitiesTableUserController extends Controller
      * @return 
      */
     public function ShowTable(Request $request)
-    {      
+    {              
         if(session('option') == NULL || session('option') == FALSE){
             $year = $request->year;
             $mounth = $request->mounth;
@@ -63,30 +65,45 @@ class UtilitiesTableUserController extends Controller
             session(['option' => false]); 
         }
         
-        $id = Auth::user()->id();
         $info = [
-            'year'      => $year,
-            'mounth'    => $mounth,
-            'type'      => $this->type,
-            'name'      => $this->name,
-            'utilities' => $this->action(SelectInfoAction::class)->SelectUtilities($year, $mounth, $id),
-            'tariffs'   => $this->action(SelectInfoAction::class)->SelectTariffs($year, $mounth),
+            'name'    => $this->name,
+            'tariffs' => $this->action(SelectInfoAction::class)->SelectTariffs($year, $mounth),
+            'mounth'  => $mounth[0],
         ];
-        
-        return view('utilities.user.templates.table', ['info' => $info]); 
+        return view('utilities.admin.templates.tariffs', ['info' => $info]);   
     }
     
     /**
-     * Выгрузка таблицы в EXCEL
-     * 
-     * @param 
-     * @return Excel
+     * Обновляем тарифы
+     *
+     * @param UpdateTariffsRequest $request
+     * @return bool
      */
-    public function ExportTable()
-    { 
-     
+    public function UpdateTariffs(UpdateTariffsRequest $request): bool
+    {              
+        $dto = UpdateTariffsDto::fromRequest($request);
+        return $this->action(UpdateInfoAction::class)->UpdateTariffs($dto);  
+    }
+    
+    /**
+     * Обновляем тарифы
+     * Обновление всех значений (услуг)
+     *
+     * @param SynchTariffsRequest $request
+     * @return
+     */
+    public function SynchTariffs(SynchTariffsRequest $request)
+    {    
+        $dto = SynchTariffsDto::fromRequest($request);
+        if($dto->mounth == "1"){
+            echo "В январе невозможно выполнить синхронизацию!";
+        }else{
+            $this->action(UpdateInfoAction::class)->UpdateTeam($dto); 
+            echo "Синхронизация тарифов выполнена!";
+        } 
     }
 }
+
 
 
 

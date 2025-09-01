@@ -37,12 +37,16 @@
                 <td>{{ number_format($info['utilities'][$sum], 2, ',', ' ') }}</td>
                 @if ($info['utilities'][$volume] == 0)
                     <td><font color="green">0</td>
+                @else
+                    <td></td>
                 @endif
+                <td>{{ number_format($info['tariffs'][$i]['tarif_min'], 4, ',', ' ') }}</td>
+                <td>{{ number_format($info['tariffs'][$i]['tarif_max'], 4, ',', ' ') }}</td>
             </tr>
         @endfor
     </tbody>
 </table>    
 @php
-    //var_dump($info);
+    //var_dump($info['tariffs']);
 @endphp    
 

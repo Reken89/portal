@@ -9,6 +9,8 @@ use App\Modules\DeloSection\Controllers\DeloNpaController;
 use App\Modules\CommunalSection\Admin\Controllers\CommunalAdminController;
 use App\Modules\CommunalSection\User\Controllers\CommunalUserController;
 use App\Modules\UtilitiesSection\Admin\Controllers\UtilitiesTableAdminController;
+use App\Modules\UtilitiesSection\Admin\Controllers\UtilitiesTarifAdminController;
+use App\Modules\UtilitiesSection\Admin\Controllers\UtilitiesDiagramAdminController;
 use App\Modules\UtilitiesSection\User\Controllers\UtilitiesTableUserController;
 
 Route::get('/', function () {
@@ -51,8 +53,13 @@ Route::get('/communal/user', [CommunalUserController::class, 'FrontView'])->midd
 //Группа адресов для модуля "Коммунальные услуги"
 Route::get('/utilities/admin/table', [UtilitiesTableAdminController::class, 'ShowTable'])->middleware('auth', 'admin');
 Route::get('/utilities/admin/export', [UtilitiesTableAdminController::class, 'ExportTable'])->middleware('auth', 'admin');
+Route::get('/utilities/admin/tariffs/table', [UtilitiesTarifAdminController::class, 'ShowTable'])->middleware('auth', 'admin');
+Route::patch('/utilities/admin/tariffs/update', [UtilitiesTarifAdminController::class, 'UpdateTariffs'])->middleware('auth', 'admin');
+Route::patch('/utilities/admin/tariffs/synch', [UtilitiesTarifAdminController::class, 'SynchTariffs'])->middleware('auth', 'admin');
 
 Route::get('/utilities/user/table', [UtilitiesTableUserController::class, 'ShowTable'])->middleware('auth');
 
 Route::get('/utilities/admin', [UtilitiesTableAdminController::class, 'FrontView'])->middleware('auth', 'admin')->name('utilities-admin');
+Route::get('/utilities/admin/tariffs', [UtilitiesTarifAdminController::class, 'FrontView'])->middleware('auth', 'admin')->name('utilities-tariffs');
+Route::get('/utilities/admin/diagrams', [UtilitiesDiagramAdminController::class, 'FrontView'])->middleware('auth', 'admin')->name('utilities-diagrams');
 Route::get('/utilities/user', [UtilitiesTableUserController::class, 'FrontView'])->middleware('auth')->name('utilities-user');

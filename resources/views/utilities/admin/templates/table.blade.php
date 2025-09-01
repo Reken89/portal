@@ -36,8 +36,8 @@
                 <div class="collapse navbar-collapse" id="ftco-nav">
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item"><a href="/portal/public/home" class="nav-link">Главная</a></li>
-                        <li class="nav-item"><a href="#" class="nav-link">Тарифы</a></li>
-                        <li class="nav-item"><a href="#" class="nav-link">Диаграммы</a></li>
+                        <li class="nav-item"><a href="/portal/public/utilities/admin/tariffs" class="nav-link">Тарифы</a></li>
+                        <li class="nav-item"><a href="/portal/public/utilities/admin/diagrams" class="nav-link">Диаграммы</a></li>
                         <li class="nav-item cta cta-colored"><a href="{{ route('logout') }}" class="nav-link" onclick="event.preventDefault();
                             document.getElementById('logout-form').submit();">Выход</a>
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
@@ -56,7 +56,7 @@
                 <div class="row no-gutters slider-text align-items-end justify-content-start">
                     <div class="col-md-12 ftco-animate text-center mb-5">
                         <p class="breadcrumbs mb-0"><span class="mr-3"></span> <span>Вы вошли как: {{ $info['email'] }}</span></p>
-                        <h1 class="mb-3 bread">Коммунальные услуги</h1>
+                        <h1 class="mb-3 bread">Коммунальные услуги (таблица)</h1>
                     </div>
                 </div>
             </div>

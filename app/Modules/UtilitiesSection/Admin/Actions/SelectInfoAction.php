@@ -4,6 +4,7 @@ namespace App\Modules\UtilitiesSection\Admin\Actions;
 
 use App\Core\Actions\BaseAction;
 use App\Modules\UtilitiesSection\Admin\Tasks\SelectUtilitiesTask;
+use App\Modules\UtilitiesSection\Admin\Tasks\SelectTarifTask;
 
 class SelectInfoAction extends BaseAction
 {   
@@ -49,6 +50,18 @@ class SelectInfoAction extends BaseAction
             return "many";
         }      
     }
+    
+   /**
+     * Получаем тарифы
+     * по заданным параметрам
+     *
+     * @param array $year, array $mounth
+     * @return array
+     */
+    public function SelectTariffs(array $year, array $mounth): array
+    {   
+        return $this->task(SelectTarifTask::class)->SelectTariffs($year[0], $mounth[0]);    
+    } 
              
 }
 
