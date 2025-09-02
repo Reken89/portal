@@ -6,7 +6,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Core\Controllers\Controller;
+use App\Modules\UtilitiesSection\User\Dto\UpdateUtilitiesDto;
+use App\Modules\UtilitiesSection\User\Dto\UpdateStatusDto;
+use App\Modules\UtilitiesSection\User\Requests\UpdateUtilitiesRequest;
+use App\Modules\UtilitiesSection\User\Requests\UpdateStatusRequest;
 use App\Modules\UtilitiesSection\User\Actions\SelectInfoAction;
+use App\Modules\UtilitiesSection\User\Actions\UpdateInfoAction;
 
 class UtilitiesTableUserController extends Controller
 {
@@ -85,6 +90,31 @@ class UtilitiesTableUserController extends Controller
     public function ExportTable()
     { 
      
+    }
+    
+    /**
+     * Обновление значений
+     * 
+     * @param UpdateUtilitiesRequest $request
+     * @return 
+     */
+    public function UpdateUtilities(UpdateUtilitiesRequest $request)
+    { 
+        $dto = UpdateUtilitiesDto::fromRequest($request);
+        $this->action(UpdateInfoAction::class)->UpdateUtilities($dto);  
+    }
+    
+    /**
+     * Обновление статуса
+     * 
+     * @param 
+     * @return 
+     */
+    public function UpdateStatus(UpdateStatusRequest $request)
+    { 
+        $dto = UpdateStatusDto::fromRequest($request);
+        var_dump($dto->status);
+        //$this->action(UpdateInfoAction::class)->UpdateUtilities($dto);  
     }
 }
 

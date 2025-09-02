@@ -20,6 +20,7 @@ class UpdateTarifTask extends BaseTask
         ->update([                  
             'tarif_min' => $dto->tarif_min,
             'tarif_max' => $dto->tarif_max,
+            'date'      => date('Y-m-d'),
         ]);
         return $result == true ? true : false;
     }  

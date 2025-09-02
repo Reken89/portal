@@ -99,15 +99,8 @@
         </section>
         
         <div class="container2">
-            <p><font color="RoyalBlue">*Выбранные параметры: <u>год</u> 2026 <u>месяц</u> {{ $info['mounth_name'] }}</p>
-            <table>
-                <tr>
-                    <td style="min-width: 200px; width: 200px;"><p><a href="#"><img src="{{ asset('assets/icons/excel-48.png') }}" alt=""></a>- экспорт в EXCEL</p></td>
-                    <td style="min-width: 200px; width: 200px;"><p><a href="#"><img src="{{ asset('assets/icons/tick.png') }}" alt=""></a>- отправить в ФЭУ</p></td>
-                    <td style="min-width: 200px; width: 200px;"><p><a href="#"><img src="{{ asset('assets/icons/system.png') }}" alt=""></a>- редактировать</p></td>
-                </tr>
-            </table>
-            <div class="container_fix3">
+            <p><font color="Blue">*Выбранные параметры: <u>год</u> 2026 <u>месяц</u> {{ $info['mounth_name'] }}</p>           
+            <div class="container_fix2">
                 <div id="table"></div>                 
             </div> 
         </div>       
@@ -152,6 +145,45 @@
         <script src="{{ asset('assets/skillhunt/js/main.js') }}"></script> 
         <script>
             $(document).ready(function(){   
+                //Выполняем запись в БД при нажатии на клавишу ENTER
+                function setKeydownmyForm() {
+                    $('input').keydown(function(e) {
+                        if (e.keyCode === 13) {
+                            let tr = this.closest('tr');
+                            let id = $('.id', tr).val(); 
+                            let type = $('.type', tr).val();
+                            
+                            //Получаем значения, меняем запятую на точку и убираем пробелы в числе                   
+                            function structure(title){
+                                let volume = $(title, tr).val();
+                                volume = volume.replace(",",".");
+                                volume = volume.replace(/ /g,'');
+                                return volume;
+                            }
+                            
+                            let mb_volume = structure('.mb_volume');
+                            let pd_volume = structure('.pd_volume');
+                            let mb_sum = structure('.mb_sum');
+                            let pd_sum = structure('.pd_sum');
+                            
+                            $.ajax({
+                                url:"/portal/public/utilities/user/table/update",  
+                                method:"patch",  
+                                data:{
+                                    "_token": "{{ csrf_token() }}",
+                                    id, mb_volume, pd_volume,
+                                    mb_sum, pd_sum, type
+                                },
+                                dataType:"text",  
+                                success:function(data){  
+                                    //alert(data);
+                                    fetch_data(); 
+                                } 
+                            }) 
+                        }                       
+                    })
+                }
+                
                 //Подгружаем BACK шаблон отрисовки       
                 function fetch_data(){  
                     let form = <?=json_encode($info)?>;
@@ -167,10 +199,33 @@
                         dataType:"text",
                         success:function(data){  
                             $('#table').html(data); 
+                            setKeydownmyForm()
                         }   
                     });  
                 } 
-                fetch_data();                               
+                fetch_data(); 
+                
+                //Выполняем действие (изменение статуса) при нажатии на кнопку
+                $(document).on('click', '#status', function(){
+                    let tr = this.closest('tr');
+                    let mounth = $('.mounth', tr).val();
+                    let status = $('.status', tr).val();
+                    let id = $('.id', tr).val();
+                    
+                    $.ajax({
+                        url:"/portal/public/utilities/user/table/status",  
+                        method:"patch",
+                        data:{
+                            "_token": "{{ csrf_token() }}",
+                            id, status, mounth
+                        },
+                        dataType:"text",  
+                        success:function(data){  
+                            alert(data);
+                            fetch_data();  
+                        } 
+                    })             
+                })
             });
         </script>
     </body>
