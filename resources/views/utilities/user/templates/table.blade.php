@@ -16,7 +16,7 @@
         <td style="min-width: 200px; width: 200px;"><p><a href="#"><img src="{{ asset('assets/icons/excel-48.png') }}" alt=""></a>- экспорт в EXCEL</p></td>
         @if ($info['utilities']['status'] == 2)
             <td style="min-width: 200px; width: 200px;"><p><a href="" onclick="return false"><img src="{{ asset('assets/icons/tick.png') }}" alt="" id="status"></a>- отправить в ФЭУ</p></td>
-        @elseif ($info['utilities']['status'] == 1)
+        @else
             <td style="min-width: 200px; width: 200px;"><p><a href="" onclick="return false"><img src="{{ asset('assets/icons/system.png') }}" alt="" id="status"></a>- редактировать</p></td>
         @endif
     </tr>
@@ -46,7 +46,7 @@
                 $volume = "volume_$type[$i]"; $sum = "sum_$type[$i]"; 
                 @endphp
                 <input type="hidden" class="type" value="{{ $info['type'][$i] }}">
-                @if ($info['utilities']['status'] == 2)
+                @if ($info['utilities']['status'] == 2 && $info['type'][$i] !== "negative")
                     <td><input type="text" style="width: 100%;" class="mb_volume" value="{{ number_format($info['utilities'][$mbvolume], 4, ',', ' ') }}"></td>
                     <td><input type="text" style="width: 100%;" class="pd_volume" value="{{ number_format($info['utilities'][$pdvolume], 4, ',', ' ') }}"></td>
                     <td><input type="text" style="width: 100%;" class="mb_sum" value="{{ number_format($info['utilities'][$mbsum], 2, ',', ' ') }}"></td>

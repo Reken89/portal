@@ -30,24 +30,36 @@ class UpdateUtilitiesTask extends BaseTask
     /**
      * Обновляем статус строки
      *
-     * @param 
+     * @param int $id, int $status
      * @return bool
      */
-    public function UpdateStatus(): bool
-    {        
-
+    public function UpdateStatus(int $id, int $status): bool
+    {      
+        $result = Utilities::find($id)
+            ->update([                
+                "status" => $status,
+                'date'   => date('Y-m-d'),
+            ]);
+        return $result == true ? true : false;
     }
     
     /**
      * Персональное обновление
      * "Негативные воздействия"
      *
-     * @param 
+     * @param UpdateUtilitiesDto $dto
      * @return bool
      */
-    public function UpdateNegative(): bool
-    {        
-
+    public function UpdateNegative(UpdateUtilitiesDto $dto): bool
+    {    
+        $result = Utilities::find($dto->id)
+            ->update([                
+                "mb_volume_negative" => $dto->mb_volume*0.5,
+                "pd_volume_negative" => $dto->pd_volume*0.5,
+                "mb_sum_negative"    => $dto->mb_sum*0.5,
+                "pd_sum_negative"    => $dto->pd_sum*0.5
+            ]);
+        return $result == true ? true : false;
     }
     
 }
