@@ -112,7 +112,7 @@ class UtilitiesTableUserController extends Controller
     /**
      * Обновление статуса
      * 
-     * @param 
+     * @param UpdateStatusRequest $request
      * @return 
      */
     public function UpdateStatus(UpdateStatusRequest $request)
@@ -131,6 +131,7 @@ class UtilitiesTableUserController extends Controller
             $examin = $this->action(UpdateInfoAction::class)->ExaminUtilities($dto, $this->type);
             if($examin == true){
                 $this->action(UpdateInfoAction::class)->UpdateStatus($dto->id, 1);
+                $this->action(UpdateInfoAction::class)->UpdatePoints(Auth::user()->id());
                 echo $this->message3;
             }else{
                 echo $this->message4;

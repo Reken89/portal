@@ -9,6 +9,7 @@ use App\Modules\UtilitiesSection\User\Tasks\UpdateUtilitiesTask;
 use App\Modules\UtilitiesSection\User\Tasks\ExaminUtilitiesTask;
 use App\Modules\UtilitiesSection\User\Tasks\SelectUtilitiesTask;
 use App\Modules\UtilitiesSection\User\Tasks\SelectTarifTask;
+use App\Modules\UtilitiesSection\User\Tasks\PointsTask;
 
 class UpdateInfoAction extends BaseAction
 {   
@@ -58,6 +59,22 @@ class UpdateInfoAction extends BaseAction
     public function UpdateStatus(int $id, int $status)
     {   
         $this->task(UpdateUtilitiesTask::class)->UpdateStatus($id, $status);    
+    } 
+    
+    /**
+     * Обновляем очки учреждения
+     *
+     * @param int $id
+     * @return bool
+     */
+    public function UpdatePoints(int $id): bool
+    {   
+        $points = $this->task(PointsTask::class)->SelectPoints($id);
+        if(date("d") < 18 && date("m") !== $points["mounth"] && date("m") > $points["mounth"]){
+            return $this->task(PointsTask::class)->UpdatePoints($id);
+        }else{
+            return false;
+        }   
     } 
 }
 
