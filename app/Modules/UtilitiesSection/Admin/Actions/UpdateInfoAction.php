@@ -7,6 +7,7 @@ use App\Modules\UtilitiesSection\Admin\Dto\UpdateTariffsDto;
 use App\Modules\UtilitiesSection\Admin\Dto\SynchTariffsDto;
 use App\Modules\UtilitiesSection\Admin\Tasks\UpdateTarifTask;
 use App\Modules\UtilitiesSection\Admin\Tasks\SelectTarifTask;
+use App\Modules\UtilitiesSection\Admin\Tasks\UpdateUtilitiesTask;
 
 class UpdateInfoAction extends BaseAction
 {    
@@ -34,6 +35,17 @@ class UpdateInfoAction extends BaseAction
         foreach ($team as $value) {
             $this->task(UpdateTarifTask::class)->UpdateTeam($dto->year, $dto->mounth, $value);
         }           
+    } 
+    
+    /**
+     * Обновляем статус
+     *
+     * @param int $id, int $status
+     * @return bool
+     */
+    public function UpdateStatus(int $id, int $status): bool
+    {   
+        return $this->task(UpdateUtilitiesTask::class)->UpdateStatus($id, $status);    
     } 
              
 }

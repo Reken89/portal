@@ -42,7 +42,26 @@
                     $('#live_data').html(data);  
                 } 
             })               
-        })                                 
+        }) 
+        
+        //Выполняем действие (изменение статуса) при нажатии на кнопку
+        $(document).on('click', '#status', function(){
+            let tr = this.closest('tr');
+            let id = $('.id', tr).val();
+
+            $.ajax({
+                url:"/portal/public/utilities/admin/table/update",  
+                method:"patch",
+                data:{
+                    "_token": "{{ csrf_token() }}",
+                    id
+                },
+                dataType:"text",  
+                success:function(data){  
+                    fetch_data();  
+                } 
+            })             
+        })
     });
 </script>
 

@@ -122,7 +122,7 @@
                         <tr>
                             <th><a href="/portal/public/utilities/admin/export"><img src="{{ asset('assets/icons/excel-48.png') }}" alt=""></a></th>
                             <td><img src="{{ asset('assets/icons/calendar.png') }}" alt=""></td>
-                            <td><a href="#"><img src="{{ asset('assets/icons/system.png') }}" alt=""></a></td>
+                            <td></td>
                             <td style="min-width: 150px; width: 150px;"><b>Объём МБ</b></td><td style="min-width: 150px; width: 150px;"><b>Объём ПД</b></td>
                             <td style="min-width: 150px; width: 150px;"><b>Объем всего</b></td><td style="min-width: 150px; width: 150px;"><font color="Red"><b>Сумма МБ</b></td>
                             <td style="min-width: 150px; width: 150px;"><font color="Red"><b>Сумма ПД</b></td><td style="min-width: 150px; width: 150px;"><font color="Red"><b>Сумма всего</b></td>
@@ -155,11 +155,11 @@
                                     <th><font color="RoyalBlue">{{ $value['user']['name'] }}</th>
                                     <td><font color="blue">{{ $value['date'] }}</td>
                                     @if ($value['status'] == 1)
-                                        <td><font color="green">Отправлено</td>
+                                        <td><img src="{{ asset('assets/icons/tick.png') }}" alt=""></td>
                                     @elseif ($value['status'] == 3)
-                                        <td><input type=button class="button" id='btn_two' value='Изменить'></td>  
+                                        <td><a href="" onclick="return false"><img src="{{ asset('assets/icons/attention.png') }}" alt="" id="status"></a></td>
                                     @else
-                                        <td><font color="red">В работе</td>
+                                        <td><img src="{{ asset('assets/icons/minus.png') }}" alt=""></td>
                                     @endif
                                     <td><font color="blue">{{ number_format($value['mb_volume_heat'], 4, ',', ' ') }}</td>
                                     <td><font color="blue">{{ number_format($value['pd_volume_heat'], 4, ',', ' ') }}</td>

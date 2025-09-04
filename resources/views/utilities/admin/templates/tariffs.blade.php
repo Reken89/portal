@@ -1,7 +1,7 @@
 <table>
     <tr>
         <input type="hidden" class="mounth" value="{{ $info['mounth'] }}">
-        <td style="min-width: 300px; width: 300px;"><p><a href="" onclick="return false"><img src="{{ asset('assets/icons/documents.png') }}" alt="" id='synch'></a>- синхронизировать тарифы</p></td>
+        <td style="min-width: 300px; width: 300px;"><p><a href="" onclick="return false"><img src="{{ asset('assets/icons/calculator.png') }}" alt="" id='synch'></a>- синхронизировать тарифы</p></td>
     </tr>
 </table>
 <table>
