@@ -62,20 +62,20 @@
             @endif
         @endforeach
         <tr>
-            <th><font color="RoyalBlue">Итог</th>
-            <td><font color="blue">{{ number_format($info['total']['heat_volume'], 4, ',', ' ') }}</td>
-            <td><font color="blue">{{ number_format($info['total']['heat_sum'], 2, ',', ' ') }}</td>
-            <td><font color="blue">{{ number_format($info['total']['drainage_volume'], 4, ',', ' ') }}</td>
-            <td><font color="blue">{{ number_format($info['total']['drainage_sum'], 2, ',', ' ') }}</td>
-            <td><font color="blue">{{ number_format($info['total']['negative_volume'], 4, ',', ' ') }}</td>
-            <td><font color="blue">{{ number_format($info['total']['negative_sum'], 2, ',', ' ') }}</td>
-            <td><font color="blue">{{ number_format($info['total']['water_volume'], 4, ',', ' ') }}</td>
-            <td><font color="blue">{{ number_format($info['total']['water_sum'], 2, ',', ' ') }}</td>
-            <td><font color="blue">{{ number_format($info['total']['power_volume'], 4, ',', ' ') }}</td>
-            <td><font color="blue">{{ number_format($info['total']['power_sum'], 2, ',', ' ') }}</td>
-            <td><font color="blue">{{ number_format($info['total']['trash_volume'], 4, ',', ' ') }}</td>
-            <td><font color="blue">{{ number_format($info['total']['trash_sum'], 2, ',', ' ') }}</td>                                                
-            <td><font color="blue">{{ number_format($info['total']['total'], 2, ',', ' ') }}</td>                                           
+            <th><b>Итог</b></th>
+            <td>{{ $info['total']['heat_volume'] }}</td>
+            <td>{{ $info['total']['heat_sum'] }}</td>
+            <td>{{ $info['total']['drainage_volume'] }}</td>
+            <td>{{ $info['total']['drainage_sum'] }}</td>
+            <td>{{ $info['total']['negative_volume'] }}</td>
+            <td>{{ $info['total']['negative_sum'] }}</td>
+            <td>{{ $info['total']['water_volume'] }}</td>
+            <td>{{ $info['total']['water_sum'] }}</td>
+            <td>{{ $info['total']['power_volume'] }}</td>
+            <td>{{ $info['total']['power_sum'] }}</td>
+            <td>{{ $info['total']['trash_volume'] }}</td>
+            <td>{{ $info['total']['trash_sum'] }}</td>                                                
+            <td>{{ $info['total']['total'] }}</td>                                           
         </tr>
     </tbody>
 </table>

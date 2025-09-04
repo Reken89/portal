@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Core\Controllers\Controller;
+use App\Modules\UtilitiesSection\User\Exports\ExportTable;
 use App\Modules\UtilitiesSection\User\Dto\UpdateUtilitiesDto;
 use App\Modules\UtilitiesSection\User\Dto\UpdateStatusDto;
 use App\Modules\UtilitiesSection\User\Requests\UpdateUtilitiesRequest;
@@ -94,7 +95,13 @@ class UtilitiesTableUserController extends Controller
      */
     public function ExportTable()
     { 
-     
+        $info = [
+            'utilities' => $this->action(SelectInfoAction::class)->SelectForExcel(Auth::user()->id(), 2026),
+            'total'     => $this->action(SelectInfoAction::class)->SelectTotal(Auth::user()->id(), 2026),
+            'mounth'    => $this->mounth,
+        ];
+        session(['info' => $info]);
+        return Excel::download(new ExportTable, 'table.xlsx');  
     }
     
     /**

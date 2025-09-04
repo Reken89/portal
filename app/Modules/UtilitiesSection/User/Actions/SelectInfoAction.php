@@ -31,5 +31,31 @@ class SelectInfoAction extends BaseAction
     {   
         return $this->task(SelectTarifTask::class)->SelectTariffs($year[0], $mounth[0]);    
     }  
+    
+    /**
+     * Получаем коммунальные услуги
+     * по заданным параметрам
+     * Для экспорта в EXCEL
+     *
+     * @param int $id, int $year
+     * @return array
+     */
+    public function SelectForExcel(int $id, int $year): array
+    {   
+        return $this->task(SelectUtilitiesTask::class)->SelectForExcel($id, $year);    
+    }  
+    
+    /**
+     * Получаем итоговую строку
+     * по заданным параметрам
+     * Для экспорта в EXCEL
+     *
+     * @param int $id, int $year
+     * @return array
+     */
+    public function SelectTotal(int $id, int $year): array
+    {   
+        return $this->task(SelectUtilitiesTask::class)->SelectTotal($id, $year);    
+    }  
 }
 

@@ -60,6 +60,7 @@ Route::patch('/utilities/admin/tariffs/synch', [UtilitiesTarifAdminController::c
 Route::get('/utilities/user/table', [UtilitiesTableUserController::class, 'ShowTable'])->middleware('auth');
 Route::patch('/utilities/user/table/update', [UtilitiesTableUserController::class, 'UpdateUtilities'])->middleware('auth');
 Route::patch('/utilities/user/table/status', [UtilitiesTableUserController::class, 'UpdateStatus'])->middleware('auth');
+Route::get('/utilities/user/table/export', [UtilitiesTableUserController::class, 'ExportTable'])->middleware('auth');
 
 Route::get('/utilities/admin', [UtilitiesTableAdminController::class, 'FrontView'])->middleware('auth', 'admin')->name('utilities-admin');
 Route::get('/utilities/admin/tariffs', [UtilitiesTarifAdminController::class, 'FrontView'])->middleware('auth', 'admin')->name('utilities-tariffs');

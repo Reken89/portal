@@ -13,7 +13,7 @@
         <input type="hidden" class="mounth" value="{{ $info['mounth'][0] }}">
         <input type="hidden" class="status" value="{{ $info['utilities']['status'] }}">
         <input type="hidden" class="id" value="{{ $info['utilities']['id'] }}">
-        <td style="min-width: 200px; width: 200px;"><p><a href="#"><img src="{{ asset('assets/icons/excel-48.png') }}" alt=""></a>- экспорт в EXCEL</p></td>
+        <td style="min-width: 200px; width: 200px;"><p><a href="/portal/public/utilities/user/table/export"><img src="{{ asset('assets/icons/excel-48.png') }}" alt=""></a>- экспорт в EXCEL</p></td>
         @if ($info['utilities']['status'] == 2)
             <td style="min-width: 200px; width: 200px;"><p><a href="" onclick="return false"><img src="{{ asset('assets/icons/tick.png') }}" alt="" id="status"></a>- отправить в ФЭУ</p></td>
         @else
