@@ -161,7 +161,7 @@
                                                         <option value="21">МБУ КМО "Центр культурного развития"</option>
                                                         <option value="22">МАУ ДПО «ЦРО»</option>
                                                     @endif
-                                                    @if ($info['role'] == "cb_kultura")  
+                                                    @if ($info['role'] == "cb_kinder")  
                                                         <option value="9">МКДОУ "Ауринко"</option>
                                                         <option value="15">МКДОУ "Солнышко"</option>
                                                         <option value="13">МКДОУ "Кораблик"</option>
