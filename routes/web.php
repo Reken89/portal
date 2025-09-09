@@ -12,6 +12,7 @@ use App\Modules\UtilitiesSection\Admin\Controllers\UtilitiesTableAdminController
 use App\Modules\UtilitiesSection\Admin\Controllers\UtilitiesTarifAdminController;
 use App\Modules\UtilitiesSection\Admin\Controllers\UtilitiesDiagramAdminController;
 use App\Modules\UtilitiesSection\User\Controllers\UtilitiesTableUserController;
+use App\Modules\ArchiveSection\User\Controllers\ArchiveUserController;
 
 Route::get('/', function () {
     return view('auth.login');
@@ -67,3 +68,8 @@ Route::get('/utilities/admin', [UtilitiesTableAdminController::class, 'FrontView
 Route::get('/utilities/admin/tariffs', [UtilitiesTarifAdminController::class, 'FrontView'])->middleware('auth', 'admin')->name('utilities-tariffs');
 Route::get('/utilities/admin/diagrams', [UtilitiesDiagramAdminController::class, 'FrontView'])->middleware('auth', 'admin')->name('utilities-diagrams');
 Route::get('/utilities/user', [UtilitiesTableUserController::class, 'FrontView'])->middleware('auth')->name('utilities-user');
+
+//Группа адресов для модуля "АРХИВ"
+Route::get('/archive/user/table', [ArchiveUserController::class, 'ShowTable'])->middleware('auth');
+
+Route::get('/archive/user', [ArchiveUserController::class, 'FrontView'])->middleware('auth')->name('archive-user');

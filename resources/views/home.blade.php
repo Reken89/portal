@@ -115,6 +115,9 @@
                             @if($role == "admin" || $role == "delo" || $role == "deloadm")
                                 @include('admin_menu')
                             @endif
+                            @if($role == "cb_buh" || $role == "cb_school" || $role == "cb_kultura" || $role == "cb_kinder")
+                                @include('cb_menu')
+                            @endif
                             @if($role == "user")
                                 @include('user_menu')
                             @endif
