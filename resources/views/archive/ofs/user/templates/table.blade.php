@@ -187,8 +187,8 @@
 
                     <div class="col-lg-4">
                         <div class="p-4 mb-3 bg-white">
-                            <h3 class="h5 text-black mb-3">Информация:</h3>
-                            <p class="mb-0 font-weight-bold">Выберите необходимые параметры и нажмите кнопку «Запрос». В таблице ниже сформируется excel файл для загрузки.</p>
+                            <h3 class="h5 text-black mb-3"><font color="red">Информация:</h3>
+                            <p class="mb-0 font-weight-bold"><font color="red">Выберите необходимые параметры и нажмите кнопку «Запрос». В таблице ниже сформируется excel файл для загрузки.</p>
                         </div>   
                     </div>                    
                         
@@ -224,7 +224,24 @@
                                     <td style="min-width: 100px; width: 100px;"><b>Разделы</b></td>
                                     <td></td><td></td>
                                 </tr>
-
+                                @foreach ($info['parameters'] as $value)
+                                <tr>
+                                    <td><font color="blue">{{ $value['number'] }}</td>
+                                    <td><font color="blue">{{ $value['user']['name'] }}</td>
+                                    <td><font color="blue">{{ $value['year'] }}</td>
+                                    <td><font color="blue">{{ $info['mounth'][$value['mounth']] }}</td>
+                                    <td><font color="blue">
+                                        @php
+                                            $chapters = json_decode($value['chapter']);                                            
+                                        @endphp
+                                        @foreach ($chapters as $chapter)
+                                            {{ $info['chapter'][$chapter] }}</br>
+                                        @endforeach
+                                    </td>
+                                    <td><font color="blue">{{ $value['date'] }}</td>
+                                    <td><a href="/portal/public/archive/user/export?id={{ $value['id'] }}"><img src="{{ asset('assets/icons/excel-48.png') }}" alt=""></a></td>
+                                </tr>
+                                @endforeach
                             </tbody>
                         </table>    
                     </div>                      

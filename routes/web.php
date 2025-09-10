@@ -72,5 +72,6 @@ Route::get('/utilities/user', [UtilitiesTableUserController::class, 'FrontView']
 //Группа адресов для модуля "АРХИВ"
 Route::get('/archive/user/table', [ArchiveUserController::class, 'ShowTable'])->middleware('auth');
 Route::post('/archive/user/parameters/add', [ArchiveUserController::class, 'AddParameters'])->middleware('auth');
+Route::get('/archive/user/export', [ArchiveUserController::class, 'ExportTable'])->middleware('auth');
 
 Route::get('/archive/user', [ArchiveUserController::class, 'FrontView'])->middleware('auth')->name('archive-user');

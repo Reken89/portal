@@ -12,17 +12,17 @@ class AddParametersTask extends BaseTask
      * Добавление параметров
      * для запроса
      *
-     * @param UpdateTariffsDto $dto
+     * @param UpdateTariffsDto $dto, $number
      * @return bool
      */
-    public function AddParameters(AddParametersDto $dto): bool
+    public function AddParameters(AddParametersDto $dto, int $number): bool
     {        
         $result = Parameter::create([
             'user_id' => $dto->user_id,
             'year'    => $dto->year,
             'mounth'  => $dto->mounth,
             'chapter' => json_encode($dto->chapter),
-            'number'  => 1,
+            'number'  => $number,
             'date'    => date('Y-m-d'),
         ]); 
         return $result == true ? true : false;

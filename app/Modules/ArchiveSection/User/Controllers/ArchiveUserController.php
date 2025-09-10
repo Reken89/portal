@@ -9,9 +9,13 @@ use App\Core\Controllers\Controller;
 use App\Modules\ArchiveSection\User\Requests\AddParametersRequest;
 use App\Modules\ArchiveSection\User\Dto\AddParametersDto;
 use App\Modules\ArchiveSection\User\Actions\AddParametersAction;
+use App\Modules\ArchiveSection\User\Actions\SelectInfoAction;
 
 class ArchiveUserController extends Controller
 {   
+    private array $mounth = ['null', 'январь', 'февраль', 'март', 'апрель', 'май', 'июнь', 'июль', 'август', 'сентябрь', 'октябрь', 'ноябрь', 'декабрь'];
+    private array $chapter = ['null', 'МБ МЗ(МБ)', 'МБ ИЦ', 'РК МЗ(РК)', 'РК ИЦ', 'ПД'];
+    
      /**
      * Front отрисовка страницы
      *
@@ -27,14 +31,17 @@ class ArchiveUserController extends Controller
     /**
      * Получаем информацию из БД
      *
-     * @param Request $request
+     * @param
      * @return 
      */
-    public function ShowTable(Request $request)
+    public function ShowTable()
     {      
         $info = [         
-            'email' => Auth::user()->email(),
-            'role'  => Auth::user()->role(),
+            'email'      => Auth::user()->email(),
+            'role'       => Auth::user()->role(),
+            'mounth'     => $this->mounth,
+            'chapter'    => $this->chapter,
+            'parameters' => $this->action(SelectInfoAction::class)->SelectParameters(),
         ];
         return view('archive.ofs.user.templates.table', ['info' => $info]);    
     }
@@ -45,9 +52,9 @@ class ArchiveUserController extends Controller
      * @param 
      * @return Excel
      */
-    public function ExportTable()
-    { 
-    
+    public function ExportTable(Request $request)
+    {
+        var_dump($request->id);    
     }
     
     /**
