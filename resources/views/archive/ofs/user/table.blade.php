@@ -22,30 +22,41 @@
         //Выполняем действие, добавляем запрос
         $(document).on('click', '#btn_add', function(){
             let info = $('#parameters').serializeArray();
-            let chapter_ = [];
+            let chapter = [];
             let year_ = [];
             let mounth_ = [];
-            let user_ = [];
+            let user_id_ = [];
             
             for (const item of info) {
                 const value = item.value;
                 if (item.name === 'chapter') {
-                    chapter_.push(value);
+                    chapter.push(value);
                 } else if (item.name === 'year') {
                     year_.push(value);
                 } else if (item.name === 'mounth') {
                     mounth_.push(value);
                 } else if (item.name === 'user') {
-                    user_.push(value);
+                    user_id_.push(value);
                 }    
             }
-            
-            let chapter = chapter_[0];
+
             let year = year_[0];
             let mounth = mounth_[0];
-            let user = user_[0];
+            let user_id = user_id_[0];
             
-            alert(chapter);                                    
+            $.ajax({
+                url:"/portal/public/archive/user/parameters/add",  
+                method:"post",
+                data:{
+                    "_token": "{{ csrf_token() }}",
+                    user_id, year, mounth, chapter
+                },
+                dataType:"text",  
+                success:function(data){ 
+                    //alert(data); 
+                    fetch_data();  
+                } 
+            })                                  
         })
                                   
     });

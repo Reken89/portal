@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Core\Controllers\Controller;
+use App\Modules\ArchiveSection\User\Requests\AddParametersRequest;
+use App\Modules\ArchiveSection\User\Dto\AddParametersDto;
+use App\Modules\ArchiveSection\User\Actions\AddParametersAction;
 
 class ArchiveUserController extends Controller
 {   
@@ -45,6 +48,19 @@ class ArchiveUserController extends Controller
     public function ExportTable()
     { 
     
+    }
+    
+    /**
+     * Добавляем параметры
+     * Для запроса
+     * 
+     * @param 
+     * @return 
+     */
+    public function AddParameters(AddParametersRequest $request)
+    { 
+        $dto = AddParametersDto::fromRequest($request);
+        $this->action(AddParametersAction::class)->AddParameters($dto);    
     }
 }
 
