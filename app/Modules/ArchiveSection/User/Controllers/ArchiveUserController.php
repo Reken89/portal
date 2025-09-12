@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Core\Controllers\Controller;
+use App\Modules\ArchiveSection\User\Exports\ExportTable;
 use App\Modules\ArchiveSection\User\Requests\AddParametersRequest;
 use App\Modules\ArchiveSection\User\Dto\AddParametersDto;
 use App\Modules\ArchiveSection\User\Actions\AddParametersAction;
@@ -54,7 +55,9 @@ class ArchiveUserController extends Controller
      */
     public function ExportTable(Request $request)
     {
-        var_dump($request->id);    
+        $info = $this->action(SelectInfoAction::class)->SelectOfs($request->id);
+        session(['info' => $info]);
+        return Excel::download(new ExportTable, 'table.xlsx');
     }
     
     /**

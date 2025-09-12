@@ -36,5 +36,19 @@ class SelectParametersTask extends BaseTask
             ->toArray();
         return $result['number']+1;
     }
+    
+    /**
+     * Получаем запрос по id
+     *
+     * @param int $id
+     * @return array
+     */
+    public function SelectLine(int $id): array
+    {
+        return Parameter::select()   
+            ->where('id', $id)    
+            ->first()
+            ->toArray();
+    }
 }
 
