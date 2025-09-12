@@ -205,6 +205,7 @@
             <div class="container">
                 <div class="row">       
                     <div class="col-md-12 col-lg-8 mb-5">
+                        <p class="mb-0 font-weight-bold"><font color="blue">История запросов</p>
                         <table class="table2">
                             <thead>
                                 <tr>
