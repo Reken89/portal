@@ -13,6 +13,7 @@ use App\Modules\UtilitiesSection\Admin\Controllers\UtilitiesTarifAdminController
 use App\Modules\UtilitiesSection\Admin\Controllers\UtilitiesDiagramAdminController;
 use App\Modules\UtilitiesSection\User\Controllers\UtilitiesTableUserController;
 use App\Modules\ArchiveSection\User\Controllers\ArchiveUserController;
+use App\Modules\ArchiveSection\Admin\Controllers\ArchiveAdminController;
 
 Route::get('/', function () {
     return view('auth.login');
@@ -70,8 +71,12 @@ Route::get('/utilities/admin/diagrams', [UtilitiesDiagramAdminController::class,
 Route::get('/utilities/user', [UtilitiesTableUserController::class, 'FrontView'])->middleware('auth')->name('utilities-user');
 
 //Группа адресов для модуля "АРХИВ"
+Route::get('/archive/admin/table', [ArchiveAdminController::class, 'ShowTable'])->middleware('auth', 'admin');
+Route::get('/archive/admin/export', [ArchiveAdminController::class, 'ExportTable'])->middleware('auth', 'admin');
+
 Route::get('/archive/user/table', [ArchiveUserController::class, 'ShowTable'])->middleware('auth');
 Route::post('/archive/user/parameters/add', [ArchiveUserController::class, 'AddParameters'])->middleware('auth');
 Route::get('/archive/user/export', [ArchiveUserController::class, 'ExportTable'])->middleware('auth');
 
+Route::get('/archive/admin', [ArchiveAdminController::class, 'FrontView'])->middleware('auth')->name('archive-admin');
 Route::get('/archive/user', [ArchiveUserController::class, 'FrontView'])->middleware('auth')->name('archive-user');
