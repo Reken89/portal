@@ -14,12 +14,17 @@ use App\Modules\UtilitiesSection\Admin\Controllers\UtilitiesDiagramAdminControll
 use App\Modules\UtilitiesSection\User\Controllers\UtilitiesTableUserController;
 use App\Modules\ArchiveSection\User\Controllers\ArchiveUserController;
 use App\Modules\ArchiveSection\Admin\Controllers\ArchiveAdminController;
+use App\Modules\AdminSection\Controllers\AdministratorController;
 
 Route::get('/', function () {
     return view('auth.login');
 });
 
-Auth::routes();
+//Auth::routes();
+Auth::routes([
+  'register' => false,
+  'reset' => false
+]);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/contact', function () {return view('contact');});
@@ -80,3 +85,9 @@ Route::get('/archive/user/export', [ArchiveUserController::class, 'ExportTable']
 
 Route::get('/archive/admin', [ArchiveAdminController::class, 'FrontView'])->middleware('auth')->name('archive-admin');
 Route::get('/archive/user', [ArchiveUserController::class, 'FrontView'])->middleware('auth')->name('archive-user');
+
+//Группа адресов для панели администратора
+Route::post('/administrator/adduser', [AdministratorController::class, 'AddUser'])->middleware('auth', 'admin');
+Route::patch('/administrator/updateinfo', [AdministratorController::class, 'UpdateInfo'])->middleware('auth', 'admin');
+Route::get('/administrator/menu', [AdministratorController::class, 'ShowTable'])->middleware('auth', 'admin');
+Route::get('/administrator', [AdministratorController::class, 'FrontView'])->middleware('auth', 'admin')->name('administrator');

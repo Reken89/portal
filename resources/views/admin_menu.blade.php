@@ -35,8 +35,14 @@
 </div>
 <div class="col-md-2">
     <div class="top-category text-center">
-        <h3><a href="#">Администратор</a></h3>
+        <h3><a href="#" onclick="myFunction()">Администратор</a></h3>
         <span class="icon flaticon-contact"></span>
         <p><span class="number"></span> <span>Open position</span></p>
+        <script>
+        function myFunction() {
+            let code = prompt('Введите код доступа!', );
+            window.location.href = '/portal/public/administrator?code='+code;
+        }
+        </script>
     </div>
 </div>
