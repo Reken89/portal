@@ -7,7 +7,7 @@ use App\Modules\AdminSection\Requests\UpdateUserInfoRequest;
 
 class UpdateUserInfoDto extends BaseDto
 {
-    public string   $id;
+    public int      $id;
     public string   $name;
     public string   $email;
     public string   $role;

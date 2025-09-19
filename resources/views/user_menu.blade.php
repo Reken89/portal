@@ -2,7 +2,7 @@
     <div class="top-category text-center no-border-left">
         <h3><a href="{{ route('utilities-user')}}">Коммуналка</a></h3>
         <span class="icon flaticon-accounting"></span>
-        <p><span class="number"></span> <span>Модуль в разработке</span></p>
+        <p><span class="number"></span> <span>Коммунальные услуги 2026</span></p>
     </div>
 </div>
 <div class="col-md-2">

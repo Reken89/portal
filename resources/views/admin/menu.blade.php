@@ -86,6 +86,27 @@
                 } 
             })               
         })
+        
+        //Выполняем действие (обновляем пароль пользователя)
+        $(document).on('click', '#password', function(){
+            var tr = this.closest('tr');
+            var id = $('.id', tr).val();
+            let password = prompt('Введите новый пароль для пользователя', );
+
+            $.ajax({
+                url:"/portal/public/administrator/updatepassword",  
+                method:"patch",
+                data:{
+                    "_token": "{{ csrf_token() }}",
+                    id, password
+                },
+                dataType:"text",  
+                success:function(data){ 
+                    //alert(data);
+                    fetch_data();  
+                } 
+            }) 
+        })
     });
 </script>
 

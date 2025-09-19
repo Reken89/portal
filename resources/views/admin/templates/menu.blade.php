@@ -146,7 +146,7 @@
                                     <td><input type="text" class="name" value="{{ $value['name'] }}"></td>
                                     <td><input type="text" class="email" value="{{ $value['email'] }}"></td>
                                     <td><input type="text" class="role" value="{{ $value['role'] }}"></td>
-                                    <td><a href="/portal/public/archive/user/export?id={{ $value['id'] }}"><img src="{{ asset('assets/icons/attention.png') }}" alt=""></a></td>
+                                    <td><a href="" onclick="return false"><img src="{{ asset('assets/icons/attention.png') }}" alt="" id="password"></a></td>
                                 </tr>
                                 @endforeach
                             </tbody>

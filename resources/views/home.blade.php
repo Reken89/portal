@@ -29,7 +29,7 @@
     <body>   
 	<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
 	    <div class="container-fluid px-md-4	">
-	        <a class="navbar-brand" href="index.html">Skillhunt</a>
+	        <a class="navbar-brand" href="">Веб-приложение</a>
 	        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="oi oi-menu"></span> Menu
 	        </button>
@@ -65,10 +65,6 @@
 				            <div class="icon mr-2">
 				              	<span class="flaticon-worldwide"></span>
 				            </div>
-				            <div class="desc text-left">
-                                                <strong class="number" data-number="100">0</strong>
-					        <span>Загрузка модулей</span>
-				            </div>
 				        </div>
 				    </div>
 				</div>
@@ -78,10 +74,6 @@
 				            <div class="icon mr-2">
 				              	<span class="flaticon-visitor"></span>
 				            </div>
-				            <div class="desc text-left">
-					        <strong class="number" data-number="450">0</strong>
-					        <span>Companies</span>
-					    </div>
 				        </div>
 				    </div>
 				</div>
@@ -90,11 +82,7 @@
 				        <div class="text d-flex">
 				            <div class="icon mr-2">
 				              	<span class="flaticon-resume"></span>
-				            </div>
-				            <div class="desc text-left">
-					        <strong class="number" data-number="80000">0</strong>
-					        <span>Active Employees</span>
-					    </div>
+				            </div>				            
 				        </div>
 				    </div>
 				</div>

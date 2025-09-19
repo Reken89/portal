@@ -6,11 +6,13 @@ use App\Core\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Modules\AdminSection\Requests\AddUserRequest;
 use App\Modules\AdminSection\Requests\UpdateUserInfoRequest;
+use App\Modules\AdminSection\Requests\UpdatePasswordRequest;
 use App\Modules\AdminSection\Actions\AddInfoAction;
 use App\Modules\AdminSection\Actions\SelectInfoAction;
 use App\Modules\AdminSection\Actions\UpdateInfoAction;
 use App\Modules\AdminSection\Dto\AddUserDto;
 use App\Modules\AdminSection\Dto\UpdateUserInfoDto;
+use App\Modules\AdminSection\Dto\UpdatePasswordDto;
 
 class AdministratorController extends Controller
 {
@@ -63,5 +65,16 @@ class AdministratorController extends Controller
     {
         $dto = UpdateUserInfoDto::fromRequest($request);
         $this->action(UpdateInfoAction::class)->UpdateInfo($dto);
+    }
+    
+    /**
+     * Обновляем пароль пользователя
+     *
+     * @param UpdatePasswordRequest $request
+     */
+    public function UpdatePassword(UpdatePasswordRequest $request)
+    {
+        $dto = UpdatePasswordDto::fromRequest($request);
+        $this->action(UpdateInfoAction::class)->UpdatePassword($dto);
     }
 }

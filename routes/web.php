@@ -89,5 +89,6 @@ Route::get('/archive/user', [ArchiveUserController::class, 'FrontView'])->middle
 //Группа адресов для панели администратора
 Route::post('/administrator/adduser', [AdministratorController::class, 'AddUser'])->middleware('auth', 'admin');
 Route::patch('/administrator/updateinfo', [AdministratorController::class, 'UpdateInfo'])->middleware('auth', 'admin');
+Route::patch('/administrator/updatepassword', [AdministratorController::class, 'UpdatePassword'])->middleware('auth', 'admin');
 Route::get('/administrator/menu', [AdministratorController::class, 'ShowTable'])->middleware('auth', 'admin');
 Route::get('/administrator', [AdministratorController::class, 'FrontView'])->middleware('auth', 'admin')->name('administrator');
