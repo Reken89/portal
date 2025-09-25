@@ -95,4 +95,5 @@ Route::get('/administrator/menu', [AdministratorController::class, 'ShowTable'])
 Route::get('/administrator', [AdministratorController::class, 'FrontView'])->middleware('auth', 'admin')->name('administrator');
 
 //Группа адресов для модуля "ОФС"
+Route::get('/ofs/user/table', [OfsWorkUserController::class, 'ShowTable'])->middleware('auth');
 Route::get('/ofs/user', [OfsWorkUserController::class, 'FrontView'])->middleware('auth')->name('ofs-user');

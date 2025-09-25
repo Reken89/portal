@@ -1,0 +1,51 @@
+<?php
+
+namespace App\Modules\OfsSection\User\Tasks;
+
+use App\Core\Tasks\BaseTask;
+use App\Modules\OfsSection\Admin\Models\Ofs;
+
+class SelectOfsTask extends BaseTask
+{   
+    /**
+     * Получаем месяц из таблицы ofs
+     *
+     * @param int $id
+     * @return array
+     */
+    public function SelectMounth(int $id): array
+    {     
+        return Ofs::select('mounth')   
+            ->where('user_id', $id)   
+            ->first()
+            ->toArray();       
+    }
+    
+    /**
+     * Получаем информацию из ofs
+     *
+     * @param int $user, int $chapter
+     * @return array
+     */
+    public function SelectInfo(int $user, int $chapter): array
+    {     
+        return Ofs::select()  
+            ->selectRaw('((`credit_year_all` + `fact_all` - `debit_year_all` - `kassa_all`) - '
+                    . '(`credit_end_all` - `debit_end_all`) + `return_old_year`) AS total1')
+            ->selectRaw('(`lbo` - `fact_all` + `prepaid` - `credit_year_all`) AS total2')
+            ->where('user_id', $user)
+            ->where('chapter', $chapter) 
+            ->join('ekr', 'ofs.ekr_id', '=', 'ekr.id')    
+            ->with([
+                'ekr', 
+                'user:id,name',
+            ])   
+            ->orderBy('ekr.number', 'asc')
+            ->orderBy('ekr.main', 'desc')
+            ->orderBy('ekr.shared', 'desc')
+            ->orderBy('ekr.title', 'asc')    
+            ->get()
+            ->toArray();       
+    }
+}
+

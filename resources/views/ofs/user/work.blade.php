@@ -1,3 +1,6 @@
+@php
+    //var_dump($info['mounth']);
+@endphp
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -59,7 +62,7 @@
                 <div class="row no-gutters slider-text align-items-end justify-content-start">
                     <div class="col-md-12 ftco-animate text-center mb-5">
                         <p class="breadcrumbs mb-0"><span class="mr-3"></span> <span>Вы вошли как {{ $info['email'] }}</span></p>
-                        <h1 class="mb-3 bread">ОФС 2026</h1>
+                        <h1 class="mb-3 bread">ОФС 2026 ({{ $info['mounth'] }})</h1>
                     </div>
                 </div>
             </div>
@@ -69,24 +72,25 @@
             <div class="container">
                 <div class="row">      
                     <div class="col-md-12 col-lg-8 mb-5">         
-                        <form action="#" id="parameters" method="post" class="p-5 bg-white">
-                                 
+                        <form action="/portal/public/ofs/user" method="get">                              
                             <div class="row form-group">
                                 <div class="col-md-12 mb-3 mb-md-0">
                                     <label class="font-weight-bold" for="fullname">Раздел</label>
                                     <div class="form-group">
                                         <div class="form-field">
-                                            <div class="checkselect">
-                                                <label><input type="checkbox" name="chapter" value="1" checked> МБ МЗ(МБ)</label>
-                                                <label><input type="checkbox" name="chapter" value="2"> МБ ИЦ</label>
-                                                <label><input type="checkbox" name="chapter" value="3"> РК МЗ(РК)</label>
-                                                <label><input type="checkbox" name="chapter" value="4"> РК ИЦ</label>
-                                                <label><input type="checkbox" name="chapter" value="5"> ПД</label>
+                                            <div class="select-wrap">
+                                                <select name="chapter" class="form-control">
+                                                    <option value="1">МБ МЗ(МБ)</option>
+                                                    <option value="2">МБ ИЦ</option>
+                                                    <option value="3">РК МЗ(РК)</option>
+                                                    <option value="4">РК ИЦ</option>
+                                                    <option value="5">ПД</option>
+                                                </select>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>       
+                            </div> 
                                                              
                             <div class="row form-group">
                                 <div class="col-md-12 mb-3 mb-md-0">
@@ -117,16 +121,12 @@
                                                         <option value="16">МБОУ ДО КМО "Спортивная школа"</option>
                                                         <option value="20">Муниципальный архив и Центральная библиотека</option>
                                                         <option value="21">МБУ КМО "Центр культурного развития"</option>
-                                                        <option value="22">МАУ ДПО «ЦРО»</option>
                                                     @endif
                                                     @if ($info['role'] == "cb_kinder")  
                                                         <option value="9">МКДОУ "Ауринко"</option>
                                                         <option value="15">МКДОУ "Солнышко"</option>
                                                         <option value="13">МКДОУ "Кораблик"</option>
                                                         <option value="10">МКДОУ "Берёзка"</option>
-                                                        <option value="12">МКДОУ "Золотой ключик"</option>
-                                                        <option value="11">МКДОУ "Гномик"</option>
-                                                        <option value="14">МКДОУ "Сказка"</option>
                                                     @endif
                                                 </select>
                                             </div>
@@ -137,7 +137,7 @@
 
                             <div class="row form-group">
                                 <div class="col-md-12">
-                                    <button class="btn btn-primary  py-2 px-5" id='btn_add' type="button">Выбрать</button>
+                                    <button class="btn btn-primary  py-2 px-5" type="submit">Выбрать</button>
                                 </div>
                             </div>
                         </form>
@@ -146,29 +146,20 @@
                     <div class="col-lg-4">
                         <div class="p-4 mb-3 bg-white">
                             <h3 class="h5 text-black mb-3"><font color="red">Информация:</h3>
-                            <p class="mb-0 font-weight-bold"><font color="red">Выберите необходимые параметры и нажмите кнопку «Запрос». В таблице ниже сформируется excel файл для загрузки.</p>
+                            <p class="mb-0 font-weight-bold"><font color="red">Вы работаете в месяце: </p>
                         </div>   
                     </div>                    
-                        
-                    <div class="container">
-                        <div class="row">       
-                            <div class="col-md-12 col-lg-8 mb-5">
-                                
-                           </div>                  
-                        </div>
-                    </div>                      
+                  
                 </div>
             </div>
-            
-            <div class="container">
-                <div class="row">       
-                    <div class="col-md-12 col-lg-8 mb-5">
-                           
-                    </div>                      
-                </div>
-            </div>
-            
+       
         </section>
+        
+        <div class="container2">
+            <div class="container_fix2">
+                <div id="table"></div>  
+            </div>
+        </div>
         
         <section class="ftco-section-parallax">
             <div class="parallax-img d-flex align-items-center">
@@ -211,6 +202,31 @@
         <!-- Plugin checkselect! -->
         <script src="{{ asset('assets/plugins/checkselect/checkselect.js') }}" type="text/javascript"></script>
         <!-- The end checkselect! -->
+        
+        <script>
+            $(document).ready(function(){ 
+                //Подгружаем BACK шаблон отрисовки
+                function fetch_data(){ 
+                    let form = <?=json_encode($info)?>;
+                    let user = form['user'];
+                    let chapter = form['chapter'];
+                    
+                    $.ajax({  
+                        url:"/portal/public/ofs/user/table",  
+                        method:"GET",
+                        data:{
+                            user, chapter
+                        },
+                        dataType:"text",
+                        success:function(data){  
+                            $('#table').html(data);  
+                            //setKeydownmyForm()
+                        }   
+                    });  
+                } 
+                fetch_data();
+            });
+        </script>
     </body>
 </html>
 
