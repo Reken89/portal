@@ -92,15 +92,17 @@ div.container_fix3 {
 	border-radius: 0 8px 8px 0;
 }
 .table2 tbody td {
-	text-align: left;
-	border: none;
-	padding: 10px 15px;
-	font-size: 14px;
-	vertical-align: top;
+  text-align: left;
+  border: none;
+  padding: 10px 15px;
+  font-size: 14px;
+  vertical-align: top;	
 }
+/*
 .table2 tbody tr:nth-child(even){
 	background: #f3f3f3;
 }
+*/
 .table2 tbody tr td:first-child {
 	border-radius: 8px 0 0 8px;
 }
@@ -123,3 +125,32 @@ th {
   padding: 0.5em;
 }
 
+
+.sticky-col {
+  position: sticky;
+  left: 0;
+  background-color: #f2f2f2; /* Задайте подходящий цвет фона */
+}
+
+.text-scale {
+  white-space: nowrap; /* По умолчанию текст в одну строку */
+  overflow: hidden;    /* Скрываем */
+  text-overflow: ellipsis; /* Ограничиваем и добавляем многоточие */
+  max-width: 150px; /* Ограничиваем ширину ячейки */
+  transition: all 0.3s ease; /* Плавное изменение */
+}
+
+.text-scale:hover {
+  width: 1500px;
+  white-space: normal; /* Растягиваем при наведении */
+  overflow: visible;   /* Показываем весь текст */
+  max-width: none;     /* Убираем ограничение по ширине */
+  position: absolute;  /* Если нужно, чтобы ячейка выходила за пределы таблицы */
+  z-index: 1;          /* Чтобы ячейка была поверх других элементов */
+  background-color: white; /* Для лучшей видимости */
+}
+
+.text-selected {
+  background-color: #00FFFF; /* Пример цвета для выделенной строки */
+  font-weight: bold; /* Можно добавить другие стили, например, сделать текст жирным */
+}

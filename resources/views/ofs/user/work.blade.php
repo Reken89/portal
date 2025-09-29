@@ -203,7 +203,7 @@
         <script src="{{ asset('assets/plugins/checkselect/checkselect.js') }}" type="text/javascript"></script>
         <!-- The end checkselect! -->
         
-        <script>
+        <script>   
             $(document).ready(function(){ 
                 //Подгружаем BACK шаблон отрисовки
                 function fetch_data(){ 
