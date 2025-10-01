@@ -96,4 +96,5 @@ Route::get('/administrator', [AdministratorController::class, 'FrontView'])->mid
 
 //Группа адресов для модуля "ОФС"
 Route::get('/ofs/user/table', [OfsWorkUserController::class, 'ShowTable'])->middleware('auth');
+Route::patch('/ofs/user/update', [OfsWorkUserController::class, 'UpdateOfs'])->middleware('auth');
 Route::get('/ofs/user', [OfsWorkUserController::class, 'FrontView'])->middleware('auth')->name('ofs-user');

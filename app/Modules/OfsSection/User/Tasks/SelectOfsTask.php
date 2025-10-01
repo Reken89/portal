@@ -29,7 +29,10 @@ class SelectOfsTask extends BaseTask
      */
     public function SelectInfo(int $user, int $chapter): array
     {     
-        return Ofs::select()  
+        return Ofs::select('ofs.id', 'ofs.user_id', 'ofs.ekr_id', 'ofs.mounth', 'ofs.chapter', 'ofs.status',
+                'ofs.lbo', 'ofs.prepaid', 'ofs.credit_year_all', 'ofs.credit_year_term', 'ofs.debit_year_all', 
+                'ofs.debit_year_term', 'ofs.fact_mounth', 'ofs.kassa_mounth', 'ofs.credit_end_all', 'ofs.credit_end_term', 
+                'ofs.debit_end_all', 'ofs.debit_end_term', 'ofs.return_old_year', 'ofs.fact_all', 'ofs.kassa_all')  
             ->selectRaw('((`credit_year_all` + `fact_all` - `debit_year_all` - `kassa_all`) - '
                     . '(`credit_end_all` - `debit_end_all`) + `return_old_year`) AS total1')
             ->selectRaw('(`lbo` - `fact_all` + `prepaid` - `credit_year_all`) AS total2')

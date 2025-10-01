@@ -1,4 +1,8 @@
 @if ($info['status'] == true)  
+@php
+    $shared_id = 1;
+    //var_dump($info['ofs'][0]);
+@endphp
 <font color="Black">
 <table class="table2">             
     <thead>
@@ -52,6 +56,12 @@
             @endif  
 
             @if ($value['ekr']['main'] == 'Yes' || $value['ekr']['main'] == 'Yes')
+                @php
+                    if($value['ekr']['shared'] == 'Yes'){
+                        $shared_id = $value['id'];
+                    }
+                    $main_id = $value['id'];
+                @endphp
                 <tr>
                     <td class="sticky-col"><p class="text-scale">{{ $value['ekr']['title'] }}</p></td>
                     <td>{{ $value['ekr']['ekr'] }}</td>
@@ -81,6 +91,24 @@
                     <input type="hidden" class="number" value="{{ $value['ekr']['number'] }}">
                     <input type="hidden" class="mounth" value="{{ $value['mounth'] }}">
                     <input type="hidden" class="chapter" value="{{ $value['chapter'] }}">
+                    <input type="hidden" class="shared_id" value="{{ $shared_id }}">
+                    <input type="hidden" class="main_id" value="{{ $main_id }}">
+                    <input type="hidden" class="id" value="{{ $value['id'] }}">
+                    
+                    <input type="hidden" class="lbo_old" value="{{ $value['lbo'] }}">
+                    <input type="hidden" class="prepaid_old" value="{{ $value['prepaid'] }}">
+                    <input type="hidden" class="credit_year_all_old" value="{{ $value['credit_year_all'] }}">
+                    <input type="hidden" class="credit_year_term_old" value="{{ $value['credit_year_term'] }}">
+                    <input type="hidden" class="debit_year_all_old" value="{{ $value['debit_year_all'] }}">
+                    <input type="hidden" class="debit_year_term_old" value="{{ $value['debit_year_term'] }}">
+                    <input type="hidden" class="fact_mounth_old" value="{{ $value['fact_mounth'] }}">
+                    <input type="hidden" class="kassa_mounth_old" value="{{ $value['kassa_mounth'] }}">
+                    <input type="hidden" class="credit_end_all_old" value="{{ $value['credit_end_all'] }}">
+                    <input type="hidden" class="credit_end_term_old" value="{{ $value['credit_end_term'] }}">
+                    <input type="hidden" class="debit_end_all_old" value="{{ $value['debit_end_all'] }}">
+                    <input type="hidden" class="debit_end_term_old" value="{{ $value['debit_end_term'] }}">
+                    <input type="hidden" class="return_old_year_old" value="{{ $value['return_old_year'] }}">
+                    
                     <td class="sticky-col"><p class="text-scale">{{ $value['ekr']['title'] }}</p></td>
                     <td>{{ $value['ekr']['ekr'] }}</td>
                     <td><a href="" onclick="return false"><img src="{{ asset('assets/icons/reset.png') }}" alt="" id="reset"></a></td>
@@ -130,20 +158,22 @@
     </tbody>
 </table>
 <script>
-    const rows = document.querySelectorAll('.text-scale'); // Получаем все строки
-    rows.forEach(row => {
-        // Добавляем обработчик при наведении мышью
-        row.addEventListener('mouseenter', () => {
-            console.log('Навели на:', row.textContent); // Выполнить действие, например, вывод в консоль
-            //row.style.fontWeight = 'bold'; // Изменить стиль
+    $(document).ready(function(){ 
+        const rows = document.querySelectorAll('.text-scale'); // Получаем все строки
+        rows.forEach(row => {
+            // Добавляем обработчик при наведении мышью
+            row.addEventListener('mouseenter', () => {
+                console.log('Навели на:', row.textContent); // Выполнить действие, например, вывод в консоль
+                //row.style.fontWeight = 'bold'; // Изменить стиль
+            });
+
+            // Добавляем обработчик при выходе мышью
+            row.addEventListener('mouseleave', () => {
+                console.log('Ушли с:', row.textContent);
+                row.style.fontWeight = 'normal'; // Вернуть стиль к исходному
+            });
         });
 
-        // Добавляем обработчик при выходе мышью
-        row.addEventListener('mouseleave', () => {
-            console.log('Ушли с:', row.textContent);
-            row.style.fontWeight = 'normal'; // Вернуть стиль к исходному
-        });
-        
         const rows2 = document.querySelectorAll('.line-row');
         rows2.forEach(row => {
             row.addEventListener('click', () => {
