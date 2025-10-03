@@ -1,7 +1,7 @@
 @if ($info['status'] == true)  
 @php
     $shared_id = 1;
-    //var_dump($info['ofs'][0]);
+    //var_dump($info['ofs']);
 @endphp
 <font color="Black">
 <table class="table2">             
@@ -9,7 +9,6 @@
         <tr>
             <th style="min-width: 200px; width: 200px;"><font color="White">Наименование расходов</th>
             <th style="min-width: 70px; width: 70px;"><font color="White">ЭКР</th>
-            <th style="min-width: 70px; width: 70px;"></th>
             <th style="min-width: 100px; width: 100px;"><font color="White">Плановые назначения ЛБО</th>
             <th style="min-width: 100px; width: 100px;"><font color="White">Аванс (прошлый год)</th>
             <th style="min-width: 100px; width: 100px;" colspan="2"><font color="White">Кредиторская задолженность</br> на начало года</th>
@@ -25,18 +24,18 @@
     </thead>
     <tbody>
         <tr>
-            <th class="col-id-no" scope="row">1</th><td>2</td><td>3</td><td>4</td>
+            <td class="sticky-col">1</td><td>2</td><td>3</td><td>4</td>
             <td>5</td><td>6</td><td>7</td><td>8</td>
-            <td>9</td><td style="min-width: 150px; width: 150px;">10</td><td>11</td><td style="min-width: 150px; width: 150px;">12</td>
+            <td>9</td><td>10</td><td>11</td><td>12</td>
             <td>13</td><td>14</td><td>15</td><td>16</td>
-            <td>17</td><td>18</td><td>19</td><td>20</td>
+            <td>17</td><td>18</td><td>19</td>
         </tr>             
         <tr>
-            <th class="col-id-no" scope="row"></th><td></td><td></td><td></td><td></td>
+            <td class="sticky-col"><b>{{ $info['ofs'][0]['user']['name'] }} "{{ $info['chapter'][$info['ofs'][0]['chapter']] }}"</b></td><td></td><td></td><td></td>
             <td style="min-width: 50px; width: 50px;">Всего</td><td style="min-width: 50px; width: 50px;">Просроченная</td>
             <td style="min-width: 50px; width: 50px;">Всего</td><td style="min-width: 50px; width: 50px;">Просроченная</td>
-            <td style="min-width: 50px; width: 50px;">Всего</td><td style="min-width: 50px; width: 50px;">Текущий</td>
-            <td style="min-width: 50px; width: 50px;">Всего</td><td style="min-width: 50px; width: 50px;">Текущий</td>
+            <td style="min-width: 110px; width: 110px;">Всего</td><td style="min-width: 50px; width: 50px;">Текущий</td>
+            <td style="min-width: 110px; width: 110px;">Всего</td><td style="min-width: 50px; width: 50px;">Текущий</td>
             <td style="min-width: 50px; width: 50px;">Всего</td><td style="min-width: 50px; width: 50px;">Просроченная</td>
             <td style="min-width: 50px; width: 50px;">Всего</td><td style="min-width: 50px; width: 50px;">Просроченная</td>
             <td></td><td></td><td></td>
@@ -44,13 +43,13 @@
         @foreach ($info['ofs'] as $value)  
 
             @if ($value['total1'] < "0" || $value['total1'] > "0")
-                @php $color_t1 = "darkred"; @endphp 
+                @php $color_t1 = "red"; @endphp 
             @else
                 @php $color_t1 = "black"; @endphp 
             @endif  
 
             @if ($value['total2'] < "0")
-                @php $color_t2 = "darkred"; @endphp 
+                @php $color_t2 = "red"; @endphp 
             @else
                 @php $color_t2 = "black"; @endphp 
             @endif  
@@ -63,9 +62,8 @@
                     $main_id = $value['id'];
                 @endphp
                 <tr>
-                    <td class="sticky-col"><p class="text-scale">{{ $value['ekr']['title'] }}</p></td>
+                    <td style="height: 65px;" class="sticky-col"><p class="text-scale">{{ $value['ekr']['title'] }}</p></td>
                     <td>{{ $value['ekr']['ekr'] }}</td>
-                    <td><img src="{{ asset('assets/icons/tick.png') }}" alt=""></td>
                     <td>{{ number_format($value['lbo'], 2, ',', ' ') }}</td>
                     <td>{{ number_format($value['prepaid'], 2, ',', ' ') }}</td>
                     <td>{{ number_format($value['credit_year_all'], 2, ',', ' ') }}</td>
@@ -109,9 +107,8 @@
                     <input type="hidden" class="debit_end_term_old" value="{{ $value['debit_end_term'] }}">
                     <input type="hidden" class="return_old_year_old" value="{{ $value['return_old_year'] }}">
                     
-                    <td class="sticky-col"><p class="text-scale">{{ $value['ekr']['title'] }}</p></td>
+                    <td style="height: 65px;" class="sticky-col"><p class="text-scale">{{ $value['ekr']['title'] }}</p></td>
                     <td>{{ $value['ekr']['ekr'] }}</td>
-                    <td><a href="" onclick="return false"><img src="{{ asset('assets/icons/reset.png') }}" alt="" id="reset"></a></td>
                     <td><input type="text" size="10" class="lbo" value="{{ number_format($value['lbo'], 2, ',', ' ') }}"></td>  
                     <td><input type="text" size="10" class="prepaid" value="{{ number_format($value['prepaid'], 2, ',', ' ') }}"></td>
                     <td><input type="text" size="10" class="credit_year_all" value="{{ number_format($value['credit_year_all'], 2, ',', ' ') }}"></td>
@@ -132,9 +129,8 @@
                 </tr>
             @else
                 <tr>
-                    <td class="sticky-col"><p class="text-scale">{{ $value['ekr']['title'] }}</p></td>
+                    <td style="height: 65px;" class="sticky-col"><p class="text-scale">{{ $value['ekr']['title'] }}</p></td>
                     <td>{{ $value['ekr']['ekr'] }}</td>
-                    <td></td>
                     <td>{{ number_format($value['lbo'], 2, ',', ' ') }}</td>  
                     <td>{{ number_format($value['prepaid'], 2, ',', ' ') }}</td>
                     <td>{{ number_format($value['credit_year_all'], 2, ',', ' ') }}</td>
@@ -154,7 +150,28 @@
                     <td>{{ number_format($value['total2'], 2, ',', ' ') }}</td>
                 </tr>
             @endif                   
-        @endforeach        
+        @endforeach 
+        <tr>
+            <td style="height: 65px;" class="sticky-col">ИТОГ</td>
+            <td></td>
+            <td><font color="blue">{{ number_format($info['total']['lbo'], 2, ',', ' ') }}</td>  
+            <td><font color="blue">{{ number_format($info['total']['prepaid'], 2, ',', ' ') }}</td>
+            <td><font color="blue">{{ number_format($info['total']['credit_year_all'], 2, ',', ' ') }}</td>
+            <td><font color="blue">{{ number_format($info['total']['credit_year_term'], 2, ',', ' ') }}</td>
+            <td><font color="blue">{{ number_format($info['total']['debit_year_all'], 2, ',', ' ') }}</td>
+            <td><font color="blue">{{ number_format($info['total']['debit_year_term'], 2, ',', ' ') }}</td>
+            <td><font color="blue">{{ number_format($info['total']['fact_all'], 2, ',', ' ') }}</td>
+            <td><font color="blue">{{ number_format($info['total']['fact_mounth'], 2, ',', ' ') }}</td>
+            <td><font color="blue">{{ number_format($info['total']['kassa_all'], 2, ',', ' ') }}</td>
+            <td><font color="blue">{{ number_format($info['total']['kassa_mounth'], 2, ',', ' ') }}</td>
+            <td><font color="blue">{{ number_format($info['total']['credit_end_all'], 2, ',', ' ') }}</td>
+            <td><font color="blue">{{ number_format($info['total']['credit_end_term'], 2, ',', ' ') }}</td>
+            <td><font color="blue">{{ number_format($info['total']['debit_end_all'], 2, ',', ' ') }}</td>
+            <td><font color="blue">{{ number_format($info['total']['debit_end_term'], 2, ',', ' ') }}</td>
+            <td><font color="blue">{{ number_format($info['total']['return_old_year'], 2, ',', ' ') }}</td>
+            <td><font color="blue">{{ number_format($info['total']['total1'], 2, ',', ' ') }}</td>
+            <td><font color="blue">{{ number_format($info['total']['total2'], 2, ',', ' ') }}</td>
+        </tr>
     </tbody>
 </table>
 <script>

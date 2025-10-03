@@ -1,5 +1,5 @@
 @php
-    //var_dump($info['mounth']);
+    //var_dump($info['hi100ry']);
 @endphp
 <!DOCTYPE html>
 <html lang="en">
@@ -43,7 +43,7 @@
                 <div class="collapse navbar-collapse" id="ftco-nav">
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item"><a href="/portal/public/home" class="nav-link">Главная</a></li>
-                        <li class="nav-item"><a href="/portal/public/ofs/user/editor" class="nav-link">Редактор ОФС</a></li>
+                        <li class="nav-item"><a href="/portal/public/ofs/user" class="nav-link">ОФС</a></li>
                         <li class="nav-item cta cta-colored"><a href="{{ route('logout') }}" class="nav-link" onclick="event.preventDefault();
                             document.getElementById('logout-form').submit();">Выход</a>
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
@@ -62,7 +62,7 @@
                 <div class="row no-gutters slider-text align-items-end justify-content-start">
                     <div class="col-md-12 ftco-animate text-center mb-5">
                         <p class="breadcrumbs mb-0"><span class="mr-3"></span> <span>Вы вошли как {{ $info['email'] }}</span></p>
-                        <h1 class="mb-3 bread">ОФС 2026 (таблица)</h1>
+                        <h1 class="mb-3 bread">ОФС 2026 (редактор)</h1>
                     </div>
                 </div>
             </div>
@@ -72,19 +72,26 @@
             <div class="container">
                 <div class="row">      
                     <div class="col-md-12 col-lg-8 mb-5">         
-                        <form action="/portal/public/ofs/user" method="get">                              
+                        <form action="#" id="parameters" method="post" class="p-5 bg-white">                              
                             <div class="row form-group">
                                 <div class="col-md-12 mb-3 mb-md-0">
-                                    <label class="font-weight-bold" for="fullname">Раздел</label>
+                                    <label class="font-weight-bold" for="fullname">Месяц</label>
                                     <div class="form-group">
                                         <div class="form-field">
                                             <div class="select-wrap">
-                                                <select name="chapter" class="form-control">
-                                                    <option value="1">МБ МЗ(МБ)</option>
-                                                    <option value="2">МБ ИЦ</option>
-                                                    <option value="3">РК МЗ(РК)</option>
-                                                    <option value="4">РК ИЦ</option>
-                                                    <option value="5">ПД</option>
+                                                <select name="mounth" class="form-control">
+                                                    <option value="1">январь</option>
+                                                    <option value="2">февраль</option>
+                                                    <option value="3">март</option>
+                                                    <option value="4">апрель</option>
+                                                    <option value="5">май</option>
+                                                    <option value="6">июнь</option>
+                                                    <option value="7">июль</option>
+                                                    <option value="8">август</option>
+                                                    <option value="9">сентябрь</option>
+                                                    <option value="10">октябрь</option>
+                                                    <option value="11">ноябрь</option>
+                                                    <option value="12">декабрь</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -137,7 +144,9 @@
 
                             <div class="row form-group">
                                 <div class="col-md-12">
-                                    <button class="btn btn-primary  py-2 px-5" type="submit">Выбрать</button>
+                                    <div id="block">
+                                        <button class="btn btn-primary  py-2 px-5" id='synch' type="button">Отправить</button>
+                                    </div>
                                 </div>
                             </div>
                         </form>
@@ -146,7 +155,7 @@
                     <div class="col-lg-4">
                         <div class="p-4 mb-3 bg-white">
                             <h3 class="h5 text-black mb-3"><font color="red">Информация:</h3>
-                            <p class="mb-0 font-weight-bold"><font color="red">месяц: {{ $info['mounth'] }}</p>
+                            <p class="mb-0 font-weight-bold"><font color="red">Тут будет информация</p>
                         </div>   
                     </div>                    
                   
@@ -155,9 +164,31 @@
        
         </section>
         
-        <div class="container2">
-            <div class="container_fix2">
-                <div id="table"></div>  
+        <div class="container">
+            <div class="row">       
+                <div class="col-md-12 col-lg-8 mb-5">
+                    <p class="mb-0 font-weight-bold"><font color="blue">История запросов на редактирование</p>
+                    <table class="table2">
+                        <thead>
+                            <tr>
+                                <th style="min-width: 100px; width: 100px;"><font color="White">Учреждение</th>
+                                <th style="min-width: 100px; width: 100px;"><font color="White">Год</th>
+                                <th style="min-width: 100px; width: 100px;"><font color="White">Месяц</th>
+                                <th style="min-width: 100px; width: 100px;"><font color="White">Дата запроса</th> 
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($info['hi100ry'] as $value)
+                            <tr>
+                                <td><b><font color="blue">{{ $value['user']['name'] }}</b></td>
+                                <td><b><font color="blue">{{ $value['year'] }}</b></td>
+                                <td><b><font color="blue">{{ $info['mounth'][$value['mounth']] }}</b></td>
+                                <td><b><font color="blue">{{ $value['date'] }}</b></td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>    
+                </div>                      
             </div>
         </div>
         
@@ -202,111 +233,9 @@
         <!-- Plugin checkselect! -->
         <script src="{{ asset('assets/plugins/checkselect/checkselect.js') }}" type="text/javascript"></script>
         <!-- The end checkselect! -->
-        
-        <script>   
-            $(document).ready(function(){ 
-                //Выполняем запись в БД при нажатии на клавишу ENTER
-                function setKeydownmyForm() {
-                    $('input').keydown(function(e) {
-                        if (e.keyCode === 13) {
-                            let tr = this.closest('tr');
-                            let ekr_id = $('.ekr_id', tr).val(); 
-                            let number = $('.number', tr).val();
-                            let mounth = $('.mounth', tr).val();
-                            let chapter = $('.chapter', tr).val();
-                            let user_id = $('.user_id', tr).val();
-                            let shared_id = $('.shared_id', tr).val();
-                            let main_id = $('.main_id', tr).val();
-                            let id = $('.id', tr).val();
-                            let lbo_old = $('.lbo_old', tr).val();
-                            let prepaid_old = $('.prepaid_old', tr).val();
-                            let credit_year_all_old = $('.credit_year_all_old', tr).val();
-                            let credit_year_term_old = $('.credit_year_term_old', tr).val();
-                            let debit_year_all_old = $('.debit_year_all_old', tr).val();
-                            let debit_year_term_old = $('.debit_year_term_old', tr).val();
-                            let fact_mounth_old = $('.fact_mounth_old', tr).val();
-                            let kassa_mounth_old = $('.kassa_mounth_old', tr).val();
-                            let credit_end_all_old = $('.credit_end_all_old', tr).val();
-                            let credit_end_term_old = $('.credit_end_term_old', tr).val();
-                            let debit_end_all_old = $('.debit_end_all_old', tr).val();
-                            let debit_end_term_old = $('.debit_end_term_old', tr).val();
-                            let return_old_year_old = $('.return_old_year_old', tr).val();
-
-                            //Получаем значения, меняем запятую на точку и убираем пробелы в числе                   
-                            function structure(title){
-                                var volume = $(title, tr).val();
-                                //Меняем запятую на точку
-                                //Убираем лишние пробелы
-                                //Выполняем арифметические действия в строке
-                                var volume = volume.replace(/\,/g,'.');
-                                var volume = volume.replace(/ /g,'');
-                                var volume = eval(volume);
-                                return volume;
-                            }
-
-                            let lbo = structure('.lbo');
-                            let prepaid = structure('.prepaid');
-                            let credit_year_all = structure('.credit_year_all');
-                            let credit_year_term = structure('.credit_year_term');
-                            let debit_year_all = structure('.debit_year_all');
-                            let debit_year_term = structure('.debit_year_term');
-                            let fact_mounth = structure('.fact_mounth');
-                            let kassa_mounth = structure('.kassa_mounth');
-                            let credit_end_all = structure('.credit_end_all');
-                            let credit_end_term = structure('.credit_end_term');
-                            let debit_end_all = structure('.debit_end_all');
-                            let debit_end_term = structure('.debit_end_term');
-                            let return_old_year = structure('.return_old_year');
-
-                            $.ajax({ 
-                                url:"/portal/public/ofs/user/update",  
-                                method:"patch",  
-                                data:{
-                                    "_token": "{{ csrf_token() }}",
-                                    ekr_id, number, lbo, prepaid, credit_year_all,
-                                    credit_year_term, debit_year_all, debit_year_term,
-                                    fact_mounth, kassa_mounth, credit_end_all, credit_end_term,
-                                    debit_end_all, debit_end_term, return_old_year,
-                                    mounth, chapter, user_id, shared_id, main_id, id,
-                                    lbo_old, prepaid_old, credit_year_all_old,
-                                    credit_year_term_old, debit_year_all_old, debit_year_term_old,
-                                    fact_mounth_old, kassa_mounth_old, credit_end_all_old, credit_end_term_old,
-                                    debit_end_all_old, debit_end_term_old, return_old_year_old,
-                                },
-                                dataType:"text",  
-                                success:function(data){  
-                                    fetch_data(); 
-                                    //alert(data);
-                                } 
-                            })                   
-                        }               
-                    })
-                }
-                
-                //Подгружаем BACK шаблон отрисовки
-                function fetch_data(){ 
-                    let form = <?=json_encode($info)?>;
-                    let user = form['user'];
-                    let chapter = form['chapter'];
-                    
-                    $.ajax({  
-                        url:"/portal/public/ofs/user/table",  
-                        method:"GET",
-                        data:{
-                            user, chapter
-                        },
-                        dataType:"text",
-                        success:function(data){  
-                            $('#table').html(data);  
-                            setKeydownmyForm()
-                        }   
-                    });  
-                } 
-                fetch_data();
-            });
-        </script>
     </body>
 </html>
+
 
 
 

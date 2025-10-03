@@ -16,6 +16,7 @@ use App\Modules\ArchiveSection\User\Controllers\ArchiveUserController;
 use App\Modules\ArchiveSection\Admin\Controllers\ArchiveAdminController;
 use App\Modules\AdminSection\Controllers\AdministratorController;
 use App\Modules\OfsSection\User\Controllers\OfsWorkUserController;
+use App\Modules\OfsSection\User\Controllers\OfsEditorUserController;
 
 Route::get('/', function () {
     return view('auth.login');
@@ -98,3 +99,6 @@ Route::get('/administrator', [AdministratorController::class, 'FrontView'])->mid
 Route::get('/ofs/user/table', [OfsWorkUserController::class, 'ShowTable'])->middleware('auth');
 Route::patch('/ofs/user/update', [OfsWorkUserController::class, 'UpdateOfs'])->middleware('auth');
 Route::get('/ofs/user', [OfsWorkUserController::class, 'FrontView'])->middleware('auth')->name('ofs-user');
+Route::patch('/ofs/user/synch', [OfsEditorUserController::class, 'SynchOfs'])->middleware('auth');
+Route::get('/ofs/user/editor/table', [OfsEditorUserController::class, 'ShowTable'])->middleware('auth');
+Route::get('/ofs/user/editor', [OfsEditorUserController::class, 'FrontView'])->middleware('auth')->name('ofs-editor-user');

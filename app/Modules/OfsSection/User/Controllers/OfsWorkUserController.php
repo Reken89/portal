@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Core\Controllers\Controller;
 use App\Modules\OfsSection\User\Actions\SelectInfoAction;
 use App\Modules\OfsSection\User\Actions\UpdateInfoAction;
+use App\Modules\OfsSection\User\Actions\CalculateInfoAction;
 use App\Modules\OfsSection\User\Dto\UpdateOfsDto;
 use App\Modules\OfsSection\User\Requests\UpdateOfsRequest;
 
@@ -26,17 +27,18 @@ class OfsWorkUserController extends Controller
         if($request->user){
             $user = $request->user;
             $chapter = $request->chapter;
+            $mn = $this->action(SelectInfoAction::class)->SelectMounth($user);
+            $mounth = $this->mounth[$mn['mounth']];
         }else{
             $user = NULL;
             $chapter = NULL;
+            $mounth = "не выбран!";
         }
         
-        $id = Auth::user()->id();
-        $mounth = $this->action(SelectInfoAction::class)->SelectMounth($id);
         $info = [
             'email'   => Auth::user()->email(),
             'role'    => Auth::user()->role(),
-            'mounth'  => $this->mounth[$mounth['mounth']],
+            'mounth'  => $mounth,
             'user'    => $user,
             'chapter' => $chapter,
         ];
@@ -52,9 +54,12 @@ class OfsWorkUserController extends Controller
     public function ShowTable(Request $request)
     {  
         if($request->user !== NULL){
+            $ofs = $this->action(SelectInfoAction::class)->SelectInfo($request->user, $request->chapter);
             $info = [
-                'status' => true,
-                'ofs'    => $this->action(SelectInfoAction::class)->SelectInfo($request->user, $request->chapter),
+                'status'  => true,
+                'ofs'     => $ofs,
+                'total'   => $this->action(CalculateInfoAction::class)->SelectTotal($ofs),
+                'chapter' => $this->chapter,
             ];
         }else{
             $info = [

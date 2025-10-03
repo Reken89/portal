@@ -4,6 +4,8 @@ namespace App\Modules\OfsSection\User\Tasks;
 
 use App\Core\Tasks\BaseTask;
 use App\Modules\OfsSection\Admin\Models\Ofs;
+use App\Modules\OfsSection\Admin\Models\Archive26;
+use App\Modules\OfsSection\User\Dto\SynchOfsDto;
 
 class SelectOfsTask extends BaseTask
 {   
@@ -47,6 +49,38 @@ class SelectOfsTask extends BaseTask
             ->orderBy('ekr.main', 'desc')
             ->orderBy('ekr.shared', 'desc')
             ->orderBy('ekr.title', 'asc')    
+            ->get()
+            ->toArray();       
+    }
+    
+    /**
+     * Получаем информацию из ofs
+     * Для последующей синхронизации
+     *
+     * @param SynchOfsDto $dto
+     * @return array
+     */
+    public function SelectSynch(SynchOfsDto $dto): array
+    {     
+        return Ofs::select()  
+            ->where('user_id', $dto->user_id)  
+            ->where('lbo', '!=', 0)    
+            ->get()
+            ->toArray();       
+    }
+    
+    /**
+     * Получаем информацию из Archive26
+     * Для последующей синхронизации
+     *
+     * @param SynchOfsDto $dto
+     * @return array
+     */
+    public function SelectArchive(SynchOfsDto $dto): array
+    {     
+        return Archive26::select()  
+            ->where('user_id', $dto->user_id)  
+            ->where('mounth', $dto->mounth)     
             ->get()
             ->toArray();       
     }

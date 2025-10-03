@@ -4,6 +4,7 @@ namespace App\Modules\OfsSection\User\Tasks;
 
 use App\Core\Tasks\BaseTask;
 use App\Modules\OfsSection\Admin\Models\Ofs;
+use App\Modules\OfsSection\Admin\Models\Archive26;
 use App\Modules\OfsSection\User\Dto\UpdateOfsDto;
 
 class UpdateOfsTask extends BaseTask
@@ -85,6 +86,72 @@ class UpdateOfsTask extends BaseTask
                 'debit_end_term'   => ofs::raw("debit_end_term - $dto->debit_end_term_old + $dto->debit_end_term"),
                 'return_old_year'  => ofs::raw("return_old_year - $dto->return_old_year_old + $dto->return_old_year"),
             ]);    
+    }
+    
+    /**
+     * Обновляем строки в Archive26
+     *
+     * @param array $info
+     * @return 
+     */
+    public function UpdateSynch(array $info)
+    {    
+        foreach ($info as $inf){
+            Archive26::where('user_id', $inf['user_id'])
+            ->where('mounth', $inf['mounth'])  
+            ->where('ekr_id', $inf['ekr_id'])   
+            ->where('chapter', $inf['chapter']) 
+            ->update([
+                'lbo'              => $inf['lbo'],
+                'prepaid'          => $inf['prepaid'],
+                'credit_year_all'  => $inf['credit_year_all'],
+                'credit_year_term' => $inf['credit_year_term'],
+                'debit_year_all'   => $inf['debit_year_all'],
+                'debit_year_term'  => $inf['debit_year_term'],
+                'fact_all'         => $inf['fact_all'],
+                'fact_mounth'      => $inf['fact_mounth'],
+                'kassa_all'        => $inf['kassa_all'],
+                'kassa_mounth'     => $inf['kassa_mounth'],
+                'credit_end_all'   => $inf['credit_end_all'],
+                'credit_end_term'  => $inf['credit_end_term'],
+                'debit_end_all'    => $inf['debit_end_all'],
+                'debit_end_term'   => $inf['debit_end_term'],
+                'return_old_year'  => $inf['return_old_year'],
+            ]);              
+        }       
+    }
+    
+    /**
+     * Обновляем строки в OFS
+     *
+     * @param array $info
+     * @return 
+     */
+    public function UpdateOfs(array $info)
+    {    
+        foreach ($info as $inf){
+            Ofs::where('user_id', $inf['user_id'])
+            ->where('ekr_id', $inf['ekr_id'])   
+            ->where('chapter', $inf['chapter']) 
+            ->update([
+                'mounth'           => $inf['mounth'],
+                'lbo'              => $inf['lbo'],
+                'prepaid'          => $inf['prepaid'],
+                'credit_year_all'  => $inf['credit_year_all'],
+                'credit_year_term' => $inf['credit_year_term'],
+                'debit_year_all'   => $inf['debit_year_all'],
+                'debit_year_term'  => $inf['debit_year_term'],
+                'fact_all'         => $inf['fact_all'],
+                'fact_mounth'      => $inf['fact_mounth'],
+                'kassa_all'        => $inf['kassa_all'],
+                'kassa_mounth'     => $inf['kassa_mounth'],
+                'credit_end_all'   => $inf['credit_end_all'],
+                'credit_end_term'  => $inf['credit_end_term'],
+                'debit_end_all'    => $inf['debit_end_all'],
+                'debit_end_term'   => $inf['debit_end_term'],
+                'return_old_year'  => $inf['return_old_year'],
+            ]);              
+        }       
     }
 }
 
