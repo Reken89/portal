@@ -28,7 +28,7 @@ class OfsWorkUserController extends Controller
             $user = $request->user;
             $chapter = $request->chapter;
             $mn = $this->action(SelectInfoAction::class)->SelectMounth($user);
-            $mounth = $this->mounth[$mn['mounth']];
+            $mounth = $this->mounth[$mn];
         }else{
             $user = NULL;
             $chapter = NULL;
@@ -36,11 +36,12 @@ class OfsWorkUserController extends Controller
         }
         
         $info = [
-            'email'   => Auth::user()->email(),
-            'role'    => Auth::user()->role(),
-            'mounth'  => $mounth,
-            'user'    => $user,
-            'chapter' => $chapter,
+            'email'    => Auth::user()->email(),
+            'role'     => Auth::user()->role(),
+            'mounth'   => $mounth,
+            'user'     => $user,
+            'chapter'  => $chapter,
+            'max_date' => $this->action(SelectInfoAction::class)->SelectFinish(),           
         ];
         return view('ofs.user.work', ['info' => $info]);   
     }
@@ -55,11 +56,13 @@ class OfsWorkUserController extends Controller
     {  
         if($request->user !== NULL){
             $ofs = $this->action(SelectInfoAction::class)->SelectInfo($request->user, $request->chapter);
+            $structure = date('d') < $this->action(SelectInfoAction::class)->SelectFinish() ? "open" : "close";
             $info = [
-                'status'  => true,
-                'ofs'     => $ofs,
-                'total'   => $this->action(CalculateInfoAction::class)->SelectTotal($ofs),
-                'chapter' => $this->chapter,
+                'status'    => true,
+                'ofs'       => $ofs,
+                'total'     => $this->action(CalculateInfoAction::class)->SelectTotal($ofs),
+                'chapter'   => $this->chapter,
+                'structure' => $structure,
             ];
         }else{
             $info = [

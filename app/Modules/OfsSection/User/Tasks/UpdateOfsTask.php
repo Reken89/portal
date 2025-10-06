@@ -6,6 +6,7 @@ use App\Core\Tasks\BaseTask;
 use App\Modules\OfsSection\Admin\Models\Ofs;
 use App\Modules\OfsSection\Admin\Models\Archive26;
 use App\Modules\OfsSection\User\Dto\UpdateOfsDto;
+use App\Modules\OfsSection\User\Dto\SynchOfsDto;
 
 class UpdateOfsTask extends BaseTask
 {   
@@ -91,14 +92,14 @@ class UpdateOfsTask extends BaseTask
     /**
      * Обновляем строки в Archive26
      *
-     * @param array $info
+     * @param array $info, int $mounth
      * @return 
      */
-    public function UpdateSynch(array $info)
+    public function UpdateSynch(array $info, int $mounth)
     {    
         foreach ($info as $inf){
             Archive26::where('user_id', $inf['user_id'])
-            ->where('mounth', $inf['mounth'])  
+            ->where('mounth', $mounth)  
             ->where('ekr_id', $inf['ekr_id'])   
             ->where('chapter', $inf['chapter']) 
             ->update([
@@ -134,7 +135,6 @@ class UpdateOfsTask extends BaseTask
             ->where('ekr_id', $inf['ekr_id'])   
             ->where('chapter', $inf['chapter']) 
             ->update([
-                'mounth'           => $inf['mounth'],
                 'lbo'              => $inf['lbo'],
                 'prepaid'          => $inf['prepaid'],
                 'credit_year_all'  => $inf['credit_year_all'],
@@ -152,6 +152,35 @@ class UpdateOfsTask extends BaseTask
                 'return_old_year'  => $inf['return_old_year'],
             ]);              
         }       
+    }
+    
+    /**
+     * Обновляем строки в OFS
+     *
+     * @param SynchOfsDto $dto
+     * @return 
+     */
+    public function AdjustOfs(SynchOfsDto $dto)
+    {    
+        Ofs::where('user_id', $dto->user_id)
+            ->where('lbo', '!=', 0) 
+            ->update([
+                'lbo'              => 0,
+                'prepaid'          => 0,
+                'credit_year_all'  => 0,
+                'credit_year_term' => 0,
+                'debit_year_all'   => 0,
+                'debit_year_term'  => 0,
+                'fact_all'         => 0,
+                'fact_mounth'      => 0,
+                'kassa_all'        => 0,
+                'kassa_mounth'     => 0,
+                'credit_end_all'   => 0,
+                'credit_end_term'  => 0,
+                'debit_end_all'    => 0,
+                'debit_end_term'   => 0,
+                'return_old_year'  => 0,
+            ]);                                    
     }
 }
 

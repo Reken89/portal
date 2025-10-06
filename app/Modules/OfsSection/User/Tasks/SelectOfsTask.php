@@ -15,12 +15,13 @@ class SelectOfsTask extends BaseTask
      * @param int $id
      * @return array
      */
-    public function SelectMounth(int $id): array
+    public function SelectMounth(int $id): int
     {     
         return Ofs::select('mounth')   
-            ->where('user_id', $id)   
-            ->first()
-            ->toArray();       
+            ->where('user_id', $id)  
+            ->max('mounth');
+            //->first()
+            //->toArray();       
     }
     
     /**
@@ -80,7 +81,8 @@ class SelectOfsTask extends BaseTask
     {     
         return Archive26::select()  
             ->where('user_id', $dto->user_id)  
-            ->where('mounth', $dto->mounth)     
+            ->where('mounth', $dto->mounth) 
+            ->where('lbo', '!=', 0) 
             ->get()
             ->toArray();       
     }

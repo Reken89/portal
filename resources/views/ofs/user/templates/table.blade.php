@@ -82,7 +82,7 @@
                     <td><font color="{{ $color_t1 }}">{{ number_format($value['total1'], 2, ',', ' ') }}</td>
                     <td><font color="{{ $color_t2 }}">{{ number_format($value['total2'], 2, ',', ' ') }}</td>
                 </tr>                
-            @elseif ($value['status'] == '2')
+            @elseif ($info['structure'] == 'open')
                 <tr class="line-row">
                     <input type="hidden" class="ekr_id" value="{{ $value['ekr_id'] }}">
                     <input type="hidden" class="user_id" value="{{ $value['user_id'] }}">

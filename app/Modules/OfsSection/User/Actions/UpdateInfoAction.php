@@ -8,6 +8,7 @@ use App\Modules\OfsSection\User\Dto\SynchOfsDto;
 use App\Modules\OfsSection\User\Tasks\UpdateOfsTask;
 use App\Modules\OfsSection\User\Tasks\SelectOfsTask;
 use App\Modules\OfsSection\User\Tasks\AddHi100ryTask;
+use App\Modules\OfsSection\User\Tasks\CoordinatorTask;
 
 class UpdateInfoAction extends BaseAction
 {   
@@ -35,11 +36,17 @@ class UpdateInfoAction extends BaseAction
     public function SynchOfs(SynchOfsDto $dto)
     {   
         $ofs = $this->task(SelectOfsTask::class)->SelectSynch($dto); 
+        $mounth = $this->task(CoordinatorTask::class)->SelectMounth($dto->user_id);
         if(!empty($ofs)){
-            $this->task(UpdateOfsTask::class)->UpdateSynch($ofs);  
+            $this->task(UpdateOfsTask::class)->UpdateSynch($ofs, $mounth);  
         }
         $archive = $this->task(SelectOfsTask::class)->SelectArchive($dto);
-        $this->task(UpdateOfsTask::class)->UpdateOfs($archive); 
+        if(!empty($archive)){
+            $this->task(UpdateOfsTask::class)->UpdateOfs($archive); 
+        }else{
+            $this->task(UpdateOfsTask::class)->AdjustOfs($dto); 
+        }    
+        $this->task(CoordinatorTask::class)->UpdateMounth($dto->user_id, $dto->mounth);
         $this->task(AddHi100ryTask::class)->AddHi100ry($dto); 
     } 
 }
