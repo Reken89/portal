@@ -8,6 +8,7 @@ use App\Core\Controllers\Controller;
 use App\Modules\OfsSection\User\Actions\SelectInfoAction;
 use App\Modules\OfsSection\User\Actions\UpdateInfoAction;
 use App\Modules\OfsSection\User\Actions\CalculateInfoAction;
+use App\Modules\OfsSection\User\Actions\StructureAction;
 use App\Modules\OfsSection\User\Dto\UpdateOfsDto;
 use App\Modules\OfsSection\User\Requests\UpdateOfsRequest;
 
@@ -56,13 +57,12 @@ class OfsWorkUserController extends Controller
     {  
         if($request->user !== NULL){
             $ofs = $this->action(SelectInfoAction::class)->SelectInfo($request->user, $request->chapter);
-            $structure = date('d') < $this->action(SelectInfoAction::class)->SelectFinish() ? "open" : "close";
             $info = [
                 'status'    => true,
                 'ofs'       => $ofs,
                 'total'     => $this->action(CalculateInfoAction::class)->SelectTotal($ofs),
                 'chapter'   => $this->chapter,
-                'structure' => $structure,
+                'structure' => $this->action(StructureAction::class)->DetermineStructure($request->user),
             ];
         }else{
             $info = [

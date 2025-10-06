@@ -52,7 +52,7 @@ class SelectInfoAction extends BaseAction
      */
     public function SelectFinish()
     {   
-        $date = $this->task(FinishTask::class)->SelectInfo();
+        $date = $this->task(FinishTask::class)->SelectInfo('ofs');
         return $date['date'];
     } 
 }

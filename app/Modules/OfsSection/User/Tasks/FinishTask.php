@@ -10,13 +10,13 @@ class FinishTask extends BaseTask
     /**
      * Получаем информацию из finishes
      *
-     * @param 
+     * @param string $info
      * @return array
      */
-    public function SelectInfo(): array 
+    public function SelectInfo(string $info): array 
     {     
         return Finish::select()  
-            ->where('title', 'ofs')
+            ->where('title', $info)
             ->first()
             ->toArray();            
     }
