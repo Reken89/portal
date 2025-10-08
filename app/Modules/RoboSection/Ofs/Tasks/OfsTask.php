@@ -82,5 +82,24 @@ class OfsTask extends BaseTask
                 'return_old_year'  => 0,
             ]);                                    
     }
+    
+    /**
+     * Новый месяц для ofs
+     *
+     * @param 
+     * @return 
+     */
+    public function UpdateMounth()
+    {   
+        Ofs::where('lbo', '!=', 0)      
+            ->update([
+                'fact_mounth'     => 0,
+                'kassa_mounth'    => 0,
+                'credit_end_all'  => 0,
+                'credit_end_term' => 0,
+                'debit_end_all'   => 0,
+                'debit_end_term'  => 0,
+            ]);                                          
+    }
 
 }

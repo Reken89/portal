@@ -24,14 +24,14 @@ class FinishTask extends BaseTask
     /**
      * Обновляем информацию в finishes
      *
-     * @param 
+     * @param int $id, string $value
      * @return bool
      */
-    public function UpdateInfo(): bool 
+    public function UpdateInfo(int $id, string $value): bool 
     {     
-        return Finish::find(2)
+        return Finish::find($id)
             ->update([                 
-                'date' => 'no',
+                'date' => $value,
             ]);                    
     }
 

@@ -107,3 +107,4 @@ Route::get('/ofs/user/editor', [OfsEditorUserController::class, 'FrontView'])->m
 //Группа адресов для обращения через curl
 Route::get('/robo/ofs/status', [RoboOfsController::class, 'ChangeStatus']);
 Route::get('/robo/ofs/synch', [RoboOfsController::class, 'SynchOfs']);
+Route::get('/robo/ofs/new_mounth', [RoboOfsController::class, 'SynchMounth']);

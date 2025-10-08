@@ -6,6 +6,7 @@ use App\Core\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Modules\RoboSection\Ofs\Actions\UpdateInfoAction;
 use App\Modules\RoboSection\Ofs\Actions\SynchOfsAction;
+use App\Modules\RoboSection\Ofs\Actions\SynchMounthAction;
 
 class RoboOfsController extends Controller
 {
@@ -43,6 +44,22 @@ class RoboOfsController extends Controller
             return false;
         }
     }  
+    
+    /**
+     * Новый месяц для таблицы ofs
+     * 
+     *
+     * @param Request $request
+     * @return 
+     */
+    public function SynchMounth(Request $request)
+    {
+        if(isset($request->key) && $request->key == $this->key){
+            return $this->action(SynchMounthAction::class)->SynchMounth();
+        }else{
+            return false;
+        }
+    } 
 }
 
 

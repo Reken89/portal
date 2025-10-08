@@ -20,7 +20,7 @@ class UpdateInfoAction extends BaseAction
     {   
         $finish = $this->task(FinishTask::class)->SelectInfo('old_mounth'); 
         if($finish['date'] == "yes"){
-            $this->task(FinishTask::class)->UpdateInfo();
+            $this->task(FinishTask::class)->UpdateInfo(2, 'no');
             //$mounth = ltrim(date('m'), '0') - 1;
             $mounth = 1;
             $mounth_array = $this->task(CoordinatorTask::class)->SelectMounth($mounth);
