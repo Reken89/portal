@@ -21,5 +21,31 @@ class CoordinatorTask extends BaseTask
                 'date'   => date('Y-m-d'),
             ]); 
     }
+    
+    /**
+     * Выбираем месяца
+     *
+     * @param int $mounth
+     * @return 
+     */
+    public function SelectMounth(int $mounth) 
+    {     
+        return Coordinator::select()  
+            ->where('mounth', '!=', $mounth) 
+            ->get()
+            ->toArray();         
+    }
+    
+    /**
+     * Получаем минимальный месяц месяц
+     *
+     * @param
+     * @return 
+     */
+    public function MinMounth() 
+    {     
+        return Coordinator::select('mounth')  
+            ->min('mounth');
+    }
 }
 

@@ -5,6 +5,7 @@ namespace App\Modules\RoboSection\Ofs\Controllers;
 use App\Core\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Modules\RoboSection\Ofs\Actions\UpdateInfoAction;
+use App\Modules\RoboSection\Ofs\Actions\SynchOfsAction;
 
 class RoboOfsController extends Controller
 {
@@ -26,6 +27,22 @@ class RoboOfsController extends Controller
             return false;
         }
     }   
+    
+    /**
+     * Синхронизация таблиц
+     * ofs и archive26 
+     *
+     * @param Request $request
+     * @return 
+     */
+    public function SynchOfs(Request $request)
+    {
+        if(isset($request->key) && $request->key == $this->key){
+            return $this->action(SynchOfsAction::class)->SynchOfs();
+        }else{
+            return false;
+        }
+    }  
 }
 
 
