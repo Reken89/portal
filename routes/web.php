@@ -18,6 +18,7 @@ use App\Modules\AdminSection\Controllers\AdministratorController;
 use App\Modules\OfsSection\User\Controllers\OfsWorkUserController;
 use App\Modules\OfsSection\User\Controllers\OfsEditorUserController;
 use App\Modules\RoboSection\Ofs\Controllers\RoboOfsController;
+use App\Modules\OfsSection\Admin\Controllers\OfsWorkAdminController;
 
 Route::get('/', function () {
     return view('auth.login');
@@ -104,6 +105,10 @@ Route::patch('/ofs/user/synch', [OfsEditorUserController::class, 'SynchOfs'])->m
 Route::get('/ofs/user/editor/table', [OfsEditorUserController::class, 'ShowTable'])->middleware('auth');
 Route::get('/ofs/user/scale', [OfsWorkUserController::class, 'ScaleView'])->middleware('auth');
 Route::get('/ofs/user/editor', [OfsEditorUserController::class, 'FrontView'])->middleware('auth')->name('ofs-editor-user');
+
+Route::get('/ofs/admin/table', [OfsWorkAdminController::class, 'ShowTable'])->middleware('auth', 'admin');
+Route::patch('/ofs/admin/rules/update', [OfsWorkAdminController::class, 'UpdateRules'])->middleware('auth', 'admin');
+Route::get('/ofs/admin', [OfsWorkAdminController::class, 'FrontView'])->middleware('auth', 'admin')->name('ofs-admin');
 
 //Группа адресов для обращения через curl
 Route::get('/robo/ofs/status', [RoboOfsController::class, 'ChangeStatus']);

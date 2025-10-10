@@ -21,7 +21,7 @@
 </div>
 <div class="col-md-2">
     <div class="top-category text-center">
-        <h3><a href="#">ОФС 2026</a></h3>
+        <h3><a href="{{ route('ofs-admin')}}">ОФС 2026</a></h3>
         <span class="icon flaticon-accounting"></span>
         <p><span class="number"></span> <span>ОФС за 2026 год</span></p>
     </div>
