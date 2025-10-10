@@ -102,6 +102,7 @@ Route::patch('/ofs/user/update', [OfsWorkUserController::class, 'UpdateOfs'])->m
 Route::get('/ofs/user', [OfsWorkUserController::class, 'FrontView'])->middleware('auth')->name('ofs-user');
 Route::patch('/ofs/user/synch', [OfsEditorUserController::class, 'SynchOfs'])->middleware('auth');
 Route::get('/ofs/user/editor/table', [OfsEditorUserController::class, 'ShowTable'])->middleware('auth');
+Route::get('/ofs/user/scale', [OfsWorkUserController::class, 'ScaleView'])->middleware('auth');
 Route::get('/ofs/user/editor', [OfsEditorUserController::class, 'FrontView'])->middleware('auth')->name('ofs-editor-user');
 
 //Группа адресов для обращения через curl

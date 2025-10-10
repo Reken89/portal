@@ -74,6 +74,22 @@ class OfsWorkUserController extends Controller
     }
     
     /**
+     * Front отрисовка страницы
+     * Для полноэкранного режима
+     *
+     * @param 
+     * @return 
+     */
+    public function ScaleView(Request $request)
+    {       
+        $info = [
+            'user'    => $request->user,
+            'chapter' => $request->chapter,          
+        ];
+        return view('ofs.user.scale', ['info' => $info]);   
+    }
+    
+    /**
      * Получаем информацию из БД
      *
      * @param UpdateOfsRequest $request

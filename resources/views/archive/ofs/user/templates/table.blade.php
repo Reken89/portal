@@ -94,6 +94,7 @@
                                         <div class="form-field">
                                             <div class="select-wrap">
                                                 <select name="year" class="form-control">
+                                                    <option value="2026">2026 год</option>
                                                     <option value="2025">2025 год</option>
                                                     <option value="2024">2024 год</option>
                                                     <option value="2023">2023 год</option>

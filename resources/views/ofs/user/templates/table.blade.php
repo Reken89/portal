@@ -31,7 +31,9 @@
             <td>17</td><td>18</td><td>19</td>
         </tr>             
         <tr>
-            <td class="sticky-col"><b>{{ $info['ofs'][0]['user']['name'] }} "{{ $info['chapter'][$info['ofs'][0]['chapter']] }}"</b></td><td></td><td></td><td></td>
+            <td class="sticky-col"><b>{{ $info['ofs'][0]['user']['name'] }} "{{ $info['chapter'][$info['ofs'][0]['chapter']] }}"</b></td>
+            <td><a href="/portal/public/ofs/user/scale?user={{ $info['ofs'][0]['user_id'] }}&chapter={{ $info['ofs'][0]['chapter'] }}"><img src="{{ asset('assets/icons/laptop.png') }}" alt=""></a></td>
+            <td></td><td></td>
             <td style="min-width: 50px; width: 50px;">Всего</td><td style="min-width: 50px; width: 50px;">Просроченная</td>
             <td style="min-width: 50px; width: 50px;">Всего</td><td style="min-width: 50px; width: 50px;">Просроченная</td>
             <td style="min-width: 110px; width: 110px;">Всего</td><td style="min-width: 50px; width: 50px;">Текущий</td>

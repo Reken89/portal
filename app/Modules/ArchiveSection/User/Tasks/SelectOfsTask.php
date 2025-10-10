@@ -6,6 +6,7 @@ use App\Core\Tasks\BaseTask;
 use App\Modules\ArchiveSection\Admin\Models\Archive23;
 use App\Modules\ArchiveSection\Admin\Models\Archive24;
 use App\Modules\ArchiveSection\Admin\Models\Archive25;
+use App\Modules\OfsSection\Admin\Models\Archive26;
 
 class SelectOfsTask extends BaseTask
 {
@@ -28,6 +29,10 @@ class SelectOfsTask extends BaseTask
         if($year == "2025"){
             $ofs = new Archive25;
             $ekr_id = "archives25.ekr_id";
+        }
+        if($year == "2026"){
+            $ofs = new Archive26;
+            $ekr_id = "archives26.ekr_id";
         }
         
         $info = $ofs::select('ekr_id', 'user_id')
@@ -54,7 +59,7 @@ class SelectOfsTask extends BaseTask
                 'user:id,name',
             ])    
             ->where('user_id', $user_id)    
-            ->where('year', $year)
+            //->where('year', $year)
             ->where('mounth', $mounth) 
             ->whereIn('chapter', $chapter) 
             ->join('ekr', $ekr_id, '=', 'ekr.id')  
