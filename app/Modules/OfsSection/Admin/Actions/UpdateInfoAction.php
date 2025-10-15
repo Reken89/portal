@@ -5,6 +5,7 @@ namespace App\Modules\OfsSection\Admin\Actions;
 use App\Core\Actions\BaseAction;
 use App\Modules\OfsSection\Admin\Dto\UpdateRulesDto;
 use App\Modules\OfsSection\Admin\Tasks\FinishTask;
+use App\Modules\OfsSection\Admin\Tasks\CounterTask;
 
 class UpdateInfoAction extends BaseAction
 {   
@@ -20,6 +21,17 @@ class UpdateInfoAction extends BaseAction
         $this->task(FinishTask::class)->UpdateInfo(1, $dto->finish);    
         $this->task(FinishTask::class)->UpdateInfo(2, $dto->old); 
     }   
+    
+    /**
+     * Обновляем счетчик
+     *
+     * @param 
+     * @return 
+     */
+    public function UpdateCounter()
+    {   
+        $this->task(CounterTask::class)->UpdateInfo(1);     
+    }  
 }
 
 

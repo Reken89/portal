@@ -107,6 +107,7 @@ Route::get('/ofs/user/scale', [OfsWorkUserController::class, 'ScaleView'])->midd
 Route::get('/ofs/user/editor', [OfsEditorUserController::class, 'FrontView'])->middleware('auth')->name('ofs-editor-user');
 
 Route::get('/ofs/admin/table', [OfsWorkAdminController::class, 'ShowTable'])->middleware('auth', 'admin');
+Route::get('/ofs/admin/export', [OfsWorkAdminController::class, 'ExportTable'])->middleware('auth', 'admin');
 Route::patch('/ofs/admin/rules/update', [OfsWorkAdminController::class, 'UpdateRules'])->middleware('auth', 'admin');
 Route::get('/ofs/admin', [OfsWorkAdminController::class, 'FrontView'])->middleware('auth', 'admin')->name('ofs-admin');
 

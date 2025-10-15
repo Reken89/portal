@@ -17,7 +17,7 @@ class CounterTask extends BaseTask
     {    
         $result = Counter::find($id)
             ->update([                
-                'point' => ofs::raw("point + 1"),
+                'point' => Counter::raw("point + 1"),
                 'date'  => date('Y-m-d'),
             ]);       
         return $result == true ? true : false;                   

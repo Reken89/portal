@@ -4,11 +4,15 @@ namespace App\Modules\OfsSection\Admin\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 use App\Core\Controllers\Controller;
 use App\Modules\OfsSection\Admin\Actions\UpdateInfoAction;
 use App\Modules\OfsSection\Admin\Actions\SelectInfoAction;
 use App\Modules\OfsSection\Admin\Dto\UpdateRulesDto;
+use App\Modules\OfsSection\Admin\Dto\ExportDto;
 use App\Modules\OfsSection\Admin\Requests\UpdateRulesRequest;
+use App\Modules\OfsSection\Admin\Requests\ExportRequest;
+use App\Modules\OfsSection\Admin\Exports\ExportTable;
 
 class OfsWorkAdminController extends Controller
 {   
@@ -56,5 +60,19 @@ class OfsWorkAdminController extends Controller
         $dto = UpdateRulesDto::fromRequest($request);
         $this->action(UpdateInfoAction::class)->UpdateRules($dto);
     }
-
+    
+    /**
+     * Выгрузка таблицы в EXCEL
+     * 
+     * @param 
+     * @return Excel
+     */
+    public function ExportTable(ExportRequest $request)
+    {
+        $dto = ExportDto::fromRequest($request);
+        $info = $this->action(SelectInfoAction::class)->SelectOfs($dto);
+        $this->action(UpdateInfoAction::class)->UpdateCounter();
+        session(['info' => $info]);
+        return Excel::download(new ExportTable, 'table.xlsx');
+    }
 }

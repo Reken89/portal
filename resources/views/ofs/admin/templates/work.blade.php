@@ -68,7 +68,7 @@
             <div style="background-color: PaleTurquoise;" class="container">
                 <div class="row"> 
                     <div class="col-md-12 col-lg-8 mb-5">         
-                        <form action="/portal/public/archive/admin/export" id="parameters" method="get" class="p-5 bg-white">
+                        <form action="/portal/public/ofs/admin/export" id="parameters" method="get" class="p-5 bg-white">
                             
                             <div class="row form-group">
                                 <div class="col-md-12 mb-3 mb-md-0">
@@ -76,7 +76,7 @@
                                     <div class="form-group">
                                         <div class="form-field">
                                             <div class="checkselect">                                                
-                                                <label><input type="checkbox" name="mounth[]" value="1" checked> январь</label>
+                                                <label><input type="checkbox" name="mounth[]" value="1"> январь</label>
                                                 <label><input type="checkbox" name="mounth[]" value="2">февраль</label>
                                                 <label><input type="checkbox" name="mounth[]" value="3">март</label>
                                                 <label><input type="checkbox" name="mounth[]" value="4">апрель</label>
@@ -100,7 +100,7 @@
                                     <div class="form-group">
                                         <div class="form-field">
                                             <div class="checkselect">
-                                                <label><input type="checkbox" name="chapter[]" value="1" checked> МБ МЗ(МБ)</label>
+                                                <label><input type="checkbox" name="chapter[]" value="1"> МБ МЗ(МБ)</label>
                                                 <label><input type="checkbox" name="chapter[]" value="2"> МБ ИЦ</label>
                                                 <label><input type="checkbox" name="chapter[]" value="3"> РК МЗ(РК)</label>
                                                 <label><input type="checkbox" name="chapter[]" value="4"> РК ИЦ</label>
@@ -117,7 +117,7 @@
                                     <div class="form-group">
                                         <div class="form-field">
                                             <div class="checkselect">                                                
-                                                <label><input type="checkbox" name="user[]" value="25" checked>Администрация Костомукшского муниципального округа</label>
+                                                <label><input type="checkbox" name="user[]" value="25">Администрация Костомукшского муниципального округа</label>
                                                 <label><input type="checkbox" name="user[]" value="26">Муниципальные закупки Костомукшского муниципального округа</label>
                                                 <label><input type="checkbox" name="user[]" value="23">Комитет по управлению муниципальной собственностью</label>
                                                 <label><input type="checkbox" name="user[]" value="27">Совет Костомукшского муниципального округа</label>
@@ -134,12 +134,10 @@
                                                 <label><input type="checkbox" name="user[]" value="16">МБОУ ДО КМО "Спортивная школа"</label>
                                                 <label><input type="checkbox" name="user[]" value="20">Муниципальный архив и Центральная библиотека</label>
                                                 <label><input type="checkbox" name="user[]" value="21">МБУ КМО "Центр культурного развития"</label>
-                                                <label><input type="checkbox" name="user[]" value="22">МАУ ДПО «ЦРО»</label>
                                                 <label><input type="checkbox" name="user[]" value="9">МКДОУ "Ауринко"</label>
                                                 <label><input type="checkbox" name="user[]" value="15">МКДОУ "Солнышко"</label>
                                                 <label><input type="checkbox" name="user[]" value="13">МКДОУ "Кораблик"</label>
-                                                <label><input type="checkbox" name="user[]" value="10">МКДОУ "Берёзка"</label>
-                                                <label><input type="checkbox" name="user[]" value="12">МКДОУ "Золотой ключик"</label>                                               
+                                                <label><input type="checkbox" name="user[]" value="10">МКДОУ "Берёзка"</label>                                            
                                             </div>
                                         </div>
                                     </div>
@@ -148,7 +146,7 @@
 
                             <div class="row form-group">
                                 <div class="col-md-12">
-                                    <button class="btn btn-primary  py-2 px-5" id='btn_add' type="submit">Добавить</button>
+                                    <button class="btn btn-primary  py-2 px-5" id='btn_add' type="submit">Выгрузить</button>
                                 </div>
                             </div>
                         </form>
