@@ -65,8 +65,8 @@
         </div>
 
         <section class="ftco-section bg-light">
-            <div class="container">
-                <div class="row">      
+            <div style="background-color: PaleTurquoise;" class="container">
+                <div class="row"> 
                     <div class="col-md-12 col-lg-8 mb-5">         
                         <form action="/portal/public/archive/admin/export" id="parameters" method="get" class="p-5 bg-white">
                             
@@ -187,8 +187,14 @@
                             </div>
                             </form>
                         </div>   
-                    </div>                    
-                   
+                        
+                        <div class="p-4 mb-3 bg-white">
+                            <h3 class="h5 text-black mb-3"><font color="red">Статистика:</h3>
+                            <p class="mb-0 font-weight-bold"><font color="red">Количество обращений ФЭУ к модулю ОФС равно {{ $info['counter']['point'] }}</p>        
+                            <p class="mb-0 font-weight-bold"><font color="red">Последняя дата обращения {{ $info['counter']['date'] }}</p>   
+                        </div> 
+                    </div>     
+                                                         
                 </div>
             </div>           
         </section>

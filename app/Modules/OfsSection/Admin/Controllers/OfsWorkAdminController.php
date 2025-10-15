@@ -35,9 +35,10 @@ class OfsWorkAdminController extends Controller
     public function ShowTable()
     {  
         $info = [
-            'finish' => $this->action(SelectInfoAction::class)->SelectRules(1),
-            'old'    => $this->action(SelectInfoAction::class)->SelectRules(2),
-            'email'  => Auth::user()->email(),
+            'finish'  => $this->action(SelectInfoAction::class)->SelectRules(1),
+            'old'     => $this->action(SelectInfoAction::class)->SelectRules(2),
+            'counter' => $this->action(SelectInfoAction::class)->SelectCounter(),
+            'email'   => Auth::user()->email(),
         ];
         return view('ofs.admin.templates.work', ['info' => $info]);     
     }
