@@ -3,7 +3,7 @@
 namespace App\Modules\OfsSection\Admin\Tasks;
 
 use App\Core\Tasks\BaseTask;
-use App\Modules\OfsSection\Admin\Models\Ofs;
+use App\Modules\OfsSection\Admin\Models\Archive26;
 use App\Modules\OfsSection\Admin\Dto\ExportDto;
 
 class OfsTask extends BaseTask
@@ -16,7 +16,7 @@ class OfsTask extends BaseTask
      */
     public function SelectInfo(ExportDto $dto): array 
     {     
-        return Ofs::select('ekr_id')
+        return Archive26::select('ekr_id')
             ->selectRaw('SUM(`lbo`) as lbo')
             ->selectRaw('SUM(`prepaid`) as prepaid')
             ->selectRaw('SUM(`credit_year_all`) as credit_year_all')

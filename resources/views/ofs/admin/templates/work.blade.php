@@ -40,6 +40,7 @@
                 <div class="collapse navbar-collapse" id="ftco-nav">
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item"><a href="/portal/public/home" class="nav-link">Главная</a></li>
+                        <li class="nav-item"><a href="/portal/public/ofs/admin/synch" class="nav-link">Синхронизация</a></li>
                         <li class="nav-item cta cta-colored"><a href="{{ route('logout') }}" class="nav-link" onclick="event.preventDefault();
                             document.getElementById('logout-form').submit();">Выход</a>
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
