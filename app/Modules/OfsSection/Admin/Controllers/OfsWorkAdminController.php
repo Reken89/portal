@@ -70,7 +70,10 @@ class OfsWorkAdminController extends Controller
     public function ExportTable(ExportRequest $request)
     {
         $dto = ExportDto::fromRequest($request);
-        $info = $this->action(SelectInfoAction::class)->SelectOfs($dto);
+        $info = [
+            'ofs'    => $this->action(SelectInfoAction::class)->SelectOfs($dto),
+            'errors' => $this->action(SelectInfoAction::class)->SelectErrors($dto)
+        ];
         $this->action(UpdateInfoAction::class)->UpdateCounter();
         session(['info' => $info]);
         return Excel::download(new ExportTable, 'table.xlsx');

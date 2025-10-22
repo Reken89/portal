@@ -44,5 +44,16 @@ class SelectInfoAction extends BaseAction
     {   
         return $this->task(OfsTask::class)->SelectInfo($dto);  
     } 
+    
+    /**
+     * Проверяем таблицу на наличие ошибок
+     *
+     * @param 
+     * @return bool
+     */
+    public function SelectErrors(ExportDto $dto)
+    {   
+        return $this->task(OfsTask::class)->CheckingError($dto);  
+    } 
 }
 

@@ -47,5 +47,22 @@ class OfsTask extends BaseTask
             ->get()
             ->toArray();                  
     }
+    
+    /**
+     * Проверяем таблицу на наличие ошибок
+     *
+     * @param ExportDto $dto
+     * @return bool
+     */
+    public function CheckingError(ExportDto $dto): bool
+    {     
+        return Archive26::select()
+            ->whereIn('user_id', $dto->user)    
+            ->whereIn('mounth', $dto->mounth) 
+            ->whereIn('chapter', $dto->chapter)     
+            ->WhereRaw('((`credit_year_all` + `fact_all` - `debit_year_all` - `kassa_all`) - (`credit_end_all` - `debit_end_all`) + `return_old_year`) <> 0')
+            ->WhereRaw('(`lbo` - `fact_all` + `prepaid` - `credit_year_all`) < 0')       
+            ->count() > 0;               
+    }
 }
 

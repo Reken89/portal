@@ -1,4 +1,9 @@
-<p>Таблица</p>
+@if($info['errors'] == true)
+    <p><b>Таблица содержит ошибки!</b></p>
+@else
+    <p><b>Таблица не содержит ошибок!</b></p>
+@endif
+<p></p>
 @php
     $total = [
         'lbo'              => 0,
@@ -20,7 +25,7 @@
         'total2'           => 0,
     ];
 
-    foreach($info as $value){
+    foreach($info['ofs'] as $value){
         if($value['ekr']['main'] == "Yes" && $value['ekr']['shared'] == "No"){
             $total['lbo'] = $total['lbo'] + $value['lbo'];
             $total['prepaid'] = $total['prepaid'] + $value['prepaid'];
@@ -79,7 +84,7 @@
             <td></td><td></td><td></td>
         </tr>
                
-            @foreach ($info as $value)  
+            @foreach ($info['ofs'] as $value)  
                 
                 @if ($value['ekr']['main'] == 'Yes' || $value['ekr']['main'] == 'Yes')
                     <tr>
