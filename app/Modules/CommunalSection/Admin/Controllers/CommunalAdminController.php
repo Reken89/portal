@@ -39,8 +39,8 @@ class CommunalAdminController extends Controller
         }else{
             $year = [date('Y')];
             $mounth = [ltrim(date('m') - 1, "0")];
-            if($mounth == 0){
-                $mounth = 1;
+            if($mounth[0] == null){
+                $mounth = [1];
             }
         }
         

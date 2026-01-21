@@ -29,7 +29,7 @@ class UtilitiesTarifAdminController extends Controller
             $mounth = $request->mounth;
         }else{
             $mounth = [ltrim(date('m') - 1, "0")];
-            if($mounth == 0){
+            if($mounth[0] == null){
                 $mounth = [1];
             }
         }

@@ -41,7 +41,7 @@ class UtilitiesTableAdminController extends Controller
                 $mounth = $request->mounth;
             }else{
                 $mounth = [ltrim(date('m') - 1, "0")];
-                if($mounth == 0){
+                if($mounth[0] == null){
                     $mounth = [1];
                 }
             }
@@ -51,7 +51,7 @@ class UtilitiesTableAdminController extends Controller
             session(['option' => false]); 
         endif;
   
-        
+
         $year = [2026];
         $mounth_name = [];       
         foreach ($mounth as $key => $value) {
@@ -66,7 +66,7 @@ class UtilitiesTableAdminController extends Controller
             'mounth_name' => $mounth_name,
         ];
         session(['info' => $info]);
-        return view('utilities.admin.templates.table', ['info' => $info]);   
+        return view('utilities.admin.templates.table', ['info' => $info]); 
     }
     
     /**
