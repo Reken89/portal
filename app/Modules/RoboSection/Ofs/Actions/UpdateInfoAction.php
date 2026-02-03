@@ -21,8 +21,8 @@ class UpdateInfoAction extends BaseAction
         $finish = $this->task(FinishTask::class)->SelectInfo('old_mounth'); 
         if($finish['date'] == "yes"){
             $this->task(FinishTask::class)->UpdateInfo(2, 'no');
-            //$mounth = ltrim(date('m'), '0') - 1;
-            $mounth = 1;
+            $mounth = ltrim(date('m'), '0') - 1;
+            //$mounth = 1;
             $mounth_array = $this->task(CoordinatorTask::class)->SelectMounth($mounth);
             foreach ($mounth_array as $value) {
                 $ofs = $this->task(OfsTask::class)->SelectInfo($value['user_id']); 

@@ -23,8 +23,8 @@ class SynchMounthAction extends BaseAction
         if($day_x != $day){
             return false;
         }
-        //$mounth = ltrim(date('m'), '0') - 1;
-        $mounth = 1;
+        $mounth = ltrim(date('m'), '0') - 1;
+        //$mounth = 1;
         $this->task(OfsTask::class)->UpdateMounth();
         $this->task(CoordinatorTask::class)->UpdateMounth($mounth);
         $this->task(FinishTask::class)->UpdateInfo(1, '17');

@@ -20,16 +20,16 @@ class SynchOfsAction extends BaseAction
      */
     public function SynchOfs()
     {   
-        //$day = ltrim(date('d'), '0') - 1;
-        $day = 17;
+        $day = ltrim(date('d'), '0') - 1;
+        //$day = 17;
         $day_x = $this->task(FinishTask::class)->SelectInfo('ofs');       
         if($day_x['date'] != $day){
             return false;
         }
         
         $mounth_min = $this->task(CoordinatorTask::class)->MinMounth();
-        //$mounth = ltrim(date('m'), '0') - 1;
-        $mounth = 1;
+        $mounth = ltrim(date('m'), '0') - 1;
+        //$mounth = 1;
         if($mounth_min == $mounth){
             foreach ($this->users as $user_id) {
                 $ofs = $this->task(OfsTask::class)->SelectInfo($user_id);
