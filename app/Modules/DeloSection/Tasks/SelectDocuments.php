@@ -62,7 +62,7 @@ class SelectDocuments extends BaseTask
     public function GetNumber(string $variant)
     {
         $result = Document::select()      
-            ->whereDate('date', '>', '2025-01-01') 
+            ->whereDate('date', '>', '2026-01-01') 
             ->where('type', $variant)     
             ->orderBy('id', 'desc')    
             ->first()
