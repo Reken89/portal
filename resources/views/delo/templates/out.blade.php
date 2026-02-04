@@ -149,6 +149,7 @@
                             <div class="col-md-12 col-lg-8 mb-5">
                                 @foreach ($info['documents'] as $value) 
                                     @php
+                                        //var_dump($value['npa']);
                                         $correspondent = mb_substr($value['correspondent']['title'], 0, 40, "UTF-8");
                                     @endphp
                                                                        
@@ -246,7 +247,7 @@
                                             <div style="background-color: PaleTurquoise;" class="job-post-item p-2 d-block d-lg-flex align-items-center">
                                                 <div class="one-third mb-4 mb-md-0">
                                                     <div class="job-post-item-header align-items-center">
-                                                        <span class="subadge">№ {{ $value['number'] }} ({{ $value['npa']['title'] }})</span>
+                                                        <span class="subadge">№ {{ $value['number'] }} ({{ $value['npa']['title'] }}) </span>
                                                         <p><b>{{ $correspondent }}</b></p>
                                                         <p class="mb-4">{{ $value['content'] }}</p>
                                                     </div>
