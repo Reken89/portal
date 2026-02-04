@@ -36,7 +36,8 @@ class CommunalUserController extends Controller
         if(isset($request->year)){
             $year = $request->year;
         }else{
-            $year = [date('Y')];
+            //$year = [date('Y')];
+            $year = [2025];
         }
 
         $id = Auth::user()->id();

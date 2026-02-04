@@ -37,11 +37,13 @@ class CommunalAdminController extends Controller
             $year = $request->year;
             $mounth = $request->mounth;
         }else{
-            $year = [date('Y')];
-            $mounth = [ltrim(date('m') - 1, "0")];
-            if($mounth[0] == null){
-                $mounth = [1];
-            }
+            //$year = [date('Y')];
+            //$mounth = [ltrim(date('m') - 1, "0")];
+            //if($mounth[0] == null){
+            //    $mounth = [1];
+            //}
+            $year = [2025];
+            $mounth = [12];
         }
         
         $mounth_name = [];       
