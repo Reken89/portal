@@ -63,27 +63,31 @@
                     }
                     $main_id = $value['id'];
                 @endphp
-                <tr>
-                    <td style="height: 65px;" class="sticky-col"><p class="text-scale">{{ $value['ekr']['title'] }}</p></td>
-                    <td>{{ $value['ekr']['ekr'] }}</td>
-                    <td>{{ number_format($value['lbo'], 2, ',', ' ') }}</td>
-                    <td>{{ number_format($value['prepaid'], 2, ',', ' ') }}</td>
-                    <td>{{ number_format($value['credit_year_all'], 2, ',', ' ') }}</td>
-                    <td>{{ number_format($value['credit_year_term'], 2, ',', ' ') }}</td>
-                    <td>{{ number_format($value['debit_year_all'], 2, ',', ' ') }}</td>
-                    <td>{{ number_format($value['debit_year_term'], 2, ',', ' ') }}</td>
-                    <td>{{ number_format($value['fact_all'], 2, ',', ' ') }}</td>
-                    <td>{{ number_format($value['fact_mounth'], 2, ',', ' ') }}</td>
-                    <td>{{ number_format($value['kassa_all'], 2, ',', ' ') }}</td>
-                    <td>{{ number_format($value['kassa_mounth'], 2, ',', ' ') }}</td>
-                    <td>{{ number_format($value['credit_end_all'], 2, ',', ' ') }}</td>
-                    <td>{{ number_format($value['credit_end_term'], 2, ',', ' ') }}</td>
-                    <td>{{ number_format($value['debit_end_all'], 2, ',', ' ') }}</td>
-                    <td>{{ number_format($value['debit_end_term'], 2, ',', ' ') }}</td>
-                    <td>{{ number_format($value['return_old_year'], 2, ',', ' ') }}</td>
-                    <td><font color="{{ $color_t1 }}">{{ number_format($value['total1'], 2, ',', ' ') }}</td>
-                    <td><font color="{{ $color_t2 }}">{{ number_format($value['total2'], 2, ',', ' ') }}</td>
-                </tr>                
+                
+                @if($value['ekr']['ekr'] >= 341 && $value['ekr']['ekr'] <= 349)
+                @else
+                    <tr>
+                        <td style="height: 65px;" class="sticky-col"><p class="text-scale">{{ $value['ekr']['title'] }}</p></td>
+                        <td>{{ $value['ekr']['ekr'] }}</td>
+                        <td>{{ number_format($value['lbo'], 2, ',', ' ') }}</td>
+                        <td>{{ number_format($value['prepaid'], 2, ',', ' ') }}</td>
+                        <td>{{ number_format($value['credit_year_all'], 2, ',', ' ') }}</td>
+                        <td>{{ number_format($value['credit_year_term'], 2, ',', ' ') }}</td>
+                        <td>{{ number_format($value['debit_year_all'], 2, ',', ' ') }}</td>
+                        <td>{{ number_format($value['debit_year_term'], 2, ',', ' ') }}</td>
+                        <td>{{ number_format($value['fact_all'], 2, ',', ' ') }}</td>
+                        <td>{{ number_format($value['fact_mounth'], 2, ',', ' ') }}</td>
+                        <td>{{ number_format($value['kassa_all'], 2, ',', ' ') }}</td>
+                        <td>{{ number_format($value['kassa_mounth'], 2, ',', ' ') }}</td>
+                        <td>{{ number_format($value['credit_end_all'], 2, ',', ' ') }}</td>
+                        <td>{{ number_format($value['credit_end_term'], 2, ',', ' ') }}</td>
+                        <td>{{ number_format($value['debit_end_all'], 2, ',', ' ') }}</td>
+                        <td>{{ number_format($value['debit_end_term'], 2, ',', ' ') }}</td>
+                        <td>{{ number_format($value['return_old_year'], 2, ',', ' ') }}</td>
+                        <td><font color="{{ $color_t1 }}">{{ number_format($value['total1'], 2, ',', ' ') }}</td>
+                        <td><font color="{{ $color_t2 }}">{{ number_format($value['total2'], 2, ',', ' ') }}</td>
+                    </tr> 
+                @endif
             @elseif ($info['structure'] == 'open')
                 <tr class="line-row">
                     <input type="hidden" class="ekr_id" value="{{ $value['ekr_id'] }}">
@@ -110,7 +114,12 @@
                     <input type="hidden" class="return_old_year_old" value="{{ $value['return_old_year'] }}">
                     
                     <td style="height: 65px;" class="sticky-col"><p class="text-scale">{{ $value['ekr']['title'] }}</p></td>
-                    <td>{{ $value['ekr']['ekr'] }}</td>
+                    @if($value['ekr']['ekr'] >= 341 && $value['ekr']['ekr'] <= 349)
+                        <td>340</td>
+                    @else
+                        <td>{{ $value['ekr']['ekr'] }}</td>
+                    @endif
+                    
                     <td><input type="text" size="10" class="lbo" value="{{ number_format($value['lbo'], 2, ',', ' ') }}"></td>  
                     <td><input type="text" size="10" class="prepaid" value="{{ number_format($value['prepaid'], 2, ',', ' ') }}"></td>
                     <td><input type="text" size="10" class="credit_year_all" value="{{ number_format($value['credit_year_all'], 2, ',', ' ') }}"></td>
@@ -132,7 +141,11 @@
             @else
                 <tr>
                     <td style="height: 65px;" class="sticky-col"><p class="text-scale">{{ $value['ekr']['title'] }}</p></td>
-                    <td>{{ $value['ekr']['ekr'] }}</td>
+                    @if($value['ekr']['ekr'] >= 341 && $value['ekr']['ekr'] <= 349)
+                        <td>340</td>
+                    @else
+                        <td>{{ $value['ekr']['ekr'] }}</td>
+                    @endif
                     <td>{{ number_format($value['lbo'], 2, ',', ' ') }}</td>  
                     <td>{{ number_format($value['prepaid'], 2, ',', ' ') }}</td>
                     <td>{{ number_format($value['credit_year_all'], 2, ',', ' ') }}</td>
