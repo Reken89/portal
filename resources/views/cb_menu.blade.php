@@ -14,7 +14,7 @@
 </div>
 <div class="col-md-2">
     <div class="top-category text-center">
-        <h3><a href="#">Модуль №3</a></h3>
+        <h3><a href="{{ route('ofs26-user')}}">Модуль №3</a></h3>
         <span class="icon flaticon-contact"></span>
         <p><span class="number"></span> <span>Модуль закрыт</span></p>
     </div>

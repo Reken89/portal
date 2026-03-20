@@ -20,6 +20,7 @@ use App\Modules\OfsSection\User\Controllers\OfsEditorUserController;
 use App\Modules\RoboSection\Ofs\Controllers\RoboOfsController;
 use App\Modules\OfsSection\Admin\Controllers\OfsWorkAdminController;
 use App\Modules\OfsSection\Admin\Controllers\OfsSynchAdminController;
+use App\Modules\Ofs26Section\User\Controllers\Ofs26UserController;
 
 Route::get('/', function () {
     return view('auth.login');
@@ -114,6 +115,11 @@ Route::get('/ofs/admin/synch/table', [OfsSynchAdminController::class, 'ShowTable
 Route::patch('/ofs/admin/copy', [OfsSynchAdminController::class, 'CopyOfs'])->middleware('auth', 'admin');
 Route::get('/ofs/admin', [OfsWorkAdminController::class, 'FrontView'])->middleware('auth', 'admin')->name('ofs-admin');
 Route::get('/ofs/admin/synch', [OfsSynchAdminController::class, 'FrontView'])->middleware('auth', 'admin');
+
+//Группа адресов для модуля "ОФС 26"
+Route::get('/ofs26/user/table', [Ofs26UserController::class, 'ShowTable'])->middleware('auth');
+Route::get('/ofs26/user', [Ofs26UserController::class, 'FrontView'])->middleware('auth')->name('ofs26-user');
+Route::patch('/ofs26/user/update', [Ofs26UserController::class, 'UpdateOfs'])->middleware('auth');
 
 //Группа адресов для обращения через curl
 Route::get('/robo/ofs/status', [RoboOfsController::class, 'ChangeStatus']);
