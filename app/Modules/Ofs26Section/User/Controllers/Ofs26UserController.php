@@ -58,7 +58,7 @@ class Ofs26UserController extends Controller
     {  
         if($request->user !== NULL){ 
             $ofs = $this->action(SelectInfoAction::class)->SelectInfo($request->user, $request->mounth, $request->chapter);
-            $structure = $ofs{0}['status'] == 2 ? "open" : "close";
+            $structure = $ofs[0]['status'] == 2 ? "open" : "close";
             $info = [
                 'status'    => true,
                 'ofs'       => $ofs,
