@@ -4,12 +4,16 @@ namespace App\Modules\Ofs26Section\User\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 use App\Core\Controllers\Controller;
+use App\Modules\Ofs26Section\User\Exports\ExportTable;
 use App\Modules\Ofs26Section\User\Actions\SelectInfoAction;
 use App\Modules\Ofs26Section\User\Actions\CalculateInfoAction;
 use App\Modules\Ofs26Section\User\Actions\UpdateInfoAction;
 use App\Modules\Ofs26Section\User\Requests\UpdateOfsRequest;
+use App\Modules\Ofs26Section\User\Requests\SynchOfsRequest;
 use App\Modules\Ofs26Section\User\Dto\UpdateOfsDto;
+use App\Modules\Ofs26Section\User\Dto\SynchOfsDto;
 
 class Ofs26UserController extends Controller
 {   
@@ -54,10 +58,11 @@ class Ofs26UserController extends Controller
     {  
         if($request->user !== NULL){ 
             $ofs = $this->action(SelectInfoAction::class)->SelectInfo($request->user, $request->mounth, $request->chapter);
+            $structure = $ofs{0}['status'] == 2 ? "open" : "close";
             $info = [
                 'status'    => true,
                 'ofs'       => $ofs,
-                'structure' => "open",
+                'structure' => $structure,
                 'chapter'   => $this->chapter,
                 'mounth'    => $this->mounth,
                 'total'     => $this->action(CalculateInfoAction::class)->SelectTotal($ofs),
@@ -80,6 +85,54 @@ class Ofs26UserController extends Controller
     {  
         $dto = UpdateOfsDto::fromRequest($request);   
         $this->action(UpdateInfoAction::class)->UpdateOfs($dto);
+    }
+    
+    /**
+     * Синхронизация ОФС
+     *
+     * @param SynchOfsRequest $request
+     * @return 
+     */
+    public function SynchOfs(SynchOfsRequest $request)
+    {  
+        $dto = SynchOfsDto::fromRequest($request); 
+        $this->action(UpdateInfoAction::class)->SynchOfs($dto);
+        echo "Синхронизация выполнена!";
+    }
+    
+    /**
+     * Меняем статус
+     *
+     * @param SynchOfsRequest $request
+     * @return 
+     */
+    public function CloseOfs(SynchOfsRequest $request)
+    {  
+        $dto = SynchOfsDto::fromRequest($request); 
+        $result = $this->action(UpdateInfoAction::class)->UpdateStatus($dto);
+
+        if($result === true){
+            echo "Таблица закрыта!";
+        }else{
+            echo "Таблица уже закрыта!!";
+        }
+    }
+    
+    /**
+     * Выгрузка таблицы в EXCEL
+     * 
+     * @param SynchOfsRequest $request
+     * @return Excel
+     */
+    public function ExportTable(SynchOfsRequest $request)
+    {
+        $dto = SynchOfsDto::fromRequest($request); 
+        $ofs = $this->action(SelectInfoAction::class)->SelectInfo($dto->user_id, $dto->mounth, $dto->chapter);
+        $data = [
+            'ofs'   => $ofs,
+            'total' => $this->action(CalculateInfoAction::class)->SelectTotal($ofs),
+        ];
+        return Excel::download(new ExportTable($data), 'table.xlsx');
     }
 
 }

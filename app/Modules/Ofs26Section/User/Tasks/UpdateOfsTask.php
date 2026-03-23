@@ -5,6 +5,7 @@ namespace App\Modules\Ofs26Section\User\Tasks;
 use App\Core\Tasks\BaseTask;
 use Illuminate\Support\Facades\DB;
 use App\Modules\Ofs26Section\User\Dto\UpdateOfsDto;
+use App\Modules\Ofs26Section\User\Dto\SynchOfsDto;
 
 class UpdateOfsTask extends BaseTask
 {   
@@ -166,6 +167,23 @@ class UpdateOfsTask extends BaseTask
                 ]);
             }          
         });  
+    }
+
+    /**
+     * Меняем статус
+     *
+     * @param SynchOfsDto $dto
+     * @return bool
+     */
+    public function UpdateStatus(SynchOfsDto $dto)
+    { 
+        return (bool) DB::table('ofs26')
+        ->where('user_id', $dto->user_id)
+        ->where('mounth', $dto->mounth)
+        ->where('status', '!=', 1)
+        ->update([                
+            'status' => 1,
+        ]);       
     }    
 }
 

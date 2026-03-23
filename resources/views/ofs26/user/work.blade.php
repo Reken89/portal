@@ -171,8 +171,20 @@
                     <div class="col-lg-4">
                         <div class="p-4 mb-3 bg-white">
                             <h3 class="h5 text-black mb-3"><font color="red">Информация:</h3>
-                            <p class="mb-0 font-weight-bold"><font color="red">месяц: ??</p>
+                            <p class="mb-0 font-weight-bold"><font color="red">учреждение: </p>
                             <p class="mb-0 font-weight-bold"><font color="red">отчетная дата: ??</p>
+                            </br>
+                            @if($info['mounth'] > 1)
+                            <tr>
+                                <input type="hidden" class="mounth" value="{{ $info['mounth'] }}">
+                                <input type="hidden" class="user" value="{{ $info['user'] }}">
+                                <input type="hidden" class="chapter" value="{{ $info['chapter'] }}">
+                                <td style="min-width: 200px; width: 200px;"><p><a href="" onclick="return false"><img src="{{ asset('assets/icons/calculator.png') }}" alt="" id="synch"></a> - Синхронизация</p></td>
+                                <td style="min-width: 200px; width: 200px;"><p><a href="" onclick="return false"><img src="{{ asset('assets/icons/tick.png') }}" alt="" id="close"></a> - Отправить в ФЭУ</p></td>
+                                <td style="min-width: 200px; width: 200px;"><p><a href="" onclick="return false"><img src="{{ asset('assets/icons/excel-48.png') }}" alt="" id="xlsx"></a> - Экспорт в xlsx</p></td>
+                                <td style="min-width: 200px; width: 200px;"><p><a href="" onclick="return false"><img src="{{ asset('assets/icons/laptop.png') }}" alt="" id="fullscreen"></a> - Полноэкранный режим</p></td>
+                            </tr>
+                            @endif
                         </div>   
                     </div>                    
                   
@@ -311,6 +323,64 @@
                     });  
                 } 
                 fetch_data();
+                
+                //Выполняем действие (синхронизация) при нажатии на кнопку
+                $(document).on('click', '#synch', function(){
+                    let tr = this.closest('tr');
+                    let mounth = $('.mounth', tr).val();
+                    let user_id = $('.user', tr).val();
+                    let chapter = $('.chapter', tr).val();
+                    
+                    $.ajax({
+                        url:"/portal/public/ofs26/user/synch",  
+                        method:"patch",
+                        data:{
+                            "_token": "{{ csrf_token() }}",
+                            user_id, chapter, mounth
+                        },
+                        dataType:"text",  
+                        success:function(data){  
+                            alert(data);
+                            fetch_data();  
+                        } 
+                    })             
+                })
+                
+                //Выполняем действие (изменение статуса) при нажатии на кнопку
+                $(document).on('click', '#close', function(){
+                    let tr = this.closest('tr');
+                    let mounth = $('.mounth', tr).val();
+                    let user_id = $('.user', tr).val();
+                    let chapter = $('.chapter', tr).val();
+                    
+                    $.ajax({
+                        url:"/portal/public/ofs26/user/close",  
+                        method:"patch",
+                        data:{
+                            "_token": "{{ csrf_token() }}",
+                            user_id, chapter, mounth
+                        },
+                        dataType:"text",  
+                        success:function(data){  
+                            alert(data);
+                            fetch_data();  
+                        } 
+                    })             
+                })
+                
+                //Выполняем действие (EXCEL) при нажатии на кнопку
+                $(document).on('click', '#xlsx', function(){
+                    let tr = this.closest('tr');
+                    let mounth = $('.mounth', tr).val();
+                    let user_id = $('.user', tr).val();
+                    let chapter = $('.chapter', tr).val();
+                    
+                    // Формируем строку запроса
+                    let url = `/portal/public/ofs26/user/export?user_id=${user_id}&chapter=${chapter}&mounth=${mounth}`;
+
+                    // Просто переходим по ней
+                    window.location.href = url;            
+                })
             });
         </script>
     </body>

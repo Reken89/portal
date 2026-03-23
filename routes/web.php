@@ -120,6 +120,9 @@ Route::get('/ofs/admin/synch', [OfsSynchAdminController::class, 'FrontView'])->m
 Route::get('/ofs26/user/table', [Ofs26UserController::class, 'ShowTable'])->middleware('auth');
 Route::get('/ofs26/user', [Ofs26UserController::class, 'FrontView'])->middleware('auth')->name('ofs26-user');
 Route::patch('/ofs26/user/update', [Ofs26UserController::class, 'UpdateOfs'])->middleware('auth');
+Route::patch('/ofs26/user/synch', [Ofs26UserController::class, 'SynchOfs'])->middleware('auth');
+Route::patch('/ofs26/user/close', [Ofs26UserController::class, 'CloseOfs'])->middleware('auth');
+Route::get('/ofs26/user/export', [Ofs26UserController::class, 'ExportTable'])->middleware('auth');
 
 //Группа адресов для обращения через curl
 Route::get('/robo/ofs/status', [RoboOfsController::class, 'ChangeStatus']);
