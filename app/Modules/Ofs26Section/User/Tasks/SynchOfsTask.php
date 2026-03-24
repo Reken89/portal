@@ -27,7 +27,7 @@ class SynchOfsTask extends BaseTask
             ->selectRaw('(lbo - fact_all + prepaid - credit_year_all) AS total2')        
             ->where('user_id', $dto->user_id)
             ->where('mounth', $dto->mounth-1)
-            ->where('chapter', $dto->chapter)
+            ->where('chapter', $dto->chapter[0])
             ->get()
             ->map(function ($item) {
                 return (array) $item; // Принудительно кастим объект в массив

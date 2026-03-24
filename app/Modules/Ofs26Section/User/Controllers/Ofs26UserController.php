@@ -58,12 +58,17 @@ class Ofs26UserController extends Controller
     {  
         if($request->user !== NULL){ 
             $ofs = $this->action(SelectInfoAction::class)->SelectInfo($request->user, $request->mounth, $request->chapter);
-            $structure = $ofs[0]['status'] == 2 ? "open" : "close";
+            if(count($request->chapter) == '1'){
+                $structure = $ofs[0]['status'] == 2 ? "open" : "close";
+            }else{
+                $structure = "close";
+            }
             $info = [
                 'status'    => true,
                 'ofs'       => $ofs,
                 'structure' => $structure,
                 'chapter'   => $this->chapter,
+                'chapters'  => $request->chapter,
                 'mounth'    => $this->mounth,
                 'total'     => $this->action(CalculateInfoAction::class)->SelectTotal($ofs),
             ];
@@ -96,8 +101,12 @@ class Ofs26UserController extends Controller
     public function SynchOfs(SynchOfsRequest $request)
     {  
         $dto = SynchOfsDto::fromRequest($request); 
-        $this->action(UpdateInfoAction::class)->SynchOfs($dto);
-        echo "Синхронизация выполнена!";
+        if(count($dto->chapter) == '1'){
+            $this->action(UpdateInfoAction::class)->SynchOfs($dto);
+            echo "Синхронизация выполнена!";
+        }else{
+            echo "Выберите один раздел!";
+        }
     }
     
     /**
@@ -109,12 +118,15 @@ class Ofs26UserController extends Controller
     public function CloseOfs(SynchOfsRequest $request)
     {  
         $dto = SynchOfsDto::fromRequest($request); 
-        $result = $this->action(UpdateInfoAction::class)->UpdateStatus($dto);
-
-        if($result === true){
-            echo "Таблица закрыта!";
+        if(count($dto->chapter) == '1'){
+            $result = $this->action(UpdateInfoAction::class)->UpdateStatus($dto);
+            if($result === true){
+                echo "Таблица закрыта!";
+            }else{
+                echo "Таблица уже закрыта!!";
+            }
         }else{
-            echo "Таблица уже закрыта!!";
+            echo "Выберите один раздел!";
         }
     }
     

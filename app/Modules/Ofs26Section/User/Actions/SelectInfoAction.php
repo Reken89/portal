@@ -13,9 +13,13 @@ class SelectInfoAction extends BaseAction
      * @param int $user, int $mounth, int $chapter
      * @return array
      */
-    public function SelectInfo(int $user, int $mounth, int $chapter): array
+    public function SelectInfo(int $user, int $mounth, array $chapter): array
     {   
-        return $this->task(SelectOfsTask::class)->SelectInfo($user, $mounth, $chapter);    
+        if(count($chapter) == '1'){
+            return $this->task(SelectOfsTask::class)->SelectInfo($user, $mounth, $chapter[0]);   
+        }else{
+            return $this->task(SelectOfsTask::class)->SelectPivot($user, $mounth, $chapter); 
+        }
     } 
 }
 

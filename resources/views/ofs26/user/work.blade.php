@@ -104,13 +104,13 @@
                                     <div class="form-group">
                                         <div class="form-field">
                                             <div class="select-wrap">
-                                                <select name="chapter" class="form-control">
-                                                    <option value="1">МБ МЗ(МБ)</option>
-                                                    <option value="2">МБ ИЦ</option>
-                                                    <option value="3">РК МЗ(РК)</option>
-                                                    <option value="4">РК ИЦ</option>
-                                                    <option value="5">ПД</option>
-                                                </select>
+                                                <div class="checkselect">
+                                                    <label><input type="checkbox" name="chapter[]" value="1" checked> МБ МЗ(МБ)</label>
+                                                    <label><input type="checkbox" name="chapter[]" value="2"> МБ ИЦ</label>
+                                                    <label><input type="checkbox" name="chapter[]" value="3"> РК МЗ(РК)</label>
+                                                    <label><input type="checkbox" name="chapter[]" value="4"> РК ИЦ</label>
+                                                    <label><input type="checkbox" name="chapter[]" value="5"> ПД</label>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -172,13 +172,14 @@
                         <div class="p-4 mb-3 bg-white">
                             <h3 class="h5 text-black mb-3"><font color="red">Информация:</h3>
                             <p class="mb-0 font-weight-bold"><font color="red">учреждение: </p>
-                            <p class="mb-0 font-weight-bold"><font color="red">отчетная дата: ??</p>
+                            <p class="mb-0 font-weight-bold"><font color="red">отчетная дата: 17 число месяца</p>
                             </br>
                             @if($info['mounth'] > 1)
                             <tr>
                                 <input type="hidden" class="mounth" value="{{ $info['mounth'] }}">
                                 <input type="hidden" class="user" value="{{ $info['user'] }}">
-                                <input type="hidden" class="chapter" value="{{ $info['chapter'] }}">
+                                
+                                <input type="hidden" class="chapter" value="{{ json_encode($info['chapter']) }}">
                                 <td style="min-width: 200px; width: 200px;"><p><a href="" onclick="return false"><img src="{{ asset('assets/icons/calculator.png') }}" alt="" id="synch"></a> - Синхронизация</p></td>
                                 <td style="min-width: 200px; width: 200px;"><p><a href="" onclick="return false"><img src="{{ asset('assets/icons/tick.png') }}" alt="" id="close"></a> - Отправить в ФЭУ</p></td>
                                 <td style="min-width: 200px; width: 200px;"><p><a href="" onclick="return false"><img src="{{ asset('assets/icons/excel-48.png') }}" alt="" id="xlsx"></a> - Экспорт в xlsx</p></td>
@@ -329,7 +330,7 @@
                     let tr = this.closest('tr');
                     let mounth = $('.mounth', tr).val();
                     let user_id = $('.user', tr).val();
-                    let chapter = $('.chapter', tr).val();
+                    let chapter = JSON.parse($('.chapter', tr).val()); 
                     
                     $.ajax({
                         url:"/portal/public/ofs26/user/synch",  
@@ -351,7 +352,8 @@
                     let tr = this.closest('tr');
                     let mounth = $('.mounth', tr).val();
                     let user_id = $('.user', tr).val();
-                    let chapter = $('.chapter', tr).val();
+                    //let chapter = $('.chapter', tr).val();
+                    let chapter = JSON.parse($('.chapter', tr).val()); 
                     
                     $.ajax({
                         url:"/portal/public/ofs26/user/close",  
@@ -373,13 +375,25 @@
                     let tr = this.closest('tr');
                     let mounth = $('.mounth', tr).val();
                     let user_id = $('.user', tr).val();
-                    let chapter = $('.chapter', tr).val();
+                    let chapter = JSON.parse($('.chapter', tr).val()); 
+                    
+                    // Создаем объект параметров
+                    let params = new URLSearchParams();
+                    params.append('user_id', user_id);
+                    params.append('mounth', mounth);
+
+                    // Добавляем каждый элемент массива отдельно с ключом chapter[]
+                    chapter.forEach(id => {
+                        params.append('chapter[]', id);
+                    });
                     
                     // Формируем строку запроса
-                    let url = `/portal/public/ofs26/user/export?user_id=${user_id}&chapter=${chapter}&mounth=${mounth}`;
+                    //let url = `/portal/public/ofs26/user/export?user_id=${user_id}&chapter[]=${chapter}&mounth=${mounth}`;
 
                     // Просто переходим по ней
-                    window.location.href = url;            
+                    //window.location.href = url;   
+                    let baseUrl = '/portal/public/ofs26/user/export';
+                    window.location.href = `${baseUrl}?${params.toString()}`;
                 })
             });
         </script>

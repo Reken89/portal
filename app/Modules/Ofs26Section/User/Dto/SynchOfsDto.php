@@ -8,7 +8,7 @@ use App\Modules\Ofs26Section\User\Requests\SynchOfsRequest;
 class SynchOfsDto extends BaseDto
 {
     public int $user_id;
-    public int $chapter;
+    public array $chapter;
     public int $mounth;
 
     /**

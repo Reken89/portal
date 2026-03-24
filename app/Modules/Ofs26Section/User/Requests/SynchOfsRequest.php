@@ -15,7 +15,7 @@ class SynchOfsRequest extends FormRequest
     {
         return [
             'user_id' => 'required|integer',
-            'chapter' => 'required|integer',
+            'chapter' => 'required|array',
             'mounth'  => 'required|integer',
         ];
     }   
