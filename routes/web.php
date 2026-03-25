@@ -123,6 +123,7 @@ Route::patch('/ofs26/user/update', [Ofs26UserController::class, 'UpdateOfs'])->m
 Route::patch('/ofs26/user/synch', [Ofs26UserController::class, 'SynchOfs'])->middleware('auth');
 Route::patch('/ofs26/user/close', [Ofs26UserController::class, 'CloseOfs'])->middleware('auth');
 Route::get('/ofs26/user/export', [Ofs26UserController::class, 'ExportTable'])->middleware('auth');
+Route::get('/ofs26/user/fullscreen', [Ofs26UserController::class, 'FullScreen'])->middleware('auth');
 
 //Группа адресов для обращения через curl
 Route::get('/robo/ofs/status', [RoboOfsController::class, 'ChangeStatus']);

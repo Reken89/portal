@@ -101,11 +101,15 @@ class Ofs26UserController extends Controller
     public function SynchOfs(SynchOfsRequest $request)
     {  
         $dto = SynchOfsDto::fromRequest($request); 
-        if(count($dto->chapter) == '1'){
-            $this->action(UpdateInfoAction::class)->SynchOfs($dto);
-            echo "Синхронизация выполнена!";
+        if($dto->mounth !== 1){
+            if(count($dto->chapter) == '1'){
+                $this->action(UpdateInfoAction::class)->SynchOfs($dto);
+                echo "Синхронизация выполнена!";
+            }else{
+                echo "Выберите один раздел!";
+            }
         }else{
-            echo "Выберите один раздел!";
+            echo "Синхронизация с 2025 годом невозможна!";
         }
     }
     
@@ -145,6 +149,28 @@ class Ofs26UserController extends Controller
             'total' => $this->action(CalculateInfoAction::class)->SelectTotal($ofs),
         ];
         return Excel::download(new ExportTable($data), 'table.xlsx');
+    }
+    
+     /**
+     * Front отрисовка страницы
+     * Полноэкранный режим таблицы
+     *
+     * @param 
+     * @return 
+     */
+    public function FullScreen(SynchOfsRequest $request)
+    {      
+        $dto = SynchOfsDto::fromRequest($request); 
+        $info = [
+            'user'    => $dto->user_id,
+            'chapter' => $dto->chapter,
+            'mounth'  => $dto->mounth,
+            'email'   => Auth::user()->email(),
+            'role'    => Auth::user()->role(),
+        ];
+
+
+        return view('ofs26.user.fullscreen', ['info' => $info]);   
     }
 
 }
