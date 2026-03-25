@@ -3,6 +3,8 @@
 namespace App\Modules\Ofs26Section\User\Actions;
 
 use App\Core\Actions\BaseAction;
+use App\Modules\Ofs26Section\User\Dto\SynchOfsDto;
+use App\Modules\Ofs26Section\User\Tasks\ExamOfsTask;
 
 class CalculateInfoAction extends BaseAction
 {   
@@ -57,6 +59,17 @@ class CalculateInfoAction extends BaseAction
         }
         return $this->total;
     }   
+    
+    /**
+     * Выполняем проверку
+     *
+     * @param SynchOfsDto $dto
+     * @return 
+     */
+    public function hasErrors(SynchOfsDto $dto)
+    {   
+        return $this->task(ExamOfsTask::class)->ExamInfo($dto);           
+    } 
 }
 
 

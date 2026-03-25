@@ -3,6 +3,8 @@
 namespace App\Modules\Ofs26Section\User\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Core\Controllers\Controller;
@@ -23,115 +25,121 @@ class Ofs26UserController extends Controller
      /**
      * Front отрисовка страницы
      *
-     * @param 
-     * @return 
+     * @param Request $request
+     * @return View
      */
-    public function FrontView(Request $request)
+    public function FrontView(Request $request): View
     {      
-        if($request->user){            
-            $info = [
-                'user'    => $request->user,
-                'chapter' => $request->chapter,
-                'mounth'  => $request->mounth,
-                'email'   => Auth::user()->email(),
-                'role'    => Auth::user()->role(),
-            ];
-        }else{
-            $info = [
-                'user'    => NULL,
-                'chapter' => NULL,
-                'mounth'  => NULL,
-                'email'   => Auth::user()->email(),
-                'role'    => Auth::user()->role(),
-            ];
-        }
-        return view('ofs26.user.work', ['info' => $info]);   
+        $info = [
+            'user'    => $request->user ?? null,
+            'chapter' => $request->chapter ?? null,
+            'mounth'  => $request->mounth ?? null,
+            'email'   => Auth::user()->email(),
+            'role'    => Auth::user()->role(),
+        ];
+
+        return view('ofs26.user.work', compact('info'));  
     }
     
     /**
      * Получаем информацию из БД
      *
-     * @param
-     * @return 
+     * @param Request $request
+     * @return View
      */
-    public function ShowTable(Request $request)
+    public function ShowTable(Request $request): View
     {  
-        if($request->user !== NULL){ 
-            $ofs = $this->action(SelectInfoAction::class)->SelectInfo($request->user, $request->mounth, $request->chapter);
-            if(count($request->chapter) == '1'){
-                $structure = $ofs[0]['status'] == 2 ? "open" : "close";
-            }else{
-                $structure = "close";
-            }
-            $info = [
-                'status'    => true,
-                'ofs'       => $ofs,
-                'structure' => $structure,
-                'chapter'   => $this->chapter,
-                'chapters'  => $request->chapter,
-                'mounth'    => $this->mounth,
-                'total'     => $this->action(CalculateInfoAction::class)->SelectTotal($ofs),
-            ];
-        }else{
-            $info = [
-                'status' => false,   
-            ];          
+        // 1. Сразу выходим, если юзера нет
+        if (!$request->user) {
+            return view('ofs26.user.templates.table', ['info' => ['status' => false]]);
         }
-        return view('ofs26.user.templates.table', ['info' => $info]);     
+
+        // 2. Если дошли сюда, значит юзер есть — работаем спокойно
+        $ofs = $this->action(SelectInfoAction::class)
+            ->SelectInfo($request->user, $request->mounth, $request->chapter);
+
+        // 3. Лаконично определяем статус структуры
+        $isSingleChapter = count($request->chapter) === 1;
+        $structure = ($isSingleChapter && ($ofs[0]['status'] ?? null) == 2) ? 'open' : 'close';
+
+        $info = [
+            'status'    => true,
+            'ofs'       => $ofs,
+            'structure' => $structure,
+            'chapter'   => $this->chapter,
+            'chapters'  => $request->chapter,
+            'mounth'    => $this->mounth,
+            'total'     => $this->action(CalculateInfoAction::class)->SelectTotal($ofs),
+        ];
+
+        return view('ofs26.user.templates.table', compact('info'));    
     }
     
     /**
      * Получаем информацию из БД
      *
      * @param UpdateOfsRequest $request
-     * @return 
+     * @return JsonResponse
      */
-    public function UpdateOfs(UpdateOfsRequest $request)
+    public function UpdateOfs(UpdateOfsRequest $request): JsonResponse
     {  
         $dto = UpdateOfsDto::fromRequest($request);   
-        $this->action(UpdateInfoAction::class)->UpdateOfs($dto);
+        $result = $this->action(UpdateInfoAction::class)->UpdateOfs($dto);
+        return $result 
+            ? response()->json(null, 204) 
+            : response()->json(null, 500);
     }
     
     /**
      * Синхронизация ОФС
      *
      * @param SynchOfsRequest $request
-     * @return 
+     * @return JsonResponse
      */
-    public function SynchOfs(SynchOfsRequest $request)
+    public function SynchOfs(SynchOfsRequest $request): JsonResponse
     {  
         $dto = SynchOfsDto::fromRequest($request); 
-        if($dto->mounth !== 1){
-            if(count($dto->chapter) == '1'){
-                $this->action(UpdateInfoAction::class)->SynchOfs($dto);
-                echo "Синхронизация выполнена!";
-            }else{
-                echo "Выберите один раздел!";
-            }
-        }else{
-            echo "Синхронизация с 2025 годом невозможна!";
+
+        // 1. Сначала отсекаем 2025 год (или 1 месяц)
+        if ($dto->mounth === 1) {
+            return response()->json(['message' => 'Синхронизация с 2025 годом невозможна!'], 400);
         }
+
+        // 2. Проверяем количество разделов
+        if (count($dto->chapter) !== 1) {
+            return response()->json(['message' => 'Выберите ровно один раздел!'], 422);
+        }
+
+        // 3. Если дошли сюда — всё хорошо, работаем
+        $this->action(UpdateInfoAction::class)->synchOfs($dto);
+
+        return response()->json(['message' => 'Синхронизация выполнена!']);
     }
     
     /**
      * Меняем статус
      *
      * @param SynchOfsRequest $request
-     * @return 
+     * @return JsonResponse
      */
-    public function CloseOfs(SynchOfsRequest $request)
+    public function CloseOfs(SynchOfsRequest $request): JsonResponse
     {  
         $dto = SynchOfsDto::fromRequest($request); 
-        if(count($dto->chapter) == '1'){
-            $result = $this->action(UpdateInfoAction::class)->UpdateStatus($dto);
-            if($result === true){
-                echo "Таблица закрыта!";
-            }else{
-                echo "Таблица уже закрыта!!";
-            }
-        }else{
-            echo "Выберите один раздел!";
+
+        // Проверка бизнес-логики
+        if ($this->action(CalculateInfoAction::class)->hasErrors($dto)) {
+            return response()->json(['message' => 'В таблицах присутствуют ошибки!'], 422);
         }
+
+        if (count($dto->chapter) !== 1) {
+            return response()->json(['message' => 'Выберите ровно один раздел!'], 422);
+        }
+
+        $isUpdated = $this->action(UpdateInfoAction::class)->updateStatus($dto);
+
+        return $isUpdated 
+            ? response()->json(['message' => 'Таблица закрыта!'])
+            : response()->json(['message' => 'Таблица уже была закрыта ранее!'], 400);
     }
     
     /**
@@ -155,10 +163,10 @@ class Ofs26UserController extends Controller
      * Front отрисовка страницы
      * Полноэкранный режим таблицы
      *
-     * @param 
-     * @return 
+     * @param SynchOfsRequest $request
+     * @return View
      */
-    public function FullScreen(SynchOfsRequest $request)
+    public function FullScreen(SynchOfsRequest $request): View
     {      
         $dto = SynchOfsDto::fromRequest($request); 
         $info = [
@@ -169,8 +177,7 @@ class Ofs26UserController extends Controller
             'role'    => Auth::user()->role(),
         ];
 
-
-        return view('ofs26.user.fullscreen', ['info' => $info]);   
+        return view('ofs26.user.fullscreen', compact('info'));   
     }
 
 }

@@ -16,9 +16,9 @@ class UpdateInfoAction extends BaseAction
      * @param UpdateOfsDto $dto
      * @return 
      */
-    public function UpdateOfs(UpdateOfsDto $dto)
+    public function UpdateOfs(UpdateOfsDto $dto): bool
     {   
-        $this->task(UpdateOfsTask::class)->UpdateInfo($dto);    
+        return $this->task(UpdateOfsTask::class)->UpdateInfo($dto);    
     }   
     
     /**
@@ -38,7 +38,7 @@ class UpdateInfoAction extends BaseAction
      * @param SynchOfsDto $dto
      * @return 
      */
-    public function UpdateStatus(SynchOfsDto $dto)
+    public function updateStatus(SynchOfsDto $dto)
     {   
         return $this->task(UpdateOfsTask::class)->UpdateStatus($dto);           
     } 

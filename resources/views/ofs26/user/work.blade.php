@@ -36,6 +36,7 @@
         <!-- Plugin table2! -->
         <link rel="stylesheet" href="{{ asset('assets/plugins/table/table2.css') }}">
         <!-- The end table2! -->
+        <script src="https://cdn.jsdelivr.net"></script>
     </head>
     <body>        
         <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
@@ -241,8 +242,9 @@
         <script src="{{ asset('assets/skillhunt/js/main.js') }}"></script> 
         
         <!-- Plugin checkselect! -->
-        <script src="{{ asset('assets/plugins/checkselect/checkselect.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('assets/plugins/checkselect/checkselect.js') }}" type="text/javascript"></script>        
         <!-- The end checkselect! -->
+
         
         <script>   
             $(document).ready(function(){ 
@@ -341,11 +343,17 @@
                             "_token": "{{ csrf_token() }}",
                             user_id, chapter, mounth
                         },
-                        dataType:"text",  
-                        success:function(data){  
-                            alert(data);
+                        dataType: "json", // Ждем JSON, а не просто текст
+                        success: function(response) {  
+                            // response — это теперь объект { "message": "..." }
+                            alert(response.message);
                             fetch_data();  
-                        } 
+                        },
+                        error: function(xhr) {
+                            // Если сервер вернул ошибку (400, 422, 500), попадем сюда
+                            let errorMessage = xhr.responseJSON ? xhr.responseJSON.message : 'Ошибка сервера';
+                            alert(errorMessage);
+                        }
                     })             
                 })
                 
@@ -364,11 +372,17 @@
                             "_token": "{{ csrf_token() }}",
                             user_id, chapter, mounth
                         },
-                        dataType:"text",  
-                        success:function(data){  
-                            alert(data);
+                        dataType: "json", // Ждем JSON, а не просто текст
+                        success: function(response) {  
+                            // response — это теперь объект { "message": "..." }
+                            alert(response.message);
                             fetch_data();  
-                        } 
+                        },
+                        error: function(xhr) {
+                            // Если сервер вернул ошибку (400, 422, 500), попадем сюда
+                            let errorMessage = xhr.responseJSON ? xhr.responseJSON.message : 'Ошибка сервера';
+                            alert(errorMessage);
+                        }
                     })             
                 })
                 
