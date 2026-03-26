@@ -57,6 +57,34 @@ class SelectOfsTask extends BaseTask
         })
         ->toArray();     
     }
+    
+    /**
+     * Получаем информацию из ofs
+     *
+     * @param ExportDto $dto
+     * @return array
+     */
+    public function selectMatrix(): array
+    {     
+        return DB::table('ofs26')
+        ->join('users', 'ofs26.user_id', '=', 'users.id')
+        ->select('users.name', 'ofs26.user_id', 'ofs26.mounth', 'ofs26.status')
+        ->where('ofs26.ekr_id', 1) 
+        ->where('ofs26.chapter', 1) 
+        ->orderBy('ofs26.user_id')
+        ->orderBy('ofs26.mounth')
+        ->get()
+        ->groupBy('user_id') // Группируем по ID учреждения
+        ->map(function ($group) {
+            return [
+                'name' => $group->first()->name,
+                // Превращаем коллекцию статусов в простой массив [status, status, ...]
+                'statuses' => $group->pluck('status')->toArray() 
+            ];
+        })
+        ->values() // Сбрасываем ключи user_id, чтобы получить чистый список
+        ->toArray();
+    }
 }
 
 

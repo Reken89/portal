@@ -26,7 +26,9 @@ class Ofs26AdminController extends Controller
     public function frontView(): View
     {      
         $info = [
-            'email' => Auth::user()->email(),
+            'email'   => Auth::user()->email(),
+            'counter' => $this->action(SelectInfoAction::class)->selectCounter(1),
+            'matrix'  => $this->action(SelectInfoAction::class)->selectMatrix(),
         ];
         return view('ofs26.admin.work', compact('info'));  
     }
@@ -39,6 +41,7 @@ class Ofs26AdminController extends Controller
     public function exportTable(ExportRequest $request)
     {
         $dto = ExportDto::fromRequest($request);
+        $this->action(UpdateInfoAction::class)->updateCounter(1); //Обновляем статистику
         $ofs = $this->action(SelectInfoAction::class)->selectInfo($dto);
         $data = [
             'ofs' => $ofs,
@@ -56,6 +59,7 @@ class Ofs26AdminController extends Controller
     public function updateStatus(UpdateOfsStatusRequest $request): JsonResponse
     {  
         $dto = UpdateOfsStatusDto::fromRequest($request); 
+        $this->action(UpdateInfoAction::class)->updateCounter(1); //Обновляем статистику
         $isUpdated = $this->action(UpdateInfoAction::class)->updateStatus($dto);
 
         return $isUpdated 

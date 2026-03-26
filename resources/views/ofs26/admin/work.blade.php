@@ -1,3 +1,6 @@
+@php
+    //var_dump($info['matrix']);
+@endphp
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -69,7 +72,7 @@
                 <div class="row"> 
                     <div class="col-md-12 col-lg-8 mb-5">         
                         <form action="/portal/public/ofs26/admin/export" id="parameters" method="get" class="p-5 bg-white">
-                            
+
                             <div class="row form-group">
                                 <div class="col-md-12 mb-3 mb-md-0">
                                     <label class="font-weight-bold" for="fullname">Месяц</label>
@@ -224,15 +227,53 @@
                         
                         <div class="p-4 mb-3 bg-white">
                             <h3 class="h5 text-black mb-3"><font color="red">Статистика:</h3>
-                            <p class="mb-0 font-weight-bold"><font color="red">Количество обращений к модулю ??</p>        
-                            <p class="mb-0 font-weight-bold"><font color="red">Последняя дата обращения ??-??-????</p>   
+                            <p class="mb-0 font-weight-bold"><font color="red">Количество обращений к модулю {{ $info['counter']['point'] }}</p>        
+                            <p class="mb-0 font-weight-bold"><font color="red">Последняя дата обращения {{ $info['counter']['date'] }}</p>   
                         </div> 
                     </div>     
                                                          
                 </div>
             </div>           
         </section>
-        
+                
+        <div class="row justify-content-center"> 
+            <div class="col-md-12 col-lg-8 offset-lg-1 mb-5">         
+                <font color="Black">
+                <table> 
+                    <thead style="background-color: #546e7a; border-bottom: 2px solid #37474f;">
+                        <tr>
+                            <th style="min-width: 110px; width: 110px;"><font color="White">Учреждение</th>
+                            <th style="min-width: 70px; width: 70px;"><font color="White">Январь</th>
+                            <th style="min-width: 70px; width: 70px;"><font color="White">Февраль</th>
+                            <th style="min-width: 70px; width: 70px;"><font color="White">Март</th>
+                            <th style="min-width: 70px; width: 70px;"><font color="White">Апрель</th>
+                            <th style="min-width: 70px; width: 70px;"><font color="White">Май</th>
+                            <th style="min-width: 70px; width: 70px;"><font color="White">Июнь</th>
+                            <th style="min-width: 70px; width: 70px;"><font color="White">Июль</th>
+                            <th style="min-width: 70px; width: 70px;"><font color="White">Август</th>
+                            <th style="min-width: 70px; width: 70px;"><font color="White">Сентябрь</th>
+                            <th style="min-width: 70px; width: 70px;"><font color="White">Октябрь</th>
+                            <th style="min-width: 70px; width: 70px;"><font color="White">Ноябрь</th>
+                            <th style="min-width: 70px; width: 70px;"><font color="White">Декабрь</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($info['matrix'] as $row)
+                            <tr>
+                                <td style="background-color: #e3f2fd; font-weight: bold;">{{ $row['name'] }}</td>
+                                @foreach($row['statuses'] as $status)                                          
+                                    @if($status === 1) <td style="background-color: #c8e6c9; color: #2e7d32; text-align: center; border: 1px solid #dee2e6;">закрыто</td>
+                                    @elseif($status === 2) <td style="background-color: #ffcdd2; color: #c62828; text-align: center; border: 1px solid #dee2e6;">открыто</td>
+                                    @endif                                           
+                                @endforeach
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>   
+        </div>           
+        </br>
+                
         <section class="ftco-section-parallax">
             <div class="parallax-img d-flex align-items-center">
                 <div class="container">
