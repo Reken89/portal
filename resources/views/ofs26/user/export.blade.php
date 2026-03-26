@@ -1,4 +1,3 @@
-<p>Тест</p>
 <table width="700px">             
     <thead>
         <tr>
