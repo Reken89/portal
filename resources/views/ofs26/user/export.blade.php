@@ -4,7 +4,6 @@
         <tr>
             <th style="min-width: 200px; width: 200px;">Наименование расходов</th>
             <th style="min-width: 70px; width: 70px;">ЭКР</th>
-            <th style="min-width: 70px; width: 70px;"></th>
             <th style="min-width: 200px; width: 200px;">Плановые назначения ЛБО</th>
             <th style="min-width: 200px; width: 200px;">Зачет авансов, выплаченных в прошлом году</th>
             <th style="min-width: 200px; width: 200px;" colspan="2">Кредиторская задолженность на начало года</th>
@@ -25,10 +24,10 @@
             <td>5</td><td>6</td><td>7</td><td>8</td>
             <td>9</td><td>10</td><td>11</td><td>12</td>
             <td>13</td><td>14</td><td>15</td><td>16</td>
-            <td>17</td><td>18</td><td>19</td><td>20</td>
+            <td>17</td><td>18</td><td>19</td>
         </tr>             
         <tr>
-            <td></td><td></td><td></td><td></td><td></td>
+            <td></td><td></td><td></td><td></td>
             <td style="min-width: 150px; width: 150px;">Всего</td><td style="min-width: 150px; width: 150px;">Просроченная</td><td style="min-width: 150px; width: 150px;">Всего</td><td style="min-width: 150px; width: 150px;">Просроченная</td>
             <td style="min-width: 150px; width: 150px;">Всего</td><td style="min-width: 150px; width: 150px;">Текущий месяц</td><td style="min-width: 150px; width: 150px;">Всего</td><td style="min-width: 150px; width: 150px;">Текущий месяц</td>
             <td style="min-width: 150px; width: 150px;">Всего</td><td style="min-width: 150px; width: 150px;">Просроченная</td><td style="min-width: 150px; width: 150px;">Всего</td><td style="min-width: 150px; width: 150px;">Просроченная</td>
@@ -41,7 +40,6 @@
                     <tr>
                         <td><b>{{ $value['title'] }}</b></td>
                         <td><b>{{ $value['ekr'] }}</b></td>
-                        <td><b></b></td>
                         <td><b>{{ $value['lbo'] }}</b></td>
                         <td><b>{{ $value['prepaid'] }}</b></td>
                         <td><b>{{ $value['credit_year_all'] }}</b></td>
@@ -64,7 +62,6 @@
                     <tr>
                         <td>{{ $value['title'] }}</td>
                         <td>{{ $value['ekr'] }}</td>
-                        <td></td>
                         <td>{{ $value['lbo'] }}</td>  
                         <td>{{ $value['prepaid'] }}</td>
                         <td>{{ $value['credit_year_all'] }}</td>
@@ -87,7 +84,6 @@
             @endforeach  
         <tr>
             <td><b>ИТОГ</b></td>
-            <td></td>
             <td></td>
             <td><b>{{ $info['total']['lbo'] }}</b></td>  
             <td><b>{{ $info['total']['prepaid'] }}</b></td>
