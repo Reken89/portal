@@ -237,7 +237,9 @@
         </section>
                 
         <div class="row justify-content-center"> 
-            <div class="col-md-12 col-lg-8 offset-lg-1 mb-5">         
+            <div class="col-md-12 col-lg-8 offset-lg-1 mb-5">  
+                <p class="mb-0 font-weight-bold"><font color="red">Открыто - таблица открыта для редактирования информации централизованной бухгалтерии</p>
+                <p class="mb-0 font-weight-bold"><font color="green">Закрыто - таблица закрыта для редактирования информации централизованной бухгалтерии</p>
                 <font color="Black">
                 <table> 
                     <thead style="background-color: #546e7a; border-bottom: 2px solid #37474f;">
