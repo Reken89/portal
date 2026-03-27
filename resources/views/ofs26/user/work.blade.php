@@ -188,8 +188,8 @@
                                     <img src="{{ asset('assets/icons/document2.png') }}" alt="Скачать">
                                 </a> - Инструкция</p>
                             </tr>
-                            @endif
                             <p><font color="red">При отправке информации в ФЭУ, закроются все разделы таблицы!</p>
+                            @endif
                         </div>   
                     </div>                    
                   
