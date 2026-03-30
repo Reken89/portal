@@ -38,6 +38,7 @@
                         <li class="nav-item"><a href="/portal/public/home" class="nav-link">Главная</a></li>
                         <li class="nav-item"><a href="/portal/public/utilities/admin" class="nav-link">Таблица</a></li>
                         <li class="nav-item"><a href="/portal/public/utilities/admin/diagrams" class="nav-link">Диаграммы</a></li>
+                        <li class="nav-item"><a href="/portal/public/communal/admin" class="nav-link">Архив</a></li>
                         <li class="nav-item cta cta-colored"><a href="{{ route('logout') }}" class="nav-link" onclick="event.preventDefault();
                             document.getElementById('logout-form').submit();">Выход</a>
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">

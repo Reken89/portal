@@ -9,14 +9,14 @@
     <div class="top-category text-center">
         <h3><a href="{{ route('utilities-admin')}}">Коммуналка</a></h3>
         <span class="icon flaticon-accounting"></span>
-        <p><span class="number"></span> <span>Коммунальные услуги 2026</span></p>
+        <p><span class="number"></span> <span>Коммунальные услуги</span></p>
     </div>
 </div>
 <div class="col-md-2">
     <div class="top-category text-center">
-        <h3><a href="{{ route('communal-admin')}}">Архив</a></h3>
+        <h3><a href="#">Бюджет</a></h3>
         <span class="icon flaticon-accounting"></span>
-        <p><span class="number"></span> <span>Коммуналка 2018-2025</span></p>
+        <p><span class="number"></span> <span>Модуль в разработке</span></p>
     </div>
 </div>
 <div class="col-md-2">
