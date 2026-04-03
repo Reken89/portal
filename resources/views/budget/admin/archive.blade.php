@@ -84,9 +84,9 @@
                                         <div class="form-field">
                                             <div class="select-wrap">
                                                 <select name="year" class="form-control">
-                                                    <option value="2027">2026 год (бюджет 26-28)</option>
-                                                    <option value="2028">2027 год (бюджет 26-28)</option>
-                                                    <option value="2029">2028 год (бюджет 26-28)</option>
+                                                    <option value="2026">2026 год (бюджет 26-28)</option>
+                                                    <option value="2027">2027 год (бюджет 26-28)</option>
+                                                    <option value="2028">2028 год (бюджет 26-28)</option>
                                                 </select>
                                             </div>
                                         </div>

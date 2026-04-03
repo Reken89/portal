@@ -15,7 +15,8 @@ class SelectInfoAction extends BaseAction
      */
     public function selectArchive(int $year): array
     {   
-        return Budget25::where('year', $year)
+        return Budget25::select('budget25.*')
+            ->where('budget25.year', $year)
             ->join('ekr', 'budget25.ekr_id', '=', 'ekr.id')  
             ->with('ekr:id,shared,main,number,title,ekr')     
             ->orderBy('ekr.number', 'asc')

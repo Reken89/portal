@@ -45,7 +45,7 @@
     </thead>
     <tbody>
         @foreach ($info['budget'] as $value) 
-            @if ($value['ekr']['main'] == 'Yes')
+            @if ($value['ekr']['main'] === 'Yes')
             <tr>
                 <td style="height: 65px;" class="sticky-col"><b><p class="text-scale">{{ $value['ekr']['title'] }}</b></p></td>
                 <td><b>{{ $value['ekr']['ekr'] }}</b></td>
