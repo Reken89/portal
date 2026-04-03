@@ -112,7 +112,7 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <th><a href="/portal/public/communal/user/export"><img src="{{ asset('assets/icons/excel-48.png') }}" alt=""></a></th>
+                            <td class="sticky-col"><a href="/portal/public/communal/user/export"><img src="{{ asset('assets/icons/excel-48.png') }}" alt=""></a></td>
                             <td style="min-width: 150px; width: 150px;"><b>Объем</b></td><td style="min-width: 150px; width: 150px;"><b>Сумма</b></td>
                             <td style="min-width: 150px; width: 150px;"><b>Объем</b></td><td style="min-width: 150px; width: 150px;"><b>Сумма</b></td>
                             <td style="min-width: 150px; width: 150px;"><b>Объем</b></td><td style="min-width: 150px; width: 150px;"><b>Сумма</b></td>
@@ -124,7 +124,7 @@
                         @foreach ($info['communals'] as $value)
                             @if($info['variant'] == "one")
                                 <tr>
-                                    <th><font color="RoyalBlue">{{ $info['mounth'][$value['mounth']] }}</th>
+                                    <td class="sticky-col"><font color="RoyalBlue">{{ $info['mounth'][$value['mounth']] }}</td>
                                     <td><font color="blue">{{ number_format($value['heat-volume'], 4, ',', ' ') }}</td>
                                     <td><font color="blue">{{ number_format($value['heat-sum'], 2, ',', ' ') }}</td>
                                     <td><font color="blue">{{ number_format($value['drainage-volume'], 4, ',', ' ') }}</td>
@@ -141,7 +141,7 @@
                                 </tr>
                             @else
                                 <tr>
-                                    <th><font color="RoyalBlue">{{ $info['mounth'][$value['mounth']] }}</th>
+                                    <td class="sticky-col"><font color="RoyalBlue">{{ $info['mounth'][$value['mounth']] }}</td>
                                     <td><font color="blue">{{ number_format($value['heat_volume'], 4, ',', ' ') }}</td>
                                     <td><font color="blue">{{ number_format($value['heat_sum'], 2, ',', ' ') }}</td>
                                     <td><font color="blue">{{ number_format($value['drainage_volume'], 4, ',', ' ') }}</td>
@@ -159,7 +159,7 @@
                             @endif
                         @endforeach
                         <tr>
-                            <th><font color="RoyalBlue">Итог</th>
+                            <td class="sticky-col"><font color="RoyalBlue">Итог</td>
                             <td><font color="blue">{{ number_format($info['total']['heat_volume'], 4, ',', ' ') }}</td>
                             <td><font color="blue">{{ number_format($info['total']['heat_sum'], 2, ',', ' ') }}</td>
                             <td><font color="blue">{{ number_format($info['total']['drainage_volume'], 4, ',', ' ') }}</td>

@@ -121,7 +121,7 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <th><a href="/portal/public/utilities/admin/export"><img src="{{ asset('assets/icons/excel-48.png') }}" alt=""></a></th>
+                            <td class="sticky-col"><a href="/portal/public/utilities/admin/export"><img src="{{ asset('assets/icons/excel-48.png') }}" alt=""></a></td>
                             <td><img src="{{ asset('assets/icons/calendar.png') }}" alt=""></td>
                             <td></td>
                             <td style="min-width: 150px; width: 150px;"><b>Объём МБ</b></td><td style="min-width: 150px; width: 150px;"><b>Объём ПД</b></td>
@@ -153,7 +153,7 @@
                             @if($info['variant'] == "one")
                                 <tr>
                                     <input type="hidden" class="id" value="{{ $value['id'] }}">
-                                    <th><font color="RoyalBlue">{{ $value['user']['name'] }}</th>
+                                    <td class="sticky-col"><b><font color="RoyalBlue">{{ $value['user']['name'] }}</b></td>
                                     <td><font color="blue">{{ $value['date'] }}</td>
                                     @if ($value['status'] == 1)
                                         <td><img src="{{ asset('assets/icons/tick.png') }}" alt=""></td>
@@ -208,7 +208,7 @@
                                 </tr>
                             @else
                                 <tr>
-                                    <th><font color="RoyalBlue">{{ $value['user']['name'] }}</th>
+                                    <td class="sticky-col"><font color="RoyalBlue">{{ $value['user']['name'] }}</td>
                                     <td></td>                                  
                                     <td></td>                                  
                                     <td><font color="blue">{{ number_format($value['mbvolume_heat'], 4, ',', ' ') }}</td>
@@ -258,7 +258,7 @@
                             @endif
                         @endforeach
                         <tr>
-                            <th><font color="RoyalBlue">Итог</th>
+                            <td class="sticky-col"><font color="RoyalBlue"><b>Итог</b></td>
                             <td></td>                                  
                             <td></td>                                  
                             <td><font color="blue">{{ number_format($info['total']['mbvolume_heat'], 4, ',', ' ') }}</td>

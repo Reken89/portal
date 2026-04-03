@@ -127,7 +127,10 @@
                     <div class="col-lg-4">
                         <div class="p-4 mb-3 bg-white">
                             <h3 class="h5 text-black mb-3"><font color="red">Информация:</h3>
-                        </div>   
+                            @if ($info['status'] == true)
+                                <p class="mb-0 font-weight-bold"><font color="red">Выбранный год: {{ $info['year'] }}</p>
+                            @endif
+                        </div> 
                     </div>       
                                                          
                 </div>

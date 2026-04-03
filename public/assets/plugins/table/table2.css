@@ -1,162 +1,129 @@
-/*
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to edit this template
-*/
-/* 
-    Created on : 20 авг. 2025 г., 09:28:15
-    Author     : Administrator
-*/
-
-div.container_fix2 {
+/* --- КОНТЕЙНЕРЫ (БЕЗ ИЗМЕНЕНИЙ) --- */
+div.container_fix, div.container_fix2, div.container_fix3, div.container_fix4 {
     overflow: scroll;
 }
-
-div.container_fix3 {
-    overflow: scroll;
-}
+div.container_fix { width: 1400px; max-height: 600px; }
+div.container_fix2 { width: 100%; height: 600px; }
+div.container_fix3 { width: 100%; height: 400px; }
+div.container_fix4 { width: 100%; height: 100%; }
 
 .table2 {
     width: 100%;
+    border-collapse: collapse;
     border: none;
     margin-bottom: 20px;
 }
+
+/* --- ШАПКА ТАБЛИЦЫ (ВОЗВРАЩЕНЫ ТВОИ ИНДЕКСЫ 1-4) --- */
 .table2 thead th {
     font-weight: bold;
     text-align: left;
     border: none;
     padding: 10px 15px;
-    background: #0000FF;
+    background: #0000FF !important; /* Твой синий цвет */
+    color: #FFFFFF !important;
     font-size: 14px;
-    position: -webkit-sticky; /* for Safari */
     position: sticky;
     top: 0;
+    z-index: 3; /* Минимальный уровень, чтобы не лезть над сайтом */
 }
 
-.table2 tbody th {
-    position: -webkit-sticky; /* for Safari */
+/* УГОЛ (ПЕРВАЯ ЯЧЕЙКА) */
+.table2 thead th:first-child {
+    left: 0;
+    z-index: 4 !important; /* Чуть выше основной шапки таблицы */
+    border-radius: 8px 0 0 8px;
+}
+
+.table2 thead tr th:last-child {
+    border-radius: 0 8px 8px 0;
+}
+
+/* --- ТЕЛО ТАБЛИЦЫ --- */
+.table2 tbody td {
+    text-align: left;
+    border: none;
+    padding: 10px 15px;
+    font-size: 14px;
+    vertical-align: top;
+    background: #FFF;
+}
+
+/* ЛИПКАЯ КОЛОНКА В ТЕЛЕ */
+.sticky-col {
     position: sticky;
     left: 0;
+    z-index: 1; /* Самый низкий уровень липкости */
+    background-color: white !important;
+    width: 150px;
+    min-width: 150px;
+    max-width: 150px;
+    overflow: visible !important; 
+    border-right: 1px solid #CCC;
 }
 
-.table2 thead th:first-child {
-    left: 0;
-    z-index: 1;
-}
-/* Use overflow:scroll on your container to enable scrolling: */
-
-div.container_fix {
-    width: 1400px;
-    max-height: 600px;
-    overflow: scroll;
-}
-
-div.container_fix2 {
-    width: 100%;
-    height: 600px;
-    overflow: scroll;
-}
-
-div.container_fix3 {
-    width: 100%;
-    height: 400px;
-    overflow: scroll;
-}
-
-div.container_fix4 {
-    width: 100%;
-    height: 100%;
-    overflow: scroll;
-}
-
-/* Use position: sticky to have it stick to the edge
- * and top, right, or left to choose which edge to stick to: */
-
-.table2 thead th {
-  position: -webkit-sticky; /* for Safari */
-  position: sticky;
-  top: 0;
-}
-
-.table2 tbody th {
-  position: -webkit-sticky; /* for Safari */
-  position: sticky;
-  left: 0;
-}
-
-
-/* To have the header in the first column stick to the left: */
-
-.table2 thead th:first-child {
-  left: 0;
-  z-index: 1;
-}
-
-.table2 thead tr th:first-child {
-	border-radius: 8px 0 0 8px;
-}
-.table2 thead tr th:last-child {
-	border-radius: 0 8px 8px 0;
-}
-.table2 tbody td {
-  text-align: left;
-  border: none;
-  padding: 10px 15px;
-  font-size: 14px;
-  vertical-align: top;	
-}
-/*
-.table2 tbody tr:nth-child(even){
-	background: #f3f3f3;
-}
-*/
 .table2 tbody tr td:first-child {
-	border-radius: 8px 0 0 8px;
+    border-radius: 8px 0 0 8px;
 }
 .table2 tbody tr td:last-child {
-	border-radius: 0 8px 8px 0;
+    border-radius: 0 8px 8px 0;
 }
 
-/* Just to display it nicely: */
-.table2 tbody th {
-  background: #FFF;
-  border-right: 1px solid #CCC;
+/* --- ПОДСВЕТКА СТРОКИ ПРИ ФОКУСЕ --- */
+.table2 tbody tr:focus-within td {
+    background-color: #d0ebff !important;
+}
+.table2 tbody tr:focus-within td.sticky-col {
+    background-color: #ffffff !important;
+    font-weight: normal !important;
+}
+.table2 tbody tr td input[type="text"]:focus {
+    background-color: #ffffff !important;
+    outline: 2px solid #0000FF; 
 }
 
-table2 {
-  border-collapse: collapse;
-}
-
-.table2 td,
-th {
-  padding: 0.5em;
-}
-
-
-.sticky-col {
-  position: sticky;
-  left: 0;
-  background-color: #f2f2f2; /* Задайте подходящий цвет фона */
-}
-
+/* --- ТЕКСТ И ХОВЕР --- */
 .text-scale {
-  white-space: nowrap; /* По умолчанию текст в одну строку */
-  overflow: hidden;    /* Скрываем */
-  text-overflow: ellipsis; /* Ограничиваем и добавляем многоточие */
-  max-width: 150px; /* Ограничиваем ширину ячейки */
-  transition: all 0.3s ease; /* Плавное изменение */
+    display: block;
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: pointer;
 }
 
 .text-scale:hover {
-  width: 1500px;
-  white-space: normal; /* Растягиваем при наведении */
-  overflow: visible;   /* Показываем весь текст */
-  max-width: none;     /* Убираем ограничение по ширине */
-  position: absolute;  /* Если нужно, чтобы ячейка выходила за пределы таблицы */
-  z-index: 1;          /* Чтобы ячейка была поверх других элементов */
-  background-color: white; /* Для лучшей видимости */
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: max-content;
+    min-width: 300px;
+    max-width: 1700px;
+    white-space: normal;
+    word-wrap: break-word;
+    z-index: 2; /* Больше колонки (1), но МЕНЬШЕ шапки (3) */
+    background-color: white;
+    color: #000; 
+    padding: 10px;
+    box-shadow: 5px 5px 20px rgba(0,0,0,0.3);
+    border: 1px solid #ccc;
+    border-radius: 4px;
 }
 
 .text-selected {
-  background-color: #00FFFF; /* Пример цвета для выделенной строки */
-  font-weight: bold; /* Можно добавить другие стили, например, сделать текст жирным */
+    background-color: #00FFFF;
+    font-weight: bold;
+}
+
+/* ИСПРАВЛЯЕМ БЕЛУЮ ЛИНИЮ И СЛОИ ШАПКИ */
+header, .header, #header, nav, .main-header {
+    z-index: 99999 !important; /* Оставляем её главной */
+    margin-top: 0 !important;  /* Убираем возможный отступ сверху */
+    padding-top: 0 !important;
+}
+
+/* На всякий случай обнуляем отступы у самого верха страницы */
+body {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
 }
