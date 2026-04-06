@@ -136,6 +136,7 @@ Route::patch('/ofs26/admin/status', [Ofs26AdminController::class, 'updateStatus'
 Route::get('/budget/admin/table', [BudgetAdminController::class, 'showTable'])->middleware('auth', 'admin');
 Route::get('/budget/admin', [BudgetAdminController::class, 'frontView'])->middleware('auth', 'admin')->name('budget-admin');
 Route::get('/budget/admin/archive', [BudgetArchiveAdminController::class, 'frontView'])->middleware('auth', 'admin')->name('budget-archive-admin');
+Route::get('/budget/admin/archive/export', [BudgetArchiveAdminController::class, 'exportTable'])->middleware('auth', 'admin')->name('budget-archive-admin-export');
 
 //Группа адресов для обращения через curl
 Route::get('/robo/ofs/status', [RoboOfsController::class, 'ChangeStatus']);

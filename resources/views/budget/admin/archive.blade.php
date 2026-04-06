@@ -129,6 +129,10 @@
                             <h3 class="h5 text-black mb-3"><font color="red">Информация:</h3>
                             @if ($info['status'] == true)
                                 <p class="mb-0 font-weight-bold"><font color="red">Выбранный год: {{ $info['year'] }}</p>
+                                </br>
+                                <a href="{{ route('budget-archive-admin-export', ['year' => $info['year'], 'variant' => $info['variant']]) }}" title="Скачать Excel">
+                                    <img src="{{ asset('assets/icons/excel-48.png') }}" alt="Export" style="width: 48px; height: 48px;">
+                                <font color="black">- Экспорт в xlsx</a>
                             @endif
                         </div> 
                     </div>       
