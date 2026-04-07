@@ -43,8 +43,7 @@
                 <div class="collapse navbar-collapse" id="ftco-nav">
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item"><a href="/portal/public/home" class="nav-link">Главная</a></li>
-                        <li class="nav-item"><a href="#" class="nav-link">Прогноз</a></li>
-                        <li class="nav-item"><a href="/portal/public/budget/admin/archive" class="nav-link">Архив</a></li>
+                        <li class="nav-item"><a href="/portal/public/budget/user/archive" class="nav-link">Архив</a></li>
                         <li class="nav-item cta cta-colored"><a href="{{ route('logout') }}" class="nav-link" onclick="event.preventDefault();
                             document.getElementById('logout-form').submit();">Выход</a>
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
@@ -73,7 +72,7 @@
             <div style="background-color: PaleTurquoise;" class="container">
                 <div class="row"> 
                     <div class="col-md-12 col-lg-8 mb-5">         
-                        <form action="/portal/public/budget/admin" id="parameters" method="get" class="p-5 bg-white">
+                        <form action="/portal/public/budget/user" id="parameters" method="get" class="p-5 bg-white">
 
                             <div class="row form-group">
                                 <div class="col-md-12 mb-3 mb-md-0">
@@ -98,8 +97,15 @@
                                     <div class="form-group">
                                         <div class="form-field">
                                             <div class="select-wrap">
-                                                <select name="user_id" class="form-control">
-                                                    <option value="#">Список уточняется</option>
+                                                <select name="variant" class="form-control">
+                                                    <option value="1">Администрация</option>
+                                                    <option value="2">ОМСУ</option>
+                                                    <option value="3">ЦБ и Закупки</option>
+                                                    <option value="4">Детские сады</option>
+                                                    <option value="5">ДХШ и ДМШ</option>
+                                                    <option value="6">ВСОШ</option>
+                                                    <option value="7">КУМС</option>
+                                                    <option value="8">Итог</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -118,7 +124,6 @@
                     <div class="col-lg-4">
                         <div class="p-4 mb-3 bg-white">
                             <h3 class="h5 text-black mb-3"><font color="red">Информация:</h3>
-                            <p class="mb-0 font-weight-bold"><font color="red">отчетная дата:</p>
                         </div>   
                     </div>       
                                                          
@@ -183,7 +188,7 @@
                     let year = form['year'];
                     
                     $.ajax({  
-                        url:"/portal/public/budget/admin/table",  
+                        url:"/portal/public/budget/user/table",  
                         method:"GET",
                         data:{
                             user_id, year

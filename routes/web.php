@@ -23,7 +23,9 @@ use App\Modules\OfsSection\Admin\Controllers\OfsSynchAdminController;
 use App\Modules\Ofs26Section\User\Controllers\Ofs26UserController;
 use App\Modules\Ofs26Section\Admin\Controllers\Ofs26AdminController;
 use App\Modules\BudgetSection\Admin\Controllers\BudgetAdminController;
+use App\Modules\BudgetSection\User\Controllers\BudgetUserController;
 use App\Modules\BudgetSection\Admin\Controllers\BudgetArchiveAdminController;
+use App\Modules\BudgetSection\User\Controllers\BudgetArchiveUserController;
 
 Route::get('/', function () {
     return view('auth.login');
@@ -136,7 +138,11 @@ Route::patch('/ofs26/admin/status', [Ofs26AdminController::class, 'updateStatus'
 Route::get('/budget/admin/table', [BudgetAdminController::class, 'showTable'])->middleware('auth', 'admin');
 Route::get('/budget/admin', [BudgetAdminController::class, 'frontView'])->middleware('auth', 'admin')->name('budget-admin');
 Route::get('/budget/admin/archive', [BudgetArchiveAdminController::class, 'frontView'])->middleware('auth', 'admin')->name('budget-archive-admin');
-Route::get('/budget/admin/archive/export', [BudgetArchiveAdminController::class, 'exportTable'])->middleware('auth', 'admin')->name('budget-archive-admin-export');
+Route::get('/budget/admin/archive/export', [BudgetArchiveAdminController::class, 'exportTable'])->middleware('auth')->name('budget-archive-admin-export');
+
+Route::get('/budget/user/table', [BudgetUserController::class, 'showTable'])->middleware('auth');
+Route::get('/budget/user', [BudgetUserController::class, 'frontView'])->middleware('auth')->name('budget-user');
+Route::get('/budget/user/archive', [BudgetArchiveUserController::class, 'frontView'])->middleware('auth')->name('budget-archive-user');
 
 //Группа адресов для обращения через curl
 Route::get('/robo/ofs/status', [RoboOfsController::class, 'ChangeStatus']);

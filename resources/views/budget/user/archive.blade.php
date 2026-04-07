@@ -1,5 +1,7 @@
 @php
-    //var_dump($info['matrix']);
+    if ($info['status'] == true){
+        //var_dump($info['total']);
+    }
 @endphp
 <!DOCTYPE html>
 <html lang="en">
@@ -43,8 +45,7 @@
                 <div class="collapse navbar-collapse" id="ftco-nav">
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item"><a href="/portal/public/home" class="nav-link">Главная</a></li>
-                        <li class="nav-item"><a href="#" class="nav-link">Прогноз</a></li>
-                        <li class="nav-item"><a href="/portal/public/budget/admin/archive" class="nav-link">Архив</a></li>
+                        <li class="nav-item"><a href="/portal/public/budget/user" class="nav-link">Таблица</a></li>
                         <li class="nav-item cta cta-colored"><a href="{{ route('logout') }}" class="nav-link" onclick="event.preventDefault();
                             document.getElementById('logout-form').submit();">Выход</a>
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
@@ -63,7 +64,7 @@
                 <div class="row no-gutters slider-text align-items-end justify-content-start">
                     <div class="col-md-12 ftco-animate text-center mb-5">
                         <p class="breadcrumbs mb-0"><span class="mr-3"></span> <span>Вы вошли как {{ $info['email'] }}</span></p>
-                        <h1 class="mb-3 bread">Бюджет</h1>
+                        <h1 class="mb-3 bread">Бюджет (архив)</h1>
                     </div>
                 </div>
             </div>
@@ -73,7 +74,7 @@
             <div style="background-color: PaleTurquoise;" class="container">
                 <div class="row"> 
                     <div class="col-md-12 col-lg-8 mb-5">         
-                        <form action="/portal/public/budget/admin" id="parameters" method="get" class="p-5 bg-white">
+                        <form action="/portal/public/budget/user/archive" id="parameters" method="get" class="p-5 bg-white">
 
                             <div class="row form-group">
                                 <div class="col-md-12 mb-3 mb-md-0">
@@ -82,9 +83,9 @@
                                         <div class="form-field">
                                             <div class="select-wrap">
                                                 <select name="year" class="form-control">
-                                                    <option value="2027">2027 год</option>
-                                                    <option value="2028">2028 год</option>
-                                                    <option value="2029">2029 год</option>
+                                                    <option value="2026">2026 год (бюджет 26-28)</option>
+                                                    <option value="2027">2027 год (бюджет 26-28)</option>
+                                                    <option value="2028">2028 год (бюджет 26-28)</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -98,8 +99,15 @@
                                     <div class="form-group">
                                         <div class="form-field">
                                             <div class="select-wrap">
-                                                <select name="user_id" class="form-control">
-                                                    <option value="#">Список уточняется</option>
+                                                <select name="variant" class="form-control">
+                                                    <option value="1">Администрация</option>
+                                                    <option value="2">ОМСУ</option>
+                                                    <option value="3">ЦБ и Закупки</option>
+                                                    <option value="4">Детские сады</option>
+                                                    <option value="5">ДХШ и ДМШ</option>
+                                                    <option value="6">ВСОШ</option>
+                                                    <option value="7">КУМС</option>
+                                                    <option value="8">Итог</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -118,8 +126,14 @@
                     <div class="col-lg-4">
                         <div class="p-4 mb-3 bg-white">
                             <h3 class="h5 text-black mb-3"><font color="red">Информация:</h3>
-                            <p class="mb-0 font-weight-bold"><font color="red">отчетная дата:</p>
-                        </div>   
+                            @if ($info['status'] == true)
+                                <p class="mb-0 font-weight-bold"><font color="red">Выбранный год: {{ $info['year'] }}</p>
+                                </br>
+                                <a href="{{ route('budget-archive-admin-export', ['year' => $info['year'], 'variant' => $info['variant']]) }}" title="Скачать Excel">
+                                    <img src="{{ asset('assets/icons/excel-48.png') }}" alt="Export" style="width: 48px; height: 48px;">
+                                <font color="black">- Экспорт в xlsx</a>
+                            @endif
+                        </div> 
                     </div>       
                                                          
                 </div>
@@ -128,7 +142,9 @@
         
         <div class="container2">
             <div class="container_fix2">
-                <div id="table"></div>  
+                @if($info['status'] == true)
+                    @include("budget.user.block.block_{$info['variant']}", ['info' => $info])
+                @endif
             </div>
         </div>
 
@@ -174,33 +190,10 @@
         <!-- Plugin checkselect! -->
         <script src="{{ asset('assets/plugins/checkselect/checkselect.js') }}" type="text/javascript"></script>
         <!-- The end checkselect! -->
-        <script>
-            $(document).ready(function(){                                
-                //Подгружаем BACK шаблон отрисовки
-                function fetch_data(){ 
-                    let form = <?=json_encode($info)?>;
-                    let user_id = form['user_id'];
-                    let year = form['year'];
-                    
-                    $.ajax({  
-                        url:"/portal/public/budget/admin/table",  
-                        method:"GET",
-                        data:{
-                            user_id, year
-                        },
-                        dataType:"text",
-                        success:function(data){  
-                            $('#table').html(data);  
-                            setKeydownmyForm()
-                        }   
-                    });  
-                } 
-                fetch_data();
 
-            });
-        </script>
     </body>
 </html>
+
 
 
 
