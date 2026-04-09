@@ -16,7 +16,7 @@ class SelectCommunalAction extends BaseAction
     public function selectInfo(array $months, int $year): array
     {   
         return Utilities::select(['id', 'user_id', 'year', 'mounth', 'status'])
-            ->with(['user:id,name'])     
+            ->with(['user:id,name,email'])     
             ->where('year', $year)
             ->whereIn('mounth', $months) 
             ->whereIn('status', [2, 3])     

@@ -51,6 +51,14 @@ class MailCommunalController extends Controller
         $this->action(MailSendAction::class)->sendMail($info['recipients'], $info['subject'], $info['template'], 
                 ['items' => $data, 'name_months' => $info['name_months'], 'status' => $info['status']]); 
         
+
+        $info_user = $this->action(WorkAction::class)->getInfoForUser();
+        
+        foreach ($data as $item) {
+            $this->action(MailSendAction::class)->sendMail([$item['user']['email']], $info_user['subject'], $info_user['template'], 
+                ['year' => $item['year'], 'name_months' => $info_user['name_months'], 'month' => $item['mounth']]); 
+        }
+        
         return response()->json($data, 200);
     }
 }

@@ -1,6 +1,6 @@
 <div style="
     width: 30cm; 
-    min-height: 5cm; 
+    min-height: 5cm;
     display: flex; 
     flex-direction: column; /* Располагаем строки друг под другом */
     align-items: center; 
@@ -21,7 +21,6 @@
         Напоминаем вам, что у вас не отправлена информация в ФЭУ:
     </span>
 
-    <!-- Вторая строка (меньше и светлее) -->
     <span style="
         color: #1a237e; /* Насыщенный темно-синий */
         font-size: 18px; 
@@ -29,6 +28,9 @@
         margin-top: 8px;
         text-shadow: 0px 1px 1px rgba(255,255,255,0.3);
     ">
-        Год: 2026, месяц: февраль
+        Год: {{ $year }}, месяц: {{ $name_months[$month] }}
     </span>
 </div>
+
+
+
