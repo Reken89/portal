@@ -1,6 +1,6 @@
 <div style="
     width: 30cm; 
-    min-height: 5cm; 
+    min-height: 5cm;
     display: flex; 
     flex-direction: column; /* Располагаем строки друг под другом */
     align-items: center; 
@@ -18,10 +18,9 @@
         font-weight: bold; 
         text-shadow: 1px 1px 2px rgba(255,255,255,0.4);
     ">
-        Тестовое письмо от портала {{ $user_name }}
+        Список учреждений не отправивших информацию (коммунальные услуги)
     </span>
 
-    <!-- Вторая строка (меньше и светлее) -->
     <span style="
         color: #1a237e; /* Насыщенный темно-синий */
         font-size: 18px; 
@@ -29,6 +28,9 @@
         margin-top: 8px;
         text-shadow: 0px 1px 1px rgba(255,255,255,0.3);
     ">
-        Тестовое письмо от портала {{ $user_name }}
+        @foreach($items as $item)
+            {{ $item['user']['name'] }}, месяц {{ $name_months[$item['mounth']] }}, статус = {{ $status[$item['status']] }} <br />
+        @endforeach
     </span>
 </div>
+

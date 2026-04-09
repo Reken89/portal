@@ -19,14 +19,13 @@ class MailSendAction extends BaseAction
     public function sendMail(array $recipients, string $subject, string $template, array $data)
     {   
         Mail::send($template, $data, function($message) use ($recipients, $subject) {
-        $message->to($recipients)
+            $message->to($recipients)
                 ->subject($subject);
-        
-        // Адрес отправителя подтянется из .env (MAIL_FROM_ADDRESS),
-        // но если нужно переопределить прямо в коде:
-        // $message->from('portal@domen.ru', 'Корпоративный портал');
-    });
 
+            // Адрес отправителя подтянется из .env (MAIL_FROM_ADDRESS),
+            // но если нужно переопределить прямо в коде:
+            // $message->from('portal@domen.ru', 'Корпоративный портал');
+        });
     } 
 }
 

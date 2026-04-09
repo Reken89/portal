@@ -27,6 +27,7 @@ use App\Modules\BudgetSection\User\Controllers\BudgetUserController;
 use App\Modules\BudgetSection\Admin\Controllers\BudgetArchiveAdminController;
 use App\Modules\BudgetSection\User\Controllers\BudgetArchiveUserController;
 use App\Modules\MailSection\Controllers\MailTestController;
+use App\Modules\MailSection\Controllers\MailCommunalController;
 
 Route::get('/', function () {
     return view('auth.login');
@@ -148,6 +149,7 @@ Route::get('/budget/user/archive', [BudgetArchiveUserController::class, 'frontVi
 //Группа адресов для mail отправки
 Route::get('/budget/mail/test/show', [MailTestController::class, 'showView']);
 Route::get('/budget/mail/test/send', [MailTestController::class, 'sendTest'])->middleware('auth', 'admin');
+Route::get('/budget/mail/communal/result', [MailCommunalController::class, 'sendResult']);
 
 //Группа адресов для обращения через curl
 Route::get('/robo/ofs/status', [RoboOfsController::class, 'ChangeStatus']);
