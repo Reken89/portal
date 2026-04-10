@@ -131,6 +131,7 @@ Route::patch('/ofs26/user/synch', [Ofs26UserController::class, 'SynchOfs'])->mid
 Route::patch('/ofs26/user/close', [Ofs26UserController::class, 'CloseOfs'])->middleware('auth');
 Route::get('/ofs26/user/export', [Ofs26UserController::class, 'ExportTable'])->middleware('auth');
 Route::get('/ofs26/user/fullscreen', [Ofs26UserController::class, 'FullScreen'])->middleware('auth');
+Route::patch('/ofs26/user/reset', [Ofs26UserController::class, 'resetInfo'])->middleware('auth');
 
 Route::get('/ofs26/admin', [Ofs26AdminController::class, 'frontView'])->middleware('auth', 'admin')->name('ofs26-admin');
 Route::get('/ofs26/admin/export', [Ofs26AdminController::class, 'exportTable'])->middleware('auth', 'admin');

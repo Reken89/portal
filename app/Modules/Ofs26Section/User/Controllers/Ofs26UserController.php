@@ -14,8 +14,10 @@ use App\Modules\Ofs26Section\User\Actions\CalculateInfoAction;
 use App\Modules\Ofs26Section\User\Actions\UpdateInfoAction;
 use App\Modules\Ofs26Section\User\Requests\UpdateOfsRequest;
 use App\Modules\Ofs26Section\User\Requests\SynchOfsRequest;
+use App\Modules\Ofs26Section\User\Requests\ResetOfsRequest;
 use App\Modules\Ofs26Section\User\Dto\UpdateOfsDto;
 use App\Modules\Ofs26Section\User\Dto\SynchOfsDto;
+use App\Modules\Ofs26Section\User\Dto\ResetOfsDto;
 
 class Ofs26UserController extends Controller
 {   
@@ -179,7 +181,21 @@ class Ofs26UserController extends Controller
 
         return view('ofs26.user.fullscreen', compact('info'));   
     }
-
+    
+    /**
+     * Сбрасываем значение полей в таблице
+     *
+     * @param ResetOfsRequest $request
+     * @return JsonResponse
+     */
+    public function resetInfo(ResetOfsRequest $request): JsonResponse
+    {      
+        $dto = ResetOfsDto::fromRequest($request);  
+        $result = $this->action(UpdateInfoAction::class)->resetInfo($dto);
+        return $result 
+            ? response()->json(null, 204) 
+            : response()->json(null, 500);
+    }
 }
 
 

@@ -8,6 +8,7 @@
         <tr>
             <th style="min-width: 200px; width: 200px;"><font color="White">Наименование расходов</th>
             <th style="min-width: 70px; width: 70px;"><font color="White">ЭКР</th>
+            <th style="min-width: 70px; width: 70px;"><font color="White"></th>
             <th style="min-width: 100px; width: 100px;"><font color="White">Плановые назначения ЛБО</th>
             <th style="min-width: 100px; width: 100px;"><font color="White">Аванс (прошлый год)</th>
             <th style="min-width: 100px; width: 100px;" colspan="2"><font color="White">Кредиторская задолженность</br> на начало года</th>
@@ -23,7 +24,7 @@
     </thead>
     <tbody>
         <tr>
-            <td class="sticky-col">1</td><td>2</td><td>3</td><td>4</td>
+            <td class="sticky-col">1</td><td>2</td><td></td><td>3</td><td>4</td>
             <td>5</td><td>6</td><td>7</td><td>8</td>
             <td>9</td><td>10</td><td>11</td><td>12</td>
             <td>13</td><td>14</td><td>15</td><td>16</td>
@@ -31,7 +32,7 @@
         </tr>             
         <tr>
             <td class="sticky-col"><b>{{ $info['ofs'][0]['user_name'] }} @foreach ($info['chapters'] as $chap) {{ $info['chapter'][$chap] }}, @endforeach {{ $info['mounth'][$info['ofs'][0]['mounth']] }}</b></td>
-            <td></td>
+            <td></td><td></td>
             <td></td><td></td>
             <td style="min-width: 50px; width: 50px;">Всего</td><td style="min-width: 50px; width: 50px;">Просроченная</td>
             <td style="min-width: 50px; width: 50px;">Всего</td><td style="min-width: 50px; width: 50px;">Просроченная</td>
@@ -68,6 +69,7 @@
                 <tr>
                     <td style="height: 65px;" class="sticky-col"><b><p class="text-scale">{{ $value['title'] }}</b></p></td>
                     <td>{{ $displayEkr }}</td> {{-- Используем подмененную переменную --}}
+                    <td></td>
                     <td>{{ number_format($value['lbo'], 2, ',', ' ') }}</td>
                     <td>{{ number_format($value['prepaid'], 2, ',', ' ') }}</td>
                     <td>{{ number_format($value['credit_year_all'], 2, ',', ' ') }}</td>
@@ -96,7 +98,11 @@
                     <input type="hidden" class="id" value="{{ $value['id'] }}">
                     
                     <td style="height: 65px;" class="sticky-col"><p class="text-scale">{{ $value['title'] }}</p></td>
-                    <td>{{ $displayEkr }}</td> {{-- Используем подмененную переменную --}}               
+                    <td>{{ $displayEkr }}</td> {{-- Используем подмененную переменную --}}   
+                    <td>
+                        <input type="button" id="reset" value="Сброс" 
+                            style="background-color: #d9534f; color: white; border: 1px solid #d43f3a; padding: 5px 15px; border-radius: 4px; cursor: pointer;">
+                    </td>
                     <td><input type="text" size="10" class="lbo" value="{{ number_format($value['lbo'], 2, ',', ' ') }}"></td>  
                     <td><input type="text" size="10" class="prepaid" value="{{ number_format($value['prepaid'], 2, ',', ' ') }}"></td>
                     <td><input type="text" size="10" class="credit_year_all" value="{{ number_format($value['credit_year_all'], 2, ',', ' ') }}"></td>
@@ -119,6 +125,7 @@
                 <tr>
                     <td style="height: 65px;" class="sticky-col"><p class="text-scale">{{ $value['title'] }}</p></td>
                     <td>{{ $displayEkr }}</td> {{-- Используем подмененную переменную --}}
+                    <td></td>
                     <td>{{ number_format($value['lbo'], 2, ',', ' ') }}</td>  
                     <td>{{ number_format($value['prepaid'], 2, ',', ' ') }}</td>
                     <td>{{ number_format($value['credit_year_all'], 2, ',', ' ') }}</td>
@@ -141,6 +148,7 @@
         @endforeach 
         <tr>
             <td style="height: 65px;" class="sticky-col">ИТОГ</td>
+            <td></td>
             <td></td>
             <td><font color="blue">{{ number_format($info['total']['lbo'], 2, ',', ' ') }}</td>  
             <td><font color="blue">{{ number_format($info['total']['prepaid'], 2, ',', ' ') }}</td>

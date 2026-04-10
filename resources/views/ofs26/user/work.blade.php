@@ -202,6 +202,7 @@
             <p><font color="red">Запись информации в таблицу, выполняется построчно. Необходимо ввести все
                 цифры (все колонки) в редактируемую строку, после чего единожды нажать клавишу enter,
                 в строке сохранятся все введенные цифры.</p>
+            <p><font color="red">Кнопка сброс, выполняет сброс на значения прошлого месяца в колонках (9 и 11), а так же обнуляет колонки (10 и 12)</p>
             <div class="container_fix2">
                 <div id="table"></div>  
             </div>
@@ -436,6 +437,32 @@
                     // Просто переходим по ней
                     let baseUrl = '/portal/public/ofs26/user/fullscreen';
                     window.location.href = `${baseUrl}?${params.toString()}`;
+                })
+                
+                //Выполняем действие (сбрасываем значения) при нажатии на кнопку reset
+                $(document).on('click', '#reset', function(){          
+                    let tr = this.closest('tr');
+                    let id = $('.id', tr).val();
+                    let mounth = $('.mounth', tr).val();
+                    let chapter = $('.chapter', tr).val();
+                    let user_id = $('.user_id', tr).val();
+                    let ekr_id = $('.ekr_id', tr).val();
+                    let number = $('.number', tr).val();
+
+                    $.ajax({
+                        url:"/portal/public/ofs26/user/reset",  
+                        method:"patch",
+                        data:{
+                            "_token": "{{ csrf_token() }}",
+                            id, mounth, chapter,
+                            user_id, ekr_id, number
+                        },
+                        dataType:"text",  
+                        success:function(data){
+                            fetch_data();
+                            //alert(data);
+                        } 
+                    })               
                 })
             });
         </script>

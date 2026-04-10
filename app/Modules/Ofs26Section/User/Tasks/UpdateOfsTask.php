@@ -6,6 +6,7 @@ use App\Core\Tasks\BaseTask;
 use Illuminate\Support\Facades\DB;
 use App\Modules\Ofs26Section\User\Dto\UpdateOfsDto;
 use App\Modules\Ofs26Section\User\Dto\SynchOfsDto;
+use App\Modules\Ofs26Section\User\Dto\ResetOfsDto;
 
 class UpdateOfsTask extends BaseTask
 {   
@@ -192,6 +193,52 @@ class UpdateOfsTask extends BaseTask
             'status' => 1,
         ]);       
     }    
+    
+    /**
+     * Сброс значений
+     *
+     * @param ResetOfsDto $dto
+     * @return bool
+     */
+    public function resetInfo(ResetOfsDto $dto): bool
+    { 
+        try {
+            return DB::transaction(function () use ($dto) {
+                // Если январь, то факт за всё время равен 0, так как прошлого месяца нет
+                if ($dto->mounth == 1) {
+                    $factAll = 0;
+                    $kassaAll = 0;
+                } else {
+                    // Ищем данные за прошлый месяц
+                    $result = DB::table('ofs26')
+                        ->select('fact_all', 'kassa_all')
+                        ->where('user_id', $dto->user_id)
+                        ->where('ekr_id', $dto->ekr_id)
+                        ->where('mounth', $dto->mounth - 1)
+                        ->where('chapter', $dto->chapter)
+                        ->first();
+
+                    if (!$result) return false;
+
+                    $factAll = $result->fact_all;
+                    $kassaAll = $result->kassa_all;
+                }
+
+                // Обновляем текущую запись
+                DB::table('ofs26')->where('id', $dto->id)->update([
+                    'fact_all'     => $factAll,
+                    'kassa_all'    => $kassaAll,
+                    'fact_mounth'  => 0,
+                    'kassa_mounth' => 0,
+                ]);
+                return true; 
+            });            
+        } catch (Exception $ex) {
+            // Если база ругнулась (например, деление на ноль или лок таблицы)
+            \Log::error("Ошибка в UpdateInfo: " . $ex->getMessage());
+            return false;
+        }    
+    } 
 }
 
 

@@ -57,4 +57,15 @@ class UpdateOfsDto extends BaseDto
             'id'                   => $request->get('id'),
         ]);
     }
+    
+    /**
+     * Создание DTO из массива данных
+     *
+     * @param array $data
+     * @return static
+     */
+    public static function fromArray(array $data): self
+    {
+        return new self($data);
+    }
 }

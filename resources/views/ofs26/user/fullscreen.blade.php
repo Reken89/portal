@@ -89,6 +89,32 @@
                 }   
             });  
         } 
-        fetch_data();       
+        fetch_data(); 
+        
+        //Выполняем действие (сбрасываем значения) при нажатии на кнопку reset
+        $(document).on('click', '#reset', function(){          
+            let tr = this.closest('tr');
+            let id = $('.id', tr).val();
+            let mounth = $('.mounth', tr).val();
+            let chapter = $('.chapter', tr).val();
+            let user_id = $('.user_id', tr).val();
+            let ekr_id = $('.ekr_id', tr).val();
+            let number = $('.number', tr).val();
+
+            $.ajax({
+                url:"/portal/public/ofs26/user/reset",  
+                method:"patch",
+                data:{
+                    "_token": "{{ csrf_token() }}",
+                    id, mounth, chapter,
+                    user_id, ekr_id, number
+                },
+                dataType:"text",  
+                success:function(data){
+                    fetch_data();
+                    //alert(data);
+                } 
+            })               
+        })
     });
 </script>
