@@ -41,7 +41,16 @@
             <td style="min-width: 50px; width: 50px;">Всего</td><td style="min-width: 50px; width: 50px;">Просроченная</td>
             <td></td><td></td><td></td>
         </tr>               
-        @foreach ($info['ofs'] as $value)  
+        @foreach ($info['ofs'] as $value)
+            {{-- 1. Скрываем строки с EKR 341-349, если это main --}}
+            @if (($value['main'] == 'Yes') && ($value['ekr'] >= 341 && $value['ekr'] <= 349))
+                @continue
+            @endif
+            
+            {{-- 2. Подменяем отображение EKR для остальных случаев --}}
+            @php 
+                $displayEkr = ($value['ekr'] >= 341 && $value['ekr'] <= 349) ? 340 : $value['ekr'];
+            @endphp
 
             @if ($value['total1'] < "0" || $value['total1'] > "0")
                 @php $color_t1 = "red"; @endphp 
@@ -55,10 +64,10 @@
                 @php $color_t2 = "black"; @endphp 
             @endif  
 
-            @if ($value['main'] == 'Yes' || $value['main'] == 'Yes')               
+            @if ($value['main'] == 'Yes')               
                 <tr>
                     <td style="height: 65px;" class="sticky-col"><b><p class="text-scale">{{ $value['title'] }}</b></p></td>
-                    <td>{{ $value['ekr'] }}</td>
+                    <td>{{ $displayEkr }}</td> {{-- Используем подмененную переменную --}}
                     <td>{{ number_format($value['lbo'], 2, ',', ' ') }}</td>
                     <td>{{ number_format($value['prepaid'], 2, ',', ' ') }}</td>
                     <td>{{ number_format($value['credit_year_all'], 2, ',', ' ') }}</td>
@@ -87,7 +96,7 @@
                     <input type="hidden" class="id" value="{{ $value['id'] }}">
                     
                     <td style="height: 65px;" class="sticky-col"><p class="text-scale">{{ $value['title'] }}</p></td>
-                    <td>{{ $value['ekr'] }}</td>                   
+                    <td>{{ $displayEkr }}</td> {{-- Используем подмененную переменную --}}               
                     <td><input type="text" size="10" class="lbo" value="{{ number_format($value['lbo'], 2, ',', ' ') }}"></td>  
                     <td><input type="text" size="10" class="prepaid" value="{{ number_format($value['prepaid'], 2, ',', ' ') }}"></td>
                     <td><input type="text" size="10" class="credit_year_all" value="{{ number_format($value['credit_year_all'], 2, ',', ' ') }}"></td>
@@ -109,7 +118,7 @@
             @else
                 <tr>
                     <td style="height: 65px;" class="sticky-col"><p class="text-scale">{{ $value['title'] }}</p></td>
-                    <td>{{ $value['ekr'] }}</td>
+                    <td>{{ $displayEkr }}</td> {{-- Используем подмененную переменную --}}
                     <td>{{ number_format($value['lbo'], 2, ',', ' ') }}</td>  
                     <td>{{ number_format($value['prepaid'], 2, ',', ' ') }}</td>
                     <td>{{ number_format($value['credit_year_all'], 2, ',', ' ') }}</td>
