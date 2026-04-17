@@ -28,6 +28,7 @@ use App\Modules\BudgetSection\Admin\Controllers\BudgetArchiveAdminController;
 use App\Modules\BudgetSection\User\Controllers\BudgetArchiveUserController;
 use App\Modules\MailSection\Controllers\MailTestController;
 use App\Modules\MailSection\Controllers\MailCommunalController;
+use App\Modules\ForecastSection\Admin\Controllers\ForecastAdminController;
 
 Route::get('/', function () {
     return view('auth.login');
@@ -146,6 +147,10 @@ Route::get('/budget/admin/archive/export', [BudgetArchiveAdminController::class,
 Route::get('/budget/user/table', [BudgetUserController::class, 'showTable'])->middleware('auth');
 Route::get('/budget/user', [BudgetUserController::class, 'frontView'])->middleware('auth')->name('budget-user');
 Route::get('/budget/user/archive', [BudgetArchiveUserController::class, 'frontView'])->middleware('auth')->name('budget-archive-user');
+
+//Группа адресов для модуля "Прогноз коммунальных услуг"
+Route::get('/forecast/admin/table', [ForecastAdminController::class, 'showTable'])->middleware('auth', 'admin');
+Route::get('/forecast/admin', [ForecastAdminController::class, 'frontView'])->middleware('auth', 'admin')->name('forecast-admin');
 
 //Группа адресов для mail отправки
 Route::get('/budget/mail/test/show', [MailTestController::class, 'showView']);

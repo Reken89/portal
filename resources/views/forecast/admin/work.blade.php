@@ -1,10 +1,10 @@
 @php
-    //var_dump($info['matrix']);
+    //var_dump($info);
 @endphp
 <!DOCTYPE html>
 <html lang="en">
     <head>
-    <title>Бюджет 2027-2029</title>
+    <title>Прогноз</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -36,6 +36,7 @@
         <!-- Plugin table2! -->
         <link rel="stylesheet" href="{{ asset('assets/plugins/table/table2.css') }}">
         <!-- The end table2! -->
+        <script src="https://cdn.jsdelivr.net"></script>
     </head>
     <body>        
         <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
@@ -43,7 +44,7 @@
                 <div class="collapse navbar-collapse" id="ftco-nav">
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item"><a href="/portal/public/home" class="nav-link">Главная</a></li>
-                        <li class="nav-item"><a href="/portal/public/forecast/admin" class="nav-link">Прогноз</a></li>
+                        <li class="nav-item"><a href="/portal/public/budget/admin" class="nav-link">Таблица</a></li>
                         <li class="nav-item"><a href="/portal/public/budget/admin/archive" class="nav-link">Архив</a></li>
                         <li class="nav-item cta cta-colored"><a href="{{ route('logout') }}" class="nav-link" onclick="event.preventDefault();
                             document.getElementById('logout-form').submit();">Выход</a>
@@ -63,49 +64,35 @@
                 <div class="row no-gutters slider-text align-items-end justify-content-start">
                     <div class="col-md-12 ftco-animate text-center mb-5">
                         <p class="breadcrumbs mb-0"><span class="mr-3"></span> <span>Вы вошли как {{ $info['email'] }}</span></p>
-                        <h1 class="mb-3 bread">Бюджет</h1>
+                        <h1 class="mb-3 bread">Прогноз коммунальных услуг</h1>
                     </div>
                 </div>
             </div>
         </div>
 
         <section class="ftco-section bg-light">
-            <div style="background-color: PaleTurquoise;" class="container">
-                <div class="row"> 
+            <div class="container">
+                <div class="row">      
                     <div class="col-md-12 col-lg-8 mb-5">         
-                        <form action="/portal/public/budget/admin" id="parameters" method="get" class="p-5 bg-white">
-
+                        <form action="/portal/public/forecast/admin" method="get">   
                             <div class="row form-group">
                                 <div class="col-md-12 mb-3 mb-md-0">
-                                    <label class="font-weight-bold" for="fullname">Год</label>
+                                    <label class="font-weight-bold" for="fullname">Таблица</label>
                                     <div class="form-group">
                                         <div class="form-field">
                                             <div class="select-wrap">
-                                                <select name="year" class="form-control">
-                                                    <option value="2027">2027 год</option>
-                                                    <option value="2028">2028 год</option>
-                                                    <option value="2029">2029 год</option>
+                                                <select name="table" class="form-control">
+                                                    <option value="1">Таблица тарифов</option>
+                                                    <option value="2">Таблица ошибок</option>
+                                                    <option value="3">Таблица «МБ»</option>
+                                                    <option value="4">Таблица «ПД»</option>
+                                                    <option value="5">Таблица «свод»</option>
                                                 </select>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>                       
-                            
-                            <div class="row form-group">
-                                <div class="col-md-12 mb-3 mb-md-0">
-                                    <label class="font-weight-bold" for="fullname">Учреждения</label>
-                                    <div class="form-group">
-                                        <div class="form-field">
-                                            <div class="select-wrap">
-                                                <select name="user_id" class="form-control">
-                                                    <option value="#">Список уточняется</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>  
+                            </div> 
 
                             <div class="row form-group">
                                 <div class="col-md-12">
@@ -118,12 +105,12 @@
                     <div class="col-lg-4">
                         <div class="p-4 mb-3 bg-white">
                             <h3 class="h5 text-black mb-3"><font color="red">Информация:</h3>
-                            <p class="mb-0 font-weight-bold"><font color="red">отчетная дата:</p>
                         </div>   
-                    </div>       
-                                                         
+                    </div>                    
+                  
                 </div>
-            </div>           
+            </div>
+       
         </section>
         
         <div class="container2">
@@ -131,8 +118,7 @@
                 <div id="table"></div>  
             </div>
         </div>
-
-                
+        
         <section class="ftco-section-parallax">
             <div class="parallax-img d-flex align-items-center">
                 <div class="container">
@@ -172,21 +158,22 @@
         <script src="{{ asset('assets/skillhunt/js/main.js') }}"></script> 
         
         <!-- Plugin checkselect! -->
-        <script src="{{ asset('assets/plugins/checkselect/checkselect.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('assets/plugins/checkselect/checkselect.js') }}" type="text/javascript"></script>        
         <!-- The end checkselect! -->
-        <script>
-            $(document).ready(function(){                                
+
+        
+        <script>   
+            $(document).ready(function(){ 
                 //Подгружаем BACK шаблон отрисовки
                 function fetch_data(){ 
                     let form = <?=json_encode($info)?>;
-                    let user_id = form['user_id'];
-                    let year = form['year'];
+                    let table = form['table'];
                     
                     $.ajax({  
-                        url:"/portal/public/budget/admin/table",  
+                        url:"/portal/public/forecast/admin/table",  
                         method:"GET",
                         data:{
-                            user_id, year
+                            table
                         },
                         dataType:"text",
                         success:function(data){  
@@ -195,12 +182,12 @@
                         }   
                     });  
                 } 
-                fetch_data();
-
+                fetch_data();                
             });
         </script>
     </body>
 </html>
+
 
 
 

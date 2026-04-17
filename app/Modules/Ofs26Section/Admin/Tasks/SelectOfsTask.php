@@ -18,10 +18,8 @@ class SelectOfsTask extends BaseTask
     {     
         return DB::table('ofs26')
         ->join('ekr', 'ofs26.ekr_id', '=', 'ekr.id')
-        ->join('users', 'ofs26.user_id', '=', 'users.id') // Заменяем with('user') на join
         ->select(
-            'ofs26.user_id', 'ofs26.ekr_id', 'ofs26.mounth',
-            'users.name as user_name', // Данные юзера
+            'ofs26.ekr_id',
             'ekr.number', 'ekr.main', 'ekr.shared', 'ekr.title', 'ekr.ekr' // Данные EKR (если нужны в результате)
         )
         ->selectRaw('SUM(ofs26.lbo) as lbo')
@@ -46,7 +44,7 @@ class SelectOfsTask extends BaseTask
         ->whereIn('ofs26.user_id', $dto->user_id)
         ->whereIn('ofs26.mounth', $dto->month)
         ->whereIn('ofs26.chapter', $dto->chapter)
-        ->groupBy(['ofs26.ekr_id', 'ofs26.user_id', 'ofs26.mounth', 'users.name', 'ekr.number', 'ekr.main', 'ekr.shared', 'ekr.title', 'ekr.ekr']) 
+        ->groupBy(['ofs26.ekr_id', 'ekr.number', 'ekr.main', 'ekr.shared', 'ekr.title', 'ekr.ekr'])        
         ->orderBy('ekr.number', 'asc')
         ->orderBy('ekr.main', 'desc')
         ->orderBy('ekr.shared', 'desc')
