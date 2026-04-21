@@ -164,6 +164,43 @@
         
         <script>   
             $(document).ready(function(){ 
+                //Выполняем запись в БД при нажатии на клавишу ENTER
+                function setKeydownmyForm() {
+                    $('input').keydown(function(e) {
+                        if (e.keyCode === 13) {
+                            let td = this.closest('td');
+                            let id = $('.tariff-id', td).val(); 
+
+                            //Получаем значения, меняем запятую на точку и убираем пробелы в числе                   
+                            function structure(title){
+                                var volume = $(title, td).val();
+                                //Меняем запятую на точку
+                                //Убираем лишние пробелы
+                                //Выполняем арифметические действия в строке
+                                var volume = volume.replace(/\,/g,'.');
+                                var volume = volume.replace(/ /g,'');
+                                var volume = eval(volume);
+                                return volume;
+                            }
+
+                            let tariff = structure('.tariff');
+
+                            $.ajax({ 
+                                url:"/portal/public/forecast/admin/tariff/update",  
+                                method:"patch",  
+                                data:{
+                                    "_token": "{{ csrf_token() }}",
+                                    id, tariff
+                                },
+                                dataType:"text",  
+                                success:function(data){  
+                                    fetch_data(); 
+                                } 
+                            })                
+                        }               
+                    })
+                }
+                
                 //Подгружаем BACK шаблон отрисовки
                 function fetch_data(){ 
                     let form = <?=json_encode($info)?>;
@@ -178,7 +215,11 @@
                         dataType:"text",
                         success:function(data){  
                             $('#table').html(data);  
-                            setKeydownmyForm()
+                            if (table == 1) {
+                                setKeydownmyForm();
+                            }else if (table == 2) {
+                                // Какая-то другая логика для второй таблицы
+                            }
                         }   
                     });  
                 } 

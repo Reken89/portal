@@ -151,6 +151,7 @@ Route::get('/budget/user/archive', [BudgetArchiveUserController::class, 'frontVi
 //Группа адресов для модуля "Прогноз коммунальных услуг"
 Route::get('/forecast/admin/table', [ForecastAdminController::class, 'showTable'])->middleware('auth', 'admin');
 Route::get('/forecast/admin', [ForecastAdminController::class, 'frontView'])->middleware('auth', 'admin')->name('forecast-admin');
+Route::patch('/forecast/admin/tariff/update', [ForecastAdminController::class, 'updateTariff'])->middleware('auth', 'admin');
 
 //Группа адресов для mail отправки
 Route::get('/budget/mail/test/show', [MailTestController::class, 'showView']);
