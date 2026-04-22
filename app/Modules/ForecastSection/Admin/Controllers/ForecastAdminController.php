@@ -12,6 +12,7 @@ use App\Modules\ForecastSection\Admin\Requests\UpdateTariffRequest;
 use App\Modules\ForecastSection\Admin\Dto\UpdateTariffDto;
 use App\Modules\ForecastSection\Admin\Actions\SelectInfoAction;
 use App\Modules\ForecastSection\Admin\Actions\UpdateInfoAction;
+use App\Modules\ForecastSection\Admin\Actions\CalculateInfoAction;
 
 class ForecastAdminController extends Controller
 {      
@@ -44,10 +45,13 @@ class ForecastAdminController extends Controller
             return view('forecast.admin.tables.table', ['info' => ['status' => false]]);
         }
 
+        $table = $this->action(SelectInfoAction::class)->selectInfo($request->table);
+        
         $info = [
             'status' => true,
             'table'  => $request->table,
-            'info'   => $this->action(SelectInfoAction::class)->selectInfo($request->table),
+            'info'   => $table,
+            'total'  => $this->action(CalculateInfoAction::class)->selectTotal($request->table, $table),
             'month'  => ['1' => 'январь', '2' => 'февраль', '3' => 'март', '4' => 'апрель', 
                 '5' => 'май', '6' => 'июнь', '7' => 'июль', '8' => 'август', '9' => 'сентябрь', 
                 '10' => 'октябрь', '11' => 'ноябрь', '12' => 'декабрь'],

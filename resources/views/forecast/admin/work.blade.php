@@ -86,7 +86,7 @@
                                                     <option value="2">Таблица ошибок</option>
                                                     <option value="3">Таблица «МБ»</option>
                                                     <option value="4">Таблица «ПД»</option>
-                                                    <option value="5">Таблица «свод»</option>
+                                                    <option value="5">Таблица «МБ+ПД»</option>
                                                 </select>
                                             </div>
                                         </div>
