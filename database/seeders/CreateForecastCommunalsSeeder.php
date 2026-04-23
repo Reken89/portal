@@ -18,21 +18,26 @@ class CreateForecastCommunalsSeeder extends Seeder
         $users = [
             3, 4, 5, 7, 8, 9, 10, 13, 15, 16, 17, 18, 19, 20, 21, 23,
         ];
+        
+        $titles = ['heat', 'water', 'drainage', 'power', 'trash', 'negative'];
                 
         //Добавляем значения в таблицу communal
         foreach ($users as $user) {
-            ForecastCommunal::create([
-                'user_id'         => $user,
-                'year'            => 2026,
-                'sum_budget_h1'   => 0,
-                'sum_business_h1' => 0,
-                'sum_budget_h2'   => 0,
-                'sum_business_h2' => 0,               
-                'vol_budget_h1'   => 0,
-                'vol_business_h1' => 0,
-                'vol_budget_h2'   => 0,
-                'vol_business_h2' => 0,
-            ]);                                                                      
+            foreach ($titles as $title) {    
+                ForecastCommunal::create([
+                    'user_id'         => $user,
+                    'year'            => 2026,
+                    'title'           => $title,
+                    'sum_budget_h1'   => 0,
+                    'sum_business_h1' => 0,
+                    'sum_budget_h2'   => 0,
+                    'sum_business_h2' => 0,               
+                    'vol_budget_h1'   => 0,
+                    'vol_business_h1' => 0,
+                    'vol_budget_h2'   => 0,
+                    'vol_business_h2' => 0,
+                ]);   
+            }    
         }
     }       
 }

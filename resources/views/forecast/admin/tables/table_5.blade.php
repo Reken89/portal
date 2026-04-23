@@ -1,7 +1,7 @@
 <table class="table2">
     <thead>
         <tr>
-            <th>Учреждение (МБ+ПД)</th>
+            <th>{{ $info['tariff'][$info['info'][0]['title']] }} (МБ+ПД)</th>
             <th>Объем 1-полугодие</th>
             <th>Сумма 1-полугодие</th>
             <th>Объем 2-полугодие</th>

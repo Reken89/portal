@@ -25,8 +25,9 @@ class ForecastAdminController extends Controller
     public function frontView(Request $request): View
     {      
         $info = [
-            'table'    => $request->table ?? null,
-            'email'   => Auth::user()->email(),
+            'table'  => $request->table ?? null,
+            'tariff' => $request->tariff ?? null,
+            'email'  => Auth::user()->email(),
         ];
 
         return view('forecast.admin.work', compact('info'));  
@@ -45,7 +46,7 @@ class ForecastAdminController extends Controller
             return view('forecast.admin.tables.table', ['info' => ['status' => false]]);
         }
 
-        $table = $this->action(SelectInfoAction::class)->selectInfo($request->table);
+        $table = $this->action(SelectInfoAction::class)->selectInfo($request->table, $request->tariff);
         
         $info = [
             'status' => true,
@@ -55,6 +56,8 @@ class ForecastAdminController extends Controller
             'month'  => ['1' => 'январь', '2' => 'февраль', '3' => 'март', '4' => 'апрель', 
                 '5' => 'май', '6' => 'июнь', '7' => 'июль', '8' => 'август', '9' => 'сентябрь', 
                 '10' => 'октябрь', '11' => 'ноябрь', '12' => 'декабрь'],
+            'tariff' => ['heat' => 'Теплоснабжение', 'water' => 'Водоснабжение', 'drainage' => 'Водоотведение', 
+                'power' => 'Электроснабжение', 'trash' => 'Вывоз мусора', 'negative' => 'Негативное воздействие'],
         ];
 
         return view('forecast.admin.tables.table', compact('info'));    
@@ -73,6 +76,17 @@ class ForecastAdminController extends Controller
         return $result 
             ? response()->json(null, 204) 
             : response()->json(null, 500);
+    }
+    
+    /**
+     * Синхронизируем таблицы
+     * Коммунальные услуги и прогноз
+     *
+     * @return JsonResponse
+     */
+    public function synchCommunal(): JsonResponse
+    {
+        return response()->json(['message' => 'Синхронизация с коммунальными услугами выполнена!']);
     }
 }
 

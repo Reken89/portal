@@ -17,6 +17,7 @@ class CreateForecastCommunalsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->integer('year');
+            $table->string('title', 100);
 
             // Суммы - 1 полугодие
             $table->decimal('sum_budget_h1', 15, 2)->default(0);

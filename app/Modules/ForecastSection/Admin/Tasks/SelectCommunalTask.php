@@ -11,10 +11,10 @@ class SelectCommunalTask extends BaseTask
      * Возвращаем таблицу ForecastCommunals
      * Местный бюджет
      *
-     * @param int $year
+     * @param int $year, string $tariff
      * @return array
      */
-    public function selectInfo(int $year): array
+    public function selectInfo(int $year, string $tariff): array
     {     
         return ForecastCommunal::select()   
             ->selectRaw("(`sum_budget_h1` + `sum_budget_h2`) AS sum_budget")
@@ -28,7 +28,8 @@ class SelectCommunalTask extends BaseTask
             ->selectRaw("(`sum_budget_h1` + `sum_budget_h2` + `sum_business_h1` + `sum_business_h2`) AS sum")
             ->selectRaw("(`vol_budget_h1` + `vol_budget_h2` + `vol_business_h1` + `vol_business_h2`) AS vol")    
             ->with(['user:id,name']) 
-            ->where('year', $year)   
+            ->where('year', $year) 
+            ->where('title', $tariff)    
             ->get()
             ->toArray();       
     }

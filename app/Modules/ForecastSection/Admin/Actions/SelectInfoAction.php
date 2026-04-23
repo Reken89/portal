@@ -11,10 +11,10 @@ class SelectInfoAction extends BaseAction
     /**
      * Получаем информацию из БД
      *
-     * @param int $table
+     * @param int $table, string $tariff
      * @return array
      */
-    public function selectInfo(int $table): array
+    public function selectInfo(int $table, string $tariff): array
     {   
         if($table == 1){
             return $this->task(WorkTariffTask::class)->selectTariffs(2026);  
@@ -25,7 +25,7 @@ class SelectInfoAction extends BaseAction
         }
         
         if($table > 2){
-            return $this->task(SelectCommunalTask::class)->selectInfo(2026);  
+            return $this->task(SelectCommunalTask::class)->selectInfo(2026, $tariff);  
         }
     } 
 }

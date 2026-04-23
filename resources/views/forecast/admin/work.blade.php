@@ -93,6 +93,26 @@
                                     </div>
                                 </div>
                             </div> 
+                            
+                            <div class="row form-group">
+                                <div class="col-md-12 mb-3 mb-md-0">
+                                    <label class="font-weight-bold" for="fullname">Тариф</label>
+                                    <div class="form-group">
+                                        <div class="form-field">
+                                            <div class="select-wrap">
+                                                <select name="tariff" class="form-control">
+                                                    <option value="heat">Теплоснабжение</option>
+                                                    <option value="water">Водоснабжение</option>
+                                                    <option value="drainage">Водоотведение</option>
+                                                    <option value="power">Электроснабжение</option>
+                                                    <option value="trash">Вывоз мусора</option>
+                                                    <option value="negative">Негативное воздействие</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> 
 
                             <div class="row form-group">
                                 <div class="col-md-12">
@@ -105,6 +125,9 @@
                     <div class="col-lg-4">
                         <div class="p-4 mb-3 bg-white">
                             <h3 class="h5 text-black mb-3"><font color="red">Информация:</h3>
+                            <tr>
+                                <td style="min-width: 200px; width: 200px;"><p><a href="" onclick="return false"><img src="{{ asset('assets/icons/calculator.png') }}" alt="" id="communal"></a> - Синхронизация (КУ)</p></td>
+                            </tr>
                         </div>   
                     </div>                    
                   
@@ -205,12 +228,13 @@
                 function fetch_data(){ 
                     let form = <?=json_encode($info)?>;
                     let table = form['table'];
+                    let tariff = form['tariff'];
                     
                     $.ajax({  
                         url:"/portal/public/forecast/admin/table",  
                         method:"GET",
                         data:{
-                            table
+                            table, tariff
                         },
                         dataType:"text",
                         success:function(data){  
@@ -223,7 +247,30 @@
                         }   
                     });  
                 } 
-                fetch_data();                
+                fetch_data();  
+                
+                //Выполняем действие (изменение статуса) при нажатии на кнопку
+                $(document).on('click', '#communal', function(){
+                    
+                    $.ajax({
+                        url:"/portal/public/forecast/admin/synch/communal",  
+                        method:"patch",
+                        data:{
+                            "_token": "{{ csrf_token() }}",
+                        },
+                        dataType: "json", // Ждем JSON, а не просто текст
+                        success: function(response) {  
+                            // response — это теперь объект { "message": "..." }
+                            alert(response.message);
+                            fetch_data();  
+                        },
+                        error: function(xhr) {
+                            // Если сервер вернул ошибку (400, 422, 500), попадем сюда
+                            let errorMessage = xhr.responseJSON ? xhr.responseJSON.message : 'Ошибка сервера';
+                            alert(errorMessage);
+                        }
+                    })             
+                })
             });
         </script>
     </body>
