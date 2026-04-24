@@ -3,24 +3,78 @@
 namespace App\Modules\ForecastSection\Admin\Tasks;
 
 use App\Core\Tasks\BaseTask;
+use Illuminate\Support\Facades\DB;
+use App\Modules\ForecastSection\Admin\Models\ForecastCommunal;
 
 class CalculateInfoTask extends BaseTask
 {   
     /**
-     * Суммируем информацию
+     * Обновляем объемы
+     * Первое полугодие
      *
-     * @param
-     * @return array
+     * @param array $info, int $year
+     * @return bool
      */
-    public function calculateInfoH1(Collection $info): array
+    public function updateVolH1(array $info, int $year): bool
     {     
-        return $info->groupBy('user_id')->map(function ($items, $userId) {
-            return [
-                'user_id' => $userId,
-                'mb_sum_heat' => $items->sum('mb_sum_heat'),
-                'pd_sum_heat' => $items->sum('pd_sum_heat'),
-                'mb_sum_drainage' => $items->sum('mb_sum_drainage'),
-            ];
-        })->values()->toArray();    
+        $result = ForecastCommunal::query()
+            ->where('year', $year)    
+            ->where('user_id', $info['user_id'])
+            ->update([
+                'vol_budget_h1' => DB::raw("CASE 
+                    WHEN title = 'heat' THEN {$info['mb_volume_heat']}
+                    WHEN title = 'water' THEN {$info['mb_volume_water']}
+                    WHEN title = 'drainage' THEN {$info['mb_volume_drainage']}
+                    WHEN title = 'power' THEN {$info['mb_volume_power']}
+                    WHEN title = 'trash' THEN {$info['mb_volume_trash']}
+                    WHEN title = 'negative' THEN {$info['mb_volume_negative']}    
+                    ELSE vol_budget_h1
+                END"),
+                'vol_business_h1' => DB::raw("CASE 
+                    WHEN title = 'heat' THEN {$info['pd_volume_heat']}
+                    WHEN title = 'water' THEN {$info['pd_volume_water']}
+                    WHEN title = 'drainage' THEN {$info['pd_volume_drainage']}
+                    WHEN title = 'power' THEN {$info['pd_volume_power']}
+                    WHEN title = 'trash' THEN {$info['pd_volume_trash']}
+                    WHEN title = 'negative' THEN {$info['pd_volume_negative']}    
+                    ELSE vol_business_h1
+                END")    
+            ]); 
+        return $result == true ? true : false;
+    }
+    
+    /**
+     * Обновляем суммы
+     * Первое полугодие
+     *
+     * @param array $info, int $year
+     * @return bool
+     */
+    public function updateSumH1(array $info, int $year): bool
+    {     
+        $result = ForecastCommunal::query()
+            ->where('year', $year)    
+            ->where('user_id', $info['user_id'])
+            ->update([
+                'sum_budget_h1' => DB::raw("CASE 
+                    WHEN title = 'heat' THEN {$info['mb_volume_heat']}
+                    WHEN title = 'water' THEN {$info['mb_volume_water']}
+                    WHEN title = 'drainage' THEN {$info['mb_volume_drainage']}
+                    WHEN title = 'power' THEN {$info['mb_volume_power']}
+                    WHEN title = 'trash' THEN {$info['mb_volume_trash']}
+                    WHEN title = 'negative' THEN {$info['mb_volume_negative']}    
+                    ELSE sum_budget_h1
+                END"),
+                'sum_business_h1' => DB::raw("CASE 
+                    WHEN title = 'heat' THEN {$info['pd_volume_heat']}
+                    WHEN title = 'water' THEN {$info['pd_volume_water']}
+                    WHEN title = 'drainage' THEN {$info['pd_volume_drainage']}
+                    WHEN title = 'power' THEN {$info['pd_volume_power']}
+                    WHEN title = 'trash' THEN {$info['pd_volume_trash']}
+                    WHEN title = 'negative' THEN {$info['pd_volume_negative']}    
+                    ELSE sum_business_h1
+                END")    
+            ]); 
+        return $result == true ? true : false;
     }
 }

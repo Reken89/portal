@@ -13,6 +13,7 @@ use App\Modules\ForecastSection\Admin\Dto\UpdateTariffDto;
 use App\Modules\ForecastSection\Admin\Actions\SelectInfoAction;
 use App\Modules\ForecastSection\Admin\Actions\UpdateInfoAction;
 use App\Modules\ForecastSection\Admin\Actions\CalculateInfoAction;
+use App\Modules\ForecastSection\Admin\Actions\SynchCommunalAction;
 
 class ForecastAdminController extends Controller
 {      
@@ -86,6 +87,7 @@ class ForecastAdminController extends Controller
      */
     public function synchCommunal(): JsonResponse
     {
+        $this->action(SynchCommunalAction::class)->synchCommunal();
         return response()->json(['message' => 'Синхронизация с коммунальными услугами выполнена!']);
     }
 }
