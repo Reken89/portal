@@ -8,6 +8,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Core\Controllers\Controller;
+use App\Modules\ForecastSection\Admin\Exports\ExportTable;
 use App\Modules\ForecastSection\Admin\Requests\UpdateTariffRequest;
 use App\Modules\ForecastSection\Admin\Dto\UpdateTariffDto;
 use App\Modules\ForecastSection\Admin\Actions\SelectInfoAction;
@@ -89,6 +90,37 @@ class ForecastAdminController extends Controller
     {
         $this->action(SynchCommunalAction::class)->synchCommunal();
         return response()->json(['message' => 'Синхронизация с коммунальными услугами выполнена!']);
+    }
+    
+    /**
+     * Синхронизируем таблицы
+     * Прогноз и бюджет
+     *
+     * @return JsonResponse
+     */
+    public function synchBudget(): JsonResponse
+    {
+        return response()->json(['message' => 'Синхронизация с таблицей бюджета выполнена!']);
+    }
+    
+    /**
+     * Экспорт в xlsx
+     *
+     * @param Request $request
+     */
+    public function exportTable(Request $request)
+    {
+        $table = $this->action(SelectInfoAction::class)->selectInfo($request->table, $request->tariff);
+        
+        $data = [
+            'table'  => $request->table,
+            'info'   => $table,
+            'total'  => $this->action(CalculateInfoAction::class)->selectTotal($request->table, $table),
+            'tariff' => ['heat' => 'Теплоснабжение', 'water' => 'Водоснабжение', 'drainage' => 'Водоотведение', 
+                'power' => 'Электроснабжение', 'trash' => 'Вывоз мусора', 'negative' => 'Негативное воздействие'],
+        ];
+        
+        return Excel::download(new ExportTable($data), 'table.xlsx');
     }
 }
 

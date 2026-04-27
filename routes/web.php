@@ -153,6 +153,8 @@ Route::get('/forecast/admin/table', [ForecastAdminController::class, 'showTable'
 Route::get('/forecast/admin', [ForecastAdminController::class, 'frontView'])->middleware('auth', 'admin')->name('forecast-admin');
 Route::patch('/forecast/admin/tariff/update', [ForecastAdminController::class, 'updateTariff'])->middleware('auth', 'admin');
 Route::patch('/forecast/admin/synch/communal', [ForecastAdminController::class, 'synchCommunal'])->middleware('auth', 'admin');
+Route::patch('/forecast/admin/synch/budget', [ForecastAdminController::class, 'synchBudget'])->middleware('auth', 'admin');
+Route::get('/forecast/admin/export', [ForecastAdminController::class, 'exportTable'])->middleware('auth', 'admin');
 
 //Группа адресов для mail отправки
 Route::get('/budget/mail/test/show', [MailTestController::class, 'showView']);

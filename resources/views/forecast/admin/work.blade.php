@@ -127,6 +127,12 @@
                             <h3 class="h5 text-black mb-3"><font color="red">Информация:</h3>
                             <tr>
                                 <td style="min-width: 200px; width: 200px;"><p><a href="" onclick="return false"><img src="{{ asset('assets/icons/calculator.png') }}" alt="" id="communal"></a> - Синхронизация (КУ)</p></td>
+                                <td style="min-width: 200px; width: 200px;"><p><a href="" onclick="return false"><img src="{{ asset('assets/icons/calculator.png') }}" alt="" id="budget"></a> - Синхронизация (Бюджет)</p></td>
+                                @if($info['table'] > 2)
+                                    <input type="hidden" class="table" value="{{ $info['table'] }}">
+                                    <input type="hidden" class="tariff" value="{{ $info['tariff'] }}">
+                                    <td style="min-width: 200px; width: 200px;"><p><a href="" onclick="return false"><img src="{{ asset('assets/icons/excel-48.png') }}" alt="" id="xlsx"></a> - Экспорт в xlsx</p></td>
+                                @endif
                             </tr>
                         </div>   
                     </div>                    
@@ -270,6 +276,45 @@
                             alert(errorMessage);
                         }
                     })             
+                })
+                
+                //Выполняем действие (изменение статуса) при нажатии на кнопку
+                $(document).on('click', '#budget', function(){
+                    
+                    $.ajax({
+                        url:"/portal/public/forecast/admin/synch/budget",  
+                        method:"patch",
+                        data:{
+                            "_token": "{{ csrf_token() }}",
+                        },
+                        dataType: "json", // Ждем JSON, а не просто текст
+                        success: function(response) {  
+                            // response — это теперь объект { "message": "..." }
+                            alert(response.message);
+                            fetch_data();  
+                        },
+                        error: function(xhr) {
+                            // Если сервер вернул ошибку (400, 422, 500), попадем сюда
+                            let errorMessage = xhr.responseJSON ? xhr.responseJSON.message : 'Ошибка сервера';
+                            alert(errorMessage);
+                        }
+                    })             
+                })
+                
+                //Выполняем действие (EXCEL) при нажатии на кнопку
+                $(document).on('click', '#xlsx', function(){
+                    let tr = this.closest('tr');
+                    let table = $('.table', tr).val();
+                    let tariff = $('.tariff', tr).val();
+                    
+                    // Создаем объект параметров
+                    let params = new URLSearchParams();
+                    params.append('table', table);
+                    params.append('tariff', tariff);
+
+                    //переходим по ссылке
+                    let baseUrl = '/portal/public/forecast/admin/export';
+                    window.location.href = `${baseUrl}?${params.toString()}`;
                 })
             });
         </script>
