@@ -36,8 +36,25 @@ class SynchCommunalAction extends BaseAction
             foreach ($sum_h1_total as $sum) {
                 $this->task(CalculateInfoTask::class)->updateSumH1($sum, 2026);
             }
-            return true;
+            
+            //Получаем суммарный объем за второе полугодие
+            $volume_h2_total = $this->task(SelectInfoTask::class)->selectVolH2(2025, $users, [7, 8, 9, 10, 11, 12]); 
+            
+            //Обновляем таблицу прогноза. Объем второго полугодия
+            foreach ($volume_h2_total as $volume) {
+                $this->task(CalculateInfoTask::class)->updateVolH2($volume, 2026);
+            }
+            
+            //Получаем суммарный объем за второе полугодие, умноженный на тарифы
+            $sum_h2_total = $this->task(SelectInfoTask::class)->selectSumH2(2025, $users, [7, 8, 9, 10, 11, 12]); 
+            
+            //Обновляем таблицу прогноза. Сумма второго полугодия
+            foreach ($sum_h2_total as $sum) {
+                $this->task(CalculateInfoTask::class)->updateSumH2($sum, 2026);
+            }
+            
+            return true;           
         });
-    } 
+    }
 }
 

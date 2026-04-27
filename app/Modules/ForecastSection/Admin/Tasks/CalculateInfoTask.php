@@ -77,4 +77,56 @@ class CalculateInfoTask extends BaseTask
             ]); 
         return $result == true ? true : false;
     }
+    
+    /**
+     * Обновляем объемы
+     * Второе полугодие
+     *
+     * @param array $info, int $year
+     * @return bool
+     */
+    public function updateVolH2(array $info, int $year): bool
+    {     
+        $result = ForecastCommunal::query()
+            ->where('year', $year)    
+            ->where('user_id', $info['user_id'])
+            ->update([
+                'vol_budget_h2' => DB::raw("CASE 
+                    WHEN title = 'heat' THEN {$info['heat']}
+                    WHEN title = 'water' THEN {$info['water']}
+                    WHEN title = 'drainage' THEN {$info['drainage']}
+                    WHEN title = 'power' THEN {$info['power']}
+                    WHEN title = 'trash' THEN {$info['trash']}
+                    WHEN title = 'negative' THEN {$info['negative']}    
+                    ELSE vol_budget_h2
+                END")
+            ]); 
+        return $result == true ? true : false;
+    }
+    
+    /**
+     * Обновляем суммы
+     * Второе полугодие
+     *
+     * @param array $info, int $year
+     * @return bool
+     */
+    public function updateSumH2(array $info, int $year): bool
+    {     
+        $result = ForecastCommunal::query()
+            ->where('year', $year)    
+            ->where('user_id', $info['user_id'])
+            ->update([
+                'sum_budget_h2' => DB::raw("CASE 
+                    WHEN title = 'heat' THEN {$info['heat']}
+                    WHEN title = 'water' THEN {$info['water']}
+                    WHEN title = 'drainage' THEN {$info['drainage']}
+                    WHEN title = 'power' THEN {$info['power']}
+                    WHEN title = 'trash' THEN {$info['trash']}
+                    WHEN title = 'negative' THEN {$info['negative']}    
+                    ELSE sum_budget_h2
+                END")   
+            ]); 
+        return $result == true ? true : false;
+    }
 }
