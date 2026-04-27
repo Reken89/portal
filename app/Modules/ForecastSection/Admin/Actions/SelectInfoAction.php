@@ -5,6 +5,7 @@ namespace App\Modules\ForecastSection\Admin\Actions;
 use App\Core\Actions\BaseAction;
 use App\Modules\ForecastSection\Admin\Tasks\WorkTariffTask;
 use App\Modules\ForecastSection\Admin\Tasks\SelectCommunalTask;
+use App\Modules\ForecastSection\Admin\Tasks\SelectInfoTask;
 
 class SelectInfoAction extends BaseAction
 {      
@@ -21,7 +22,7 @@ class SelectInfoAction extends BaseAction
         }
         
         if($table == 2){
-            return [];  
+            return $this->task(SelectInfoTask::class)->selectStatus(2026, [3, 4, 5, 7, 8, 9, 10, 13, 15, 16, 17, 18, 19, 20, 21, 23,]);  
         }
         
         if($table > 2){

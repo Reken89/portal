@@ -173,4 +173,23 @@ class SelectInfoTask extends BaseTask
             ->map(fn($item) => (array)$item)
             ->toArray();   
     }
+    
+    /**
+     * Получаем информацию
+     * Статус ошибок
+     *
+     * @param int $year, array $users
+     * @return array
+     */
+    public function selectStatus(int $year, array $users): array
+    {     
+        return Utilities::whereIn('user_id', $users)
+            ->where('year', $year)
+            ->get()
+            ->groupBy('mounth')
+            ->map(function ($items) {
+                return $items->every('status', 1);
+            })
+            ->toArray();      
+    }
 }
