@@ -128,6 +128,9 @@
                             <tr>
                                 <td style="min-width: 200px; width: 200px;"><p><a href="" onclick="return false"><img src="{{ asset('assets/icons/calculator.png') }}" alt="" id="communal"></a> - Синхронизация (КУ)</p></td>
                                 <td style="min-width: 200px; width: 200px;"><p><a href="" onclick="return false"><img src="{{ asset('assets/icons/calculator.png') }}" alt="" id="budget"></a> - Синхронизация (Бюджет)</p></td>
+                                <p><a href="{{ asset('assets/docs/forecast.pdf') }}" download>
+                                    <img src="{{ asset('assets/icons/document2.png') }}" alt="Скачать">
+                                </a> - Инструкция</p>
                                 @if($info['table'] > 2)
                                     <input type="hidden" class="table" value="{{ $info['table'] }}">
                                     <input type="hidden" class="tariff" value="{{ $info['tariff'] }}">
