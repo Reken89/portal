@@ -26,6 +26,9 @@ class SelectInfoAction extends BaseAction
         }
         
         if($table > 2){
+            if($tariff == 'all'){
+                return $this->task(SelectCommunalTask::class)->selectTotalInfo(2026); 
+            }
             return $this->task(SelectCommunalTask::class)->selectInfo(2026, $tariff);  
         }
     } 

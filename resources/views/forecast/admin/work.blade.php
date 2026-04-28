@@ -107,6 +107,7 @@
                                                     <option value="power">Электроснабжение</option>
                                                     <option value="trash">Вывоз мусора</option>
                                                     <option value="negative">Негативное воздействие</option>
+                                                    <option value="all">Все тарифы</option>
                                                 </select>
                                             </div>
                                         </div>
