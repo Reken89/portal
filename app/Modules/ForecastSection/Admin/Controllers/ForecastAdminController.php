@@ -18,6 +18,10 @@ use App\Modules\ForecastSection\Admin\Actions\SynchCommunalAction;
 
 class ForecastAdminController extends Controller
 {      
+    private array $tariff = ['heat' => 'Теплоснабжение', 'water' => 'Водоснабжение', 'drainage' => 'Водоотведение', 
+                'power' => 'Электроснабжение', 'trash' => 'Вывоз мусора', 'negative' => 'Негативное воздействие', 
+                'all' => 'Все тарифы'];
+    
      /**
      * Front отрисовка страницы
      *
@@ -58,9 +62,7 @@ class ForecastAdminController extends Controller
             'month'  => ['1' => 'январь', '2' => 'февраль', '3' => 'март', '4' => 'апрель', 
                 '5' => 'май', '6' => 'июнь', '7' => 'июль', '8' => 'август', '9' => 'сентябрь', 
                 '10' => 'октябрь', '11' => 'ноябрь', '12' => 'декабрь'],
-            'tariff' => ['heat' => 'Теплоснабжение', 'water' => 'Водоснабжение', 'drainage' => 'Водоотведение', 
-                'power' => 'Электроснабжение', 'trash' => 'Вывоз мусора', 'negative' => 'Негативное воздействие', 
-                'all' => 'Все тарифы'],
+            'tariff' => $this->tariff,
         ];
 
         return view('forecast.admin.tables.table', compact('info'));    
@@ -117,8 +119,7 @@ class ForecastAdminController extends Controller
             'table'  => $request->table,
             'info'   => $table,
             'total'  => $this->action(CalculateInfoAction::class)->selectTotal($request->table, $table),
-            'tariff' => ['heat' => 'Теплоснабжение', 'water' => 'Водоснабжение', 'drainage' => 'Водоотведение', 
-                'power' => 'Электроснабжение', 'trash' => 'Вывоз мусора', 'negative' => 'Негативное воздействие'],
+            'tariff' => $this->tariff,
         ];
         
         return Excel::download(new ExportTable($data), 'table.xlsx');
