@@ -127,3 +127,20 @@ body {
     margin-top: 0 !important;
     padding-top: 0 !important;
 }
+
+.sum-editable {
+    display: inline-block;    /* Позволяет задавать ширину и высоту */
+    min-width: 100px;          /* Аналог size="10" */
+    padding: 2px 5px;         /* Внутренние отступы как у инпута */
+    border: 1px solid #ccc;   /* Граница */
+    border-radius: 3px;       /* Легкое закругление */
+    background-color: #fff;   /* Белый фон */
+    cursor: text;             /* Чтобы курсор при наведении был как для текста */
+    outline: none;            /* Убираем стандартную синюю рамку браузера */
+}
+
+/* Эффект при клике (фокусе), как у настоящего инпута */
+.sum-editable:focus {
+    border-color: #66afe9;
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102,175,233,.6);
+}

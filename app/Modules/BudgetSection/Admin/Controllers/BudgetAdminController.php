@@ -8,9 +8,16 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Core\Controllers\Controller;
+use App\Modules\BudgetSection\Admin\Dto\BudgetUpdateDto;
+use App\Modules\BudgetSection\Admin\Requests\BudgetUpdateRequest;
+use App\Modules\BudgetSection\Admin\Actions\SelectInfoAction;
+use App\Modules\BudgetSection\Admin\Actions\CalculateInfoAction;
 
 class BudgetAdminController extends Controller
 {      
+    private string $day_start = "2026-05-01";
+    private string $day_stop = "2026-12-01";
+    
      /**
      * Front отрисовка страницы
      *
@@ -20,9 +27,9 @@ class BudgetAdminController extends Controller
     public function frontView(Request $request): View
     {      
         $info = [
-            'user_id' => $request->user_id ?? null,
-            'year'    => $request->year ?? null,
-            'email'   => Auth::user()->email(),
+            'table' => $request->table ?? null,
+            'year'  => $request->year ?? null,
+            'email' => Auth::user()->email(),
         ];
 
         return view('budget.admin.work', compact('info'));  
@@ -36,10 +43,40 @@ class BudgetAdminController extends Controller
      */
     public function showTable(Request $request): View
     {  
+        // 1. Сразу выходим, если таблица не выбрана
+        if (!$request->table) {
+            return view('budget.admin.templates.table', ['info' => ['status' => false]]);
+        }
+        
+        $budget = $this->action(SelectInfoAction::class)
+            ->selectBudget($request->year);
+        
+        $today = date('Y-m-d');
+        $isOpen = ($today > $this->day_start && $today < $this->day_stop);
+
+        $structure = $isOpen ? "open" : "close";
+        
         $info = [
+            'status'    => true,
+            'table'     => $request->table,
+            'structure' => $structure,
+            'budget'    => $budget,
+            'total'     => $this->action(CalculateInfoAction::class)->selectTotal($budget),
         ];
 
         return view('budget.admin.templates.table', compact('info'));    
+    }
+    
+    /**
+     * Обновляем значения
+     *
+     * @param BudgetUpdateRequest $request
+     * @return 
+     */
+    public function updateBudget(BudgetUpdateRequest $request)
+    { 
+        $dto = BudgetUpdateDto::fromRequest($request);
+        var_dump($dto);
     }
 }
 

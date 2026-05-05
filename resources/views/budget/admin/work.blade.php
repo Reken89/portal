@@ -98,8 +98,15 @@
                                     <div class="form-group">
                                         <div class="form-field">
                                             <div class="select-wrap">
-                                                <select name="user_id" class="form-control">
-                                                    <option value="#">Список уточняется</option>
+                                                <select name="table" class="form-control">
+                                                    <option value="1">Администрация</option>
+                                                    <option value="2">ОМСУ</option>
+                                                    <option value="3">ЦБ и Закупки</option>
+                                                    <option value="4">Детские сады</option>
+                                                    <option value="5">ДХШ и ДМШ</option>
+                                                    <option value="6">ВСОШ</option>
+                                                    <option value="7">КУМС</option>
+                                                    <option value="8">Итог</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -175,18 +182,60 @@
         <script src="{{ asset('assets/plugins/checkselect/checkselect.js') }}" type="text/javascript"></script>
         <!-- The end checkselect! -->
         <script>
-            $(document).ready(function(){                                
+            $(document).ready(function(){   
+                //Выполняем запись в БД при нажатии на клавишу ENTER
+                function setKeydownmyForm() {
+                    $('.sum-editable').keydown(function(e) {
+                        if (e.keyCode === 13) {
+                            e.preventDefault();
+                            let el = $(this);
+                            let td = el.closest('td');
+                            let tr = el.closest('tr');
+                            let user_id = td.data('user-id'); // Берем ID из data-атрибута
+                            let id = tr.data('id');
+
+                            //Получаем значения, меняем запятую на точку и убираем пробелы в числе                   
+                            function structure(title){
+                                var volume = $(title, td).text();
+                                //Меняем запятую на точку
+                                //Убираем лишние пробелы
+                                //Выполняем арифметические действия в строке
+                                var volume = volume.replace(/\,/g,'.');
+                                var volume = volume.replace(/ /g,'');
+                                var volume = eval(volume);
+                                return volume;
+                            }
+
+                            let sum = structure(el);
+
+                            $.ajax({ 
+                                url:"/portal/public/budget/admin/update",  
+                                method:"patch",  
+                                data:{
+                                    "_token": "{{ csrf_token() }}",
+                                    id, user_id, sum
+                                },
+                                dataType:"text",  
+                                success:function(data){  
+                                    fetch_data(); 
+                                    alert(data);
+                                } 
+                            })              
+                        }               
+                    })
+                }
+                
                 //Подгружаем BACK шаблон отрисовки
                 function fetch_data(){ 
                     let form = <?=json_encode($info)?>;
-                    let user_id = form['user_id'];
+                    let table = form['table'];
                     let year = form['year'];
                     
                     $.ajax({  
                         url:"/portal/public/budget/admin/table",  
                         method:"GET",
                         data:{
-                            user_id, year
+                            table, year
                         },
                         dataType:"text",
                         success:function(data){  
