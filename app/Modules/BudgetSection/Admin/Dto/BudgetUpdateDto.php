@@ -10,6 +10,7 @@ class BudgetUpdateDto extends BaseDto
     public int   $id;
     public int   $user_id;
     public float $sum;
+    public int   $year;
 
     /**
      * Возвращает DTO из объекта Request
@@ -23,6 +24,7 @@ class BudgetUpdateDto extends BaseDto
             'id'      => $request->get('id'),
             'user_id' => $request->get('user_id'),
             'sum'     => $request->get('sum'),
+            'year'    => $request->get('year'),
         ]);
     }
 }

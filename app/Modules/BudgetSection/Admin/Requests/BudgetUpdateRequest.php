@@ -17,6 +17,7 @@ class BudgetUpdateRequest extends FormRequest
             'id'      => 'required|integer',
             'user_id' => 'required|integer',
             'sum'     => 'required|numeric|between:0.00,999999999.99',
+            'year'    => 'required|integer',
         ];
     }   
 }

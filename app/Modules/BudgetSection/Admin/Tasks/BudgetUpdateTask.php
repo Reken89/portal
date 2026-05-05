@@ -1,0 +1,101 @@
+<?php
+
+namespace App\Modules\BudgetSection\Admin\Tasks;
+
+use App\Core\Tasks\BaseTask;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\Builder;
+use App\Modules\BudgetSection\Admin\Models\Budget26;
+use App\Modules\BudgetSection\Admin\Dto\BudgetUpdateDto;
+
+class BudgetUpdateTask extends BaseTask
+{   
+    /**
+     * Обновляем информацию в таблице budget26
+     *
+     * @param BudgetUpdateDto $dto
+     * @return bool
+     */
+    public function updateInfo(BudgetUpdateDto $dto): bool
+    {   
+        try {
+            return DB::transaction(function () use ($dto) {                
+                //Получаем строку из budget26
+                $line = Budget26::select('budget26.*')
+                    ->where('budget26.id', $dto->id)
+                    ->join('ekr', 'budget26.ekr_id', '=', 'ekr.id')  
+                    ->with('ekr:id,number')     
+                    ->first()
+                    ->toArray();
+
+                $number = $line['ekr']['number'];
+                $old_sum = $line['data'][$dto->user_id]['sum_fu'];
+
+                // Обновляем значение
+                Budget26::where('id', $dto->id)->update([
+                    "data->{$dto->user_id}->sum_fu"  => $dto->sum,
+                    "data->{$dto->user_id}->date_fu" => date('Y-m-d'),
+                ]);
+
+                //Обновляем строку main
+                Budget26::where('year', $dto->year) 
+                    ->whereHas('ekr', function (Builder $query) use ($number) {
+                        $query->where('shared', 'No');
+                        $query->where('main', 'Yes');
+                        $query->where('number', $number);
+                    })    
+                    ->update([
+                        // Обновляем дату обычным способом
+                        "data->{$dto->user_id}->date_fu" => date('Y-m-d'),
+
+                        // Математика через DB::raw для JSON
+                        "data" => DB::raw("JSON_SET(data, '$.\"{$dto->user_id}\".sum_fu', 
+                            CAST(JSON_UNQUOTE(JSON_EXTRACT(data, '$.\"{$dto->user_id}\".sum_fu')) AS DECIMAL(15,2)) 
+                            - {$old_sum} 
+                            + {$dto->sum}
+                        )")
+                    ]);
+
+                //Обновляем строку share            
+                if($number >= 17 && $number <=42 || $number == 45){
+                    if ($number >= 17 && $number <= 19) {
+                        $num = 16;
+                    } elseif ($number >= 21 && $number <= 25) {
+                        $num = 20;
+                    } elseif ($number >= 27 && $number <= 34) {
+                        $num = 26;
+                    } elseif (($number >= 36 && $number <= 42) || $number == 45) {
+                        $num = 35;
+                    }
+
+                    Budget26::where('year', $dto->year) 
+                    ->whereHas('ekr', function (Builder $query) use ($num) {
+                        $query->where('shared', 'Yes');
+                        $query->where('main', 'Yes');
+                        $query->where('number', $num);
+                    })    
+                    ->update([
+                        // Обновляем дату обычным способом
+                        "data->{$dto->user_id}->date_fu" => date('Y-m-d'),
+
+                        // Математика через DB::raw для JSON
+                        "data" => DB::raw("JSON_SET(data, '$.\"{$dto->user_id}\".sum_fu', 
+                            CAST(JSON_UNQUOTE(JSON_EXTRACT(data, '$.\"{$dto->user_id}\".sum_fu')) AS DECIMAL(15,2)) 
+                            - {$old_sum} 
+                            + {$dto->sum}
+                        )")
+                    ]);           
+                }  
+                
+                return true; 
+            });
+        }catch (\Exception $e) {
+            // Если база ругнулась (например, деление на ноль или лок таблицы)
+            \Log::error("Ошибка в UpdateInfo: " . $e->getMessage());
+            return false;
+        }    
+    }  
+}
+
+
+

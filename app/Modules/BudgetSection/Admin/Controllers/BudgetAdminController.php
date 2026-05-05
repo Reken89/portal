@@ -12,6 +12,7 @@ use App\Modules\BudgetSection\Admin\Dto\BudgetUpdateDto;
 use App\Modules\BudgetSection\Admin\Requests\BudgetUpdateRequest;
 use App\Modules\BudgetSection\Admin\Actions\SelectInfoAction;
 use App\Modules\BudgetSection\Admin\Actions\CalculateInfoAction;
+use App\Modules\BudgetSection\Admin\Actions\UpdateInfoAction;
 
 class BudgetAdminController extends Controller
 {      
@@ -73,10 +74,13 @@ class BudgetAdminController extends Controller
      * @param BudgetUpdateRequest $request
      * @return 
      */
-    public function updateBudget(BudgetUpdateRequest $request)
+    public function updateBudget(BudgetUpdateRequest $request): JsonResponse
     { 
         $dto = BudgetUpdateDto::fromRequest($request);
-        var_dump($dto);
+        $result = $this->action(UpdateInfoAction::class)->updateInfo($dto);       
+        return $result 
+            ? response()->json(null, 204) 
+            : response()->json(null, 500);
     }
 }
 

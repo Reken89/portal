@@ -193,6 +193,7 @@
                             let tr = el.closest('tr');
                             let user_id = td.data('user-id'); // Берем ID из data-атрибута
                             let id = tr.data('id');
+                            let year = tr.data('year');
 
                             //Получаем значения, меняем запятую на точку и убираем пробелы в числе                   
                             function structure(title){
@@ -213,13 +214,16 @@
                                 method:"patch",  
                                 data:{
                                     "_token": "{{ csrf_token() }}",
-                                    id, user_id, sum
+                                    id, user_id, sum, year
                                 },
-                                dataType:"text",  
-                                success:function(data){  
-                                    fetch_data(); 
-                                    alert(data);
-                                } 
+                                dataType: "json", // Ждем JSON, а не просто текст
+                                success: function(response) {  
+                                    fetch_data();  
+                                },
+                                error: function(xhr) {
+                                    // Если сервер вернул ошибку (400, 422, 500), попадем сюда
+                                    let errorMessage = xhr.responseJSON ? xhr.responseJSON.message : 'Ошибка сервера';
+                                }
                             })              
                         }               
                     })

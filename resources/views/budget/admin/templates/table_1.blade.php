@@ -99,7 +99,7 @@
                 <td><font color="blue"><b>{{ number_format($value['data'][74]['sum_cb'], 2, ',', ' ') }}</b></td>
             </tr>
             @else
-            <tr data-id="{{ $value['id'] }}">
+            <tr data-id="{{ $value['id'] }}" data-year="{{ $value['year'] }}">
                 <td style="height: 65px;" class="sticky-col"><p class="text-scale">{{ $value['ekr']['title'] }}</p></td>
                 <td>{{ $value['ekr']['ekr'] }}</td>
                 @if ($info['structure'] == "close")
