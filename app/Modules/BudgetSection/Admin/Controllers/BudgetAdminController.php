@@ -9,7 +9,9 @@ use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Core\Controllers\Controller;
 use App\Modules\BudgetSection\Admin\Dto\BudgetUpdateDto;
+use App\Modules\BudgetSection\Admin\Dto\BudgetExportDto;
 use App\Modules\BudgetSection\Admin\Requests\BudgetUpdateRequest;
+use App\Modules\BudgetSection\Admin\Requests\BudgetExportRequest;
 use App\Modules\BudgetSection\Admin\Actions\SelectInfoAction;
 use App\Modules\BudgetSection\Admin\Actions\CalculateInfoAction;
 use App\Modules\BudgetSection\Admin\Actions\UpdateInfoAction;
@@ -94,6 +96,24 @@ class BudgetAdminController extends Controller
         return $result 
             ? response()->json(['message' => 'Синхронизация выполнена!'], 200) 
             : response()->json(['message' => 'Значения уже идентичны!'], 200);
+    }
+    
+    /**
+     * Полноэкранный режим таблицы
+     *
+     * @param BudgetExportRequest $request
+     * @return View
+     */
+    public function fullScreen(BudgetExportRequest $request): View
+    {      
+        $dto = BudgetExportDto::fromRequest($request); 
+        $info = [
+            'table' => $dto->variant,
+            'year'  => $dto->year,
+            'email' => Auth::user()->email(),
+        ];
+
+        return view('budget.admin.fullscreen', compact('info'));  
     }
 }
 
