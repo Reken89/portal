@@ -12,19 +12,22 @@
     $(document).ready(function(){ 
         //Выполняем запись в БД при нажатии на клавишу ENTER
         function setKeydownmyForm() {
-            $('input').keydown(function(e) {
+            $('.sum-editable').keydown(function(e) {
                 if (e.keyCode === 13) {
-                    let tr = this.closest('tr');
-                    let ekr_id = $('.ekr_id', tr).val(); 
-                    let number = $('.number', tr).val();
-                    let mounth = $('.mounth', tr).val();
-                    let chapter = $('.chapter', tr).val();
-                    let user_id = $('.user_id', tr).val();
-                    let id = $('.id', tr).val();
+                    e.preventDefault();
+                    let el = $(this);
+                    let td = el.closest('td');
+                    let tr = el.closest('tr');
+                    let id = tr.data('id');
+                    let ekr_id = tr.data('ekr');
+                    let number = tr.data('number');
+                    let mounth = tr.data('mounth');
+                    let chapter = tr.data('chapter');
+                    let user_id = tr.data('user');
 
                     //Получаем значения, меняем запятую на точку и убираем пробелы в числе                   
                     function structure(title){
-                        var volume = $(title, tr).val();
+                        var volume = $(title, tr).text();
                         //Меняем запятую на точку
                         //Убираем лишние пробелы
                         //Выполняем арифметические действия в строке
@@ -34,19 +37,19 @@
                         return volume;
                     }
 
-                    let lbo = structure('.lbo');
-                    let prepaid = structure('.prepaid');
-                    let credit_year_all = structure('.credit_year_all');
-                    let credit_year_term = structure('.credit_year_term');
-                    let debit_year_all = structure('.debit_year_all');
-                    let debit_year_term = structure('.debit_year_term');
-                    let fact_mounth = structure('.fact_mounth');
-                    let kassa_mounth = structure('.kassa_mounth');
-                    let credit_end_all = structure('.credit_end_all');
-                    let credit_end_term = structure('.credit_end_term');
-                    let debit_end_all = structure('.debit_end_all');
-                    let debit_end_term = structure('.debit_end_term');
-                    let return_old_year = structure('.return_old_year');
+                    let lbo = structure('.lbo span');
+                    let prepaid = structure('.prepaid span');
+                    let credit_year_all = structure('.credit_year_all span');
+                    let credit_year_term = structure('.credit_year_term span');
+                    let debit_year_all = structure('.debit_year_all span');
+                    let debit_year_term = structure('.debit_year_term span');
+                    let fact_mounth = structure('.fact_mounth span');
+                    let kassa_mounth = structure('.kassa_mounth span');
+                    let credit_end_all = structure('.credit_end_all span');
+                    let credit_end_term = structure('.credit_end_term span');
+                    let debit_end_all = structure('.debit_end_all span');
+                    let debit_end_term = structure('.debit_end_term span');
+                    let return_old_year = structure('.return_old_year span');
 
                     $.ajax({ 
                         url:"/portal/public/ofs26/user/update",  
@@ -93,13 +96,14 @@
         
         //Выполняем действие (сбрасываем значения) при нажатии на кнопку reset
         $(document).on('click', '#reset', function(){          
-            let tr = this.closest('tr');
-            let id = $('.id', tr).val();
-            let mounth = $('.mounth', tr).val();
-            let chapter = $('.chapter', tr).val();
-            let user_id = $('.user_id', tr).val();
-            let ekr_id = $('.ekr_id', tr).val();
-            let number = $('.number', tr).val();
+            let el = $(this);
+            let tr = el.closest('tr');
+            let id = tr.data('id');
+            let ekr_id = tr.data('ekr');
+            let number = tr.data('number');
+            let mounth = tr.data('mounth');
+            let chapter = tr.data('chapter');
+            let user_id = tr.data('user');
 
             $.ajax({
                 url:"/portal/public/ofs26/user/reset",  
