@@ -1,5 +1,5 @@
 @php
-    //var_dump($info['matrix']);
+    //var_dump($info);
 @endphp
 <!DOCTYPE html>
 <html lang="en">
@@ -126,6 +126,12 @@
                         <div class="p-4 mb-3 bg-white">
                             <h3 class="h5 text-black mb-3"><font color="red">Информация:</h3>
                             <p class="mb-0 font-weight-bold"><font color="red">отчетная дата:</p>
+                            </br>
+                            @if($info['table'] !== null)
+                            <tr>
+                                <td style="min-width: 200px; width: 200px;"><p><a href="" onclick="return false"><img src="{{ asset('assets/icons/attention.png') }}" alt="" id="synch"></a> - Синхронизация</p></td>
+                            </tr>
+                            @endif
                         </div>   
                     </div>       
                                                          
@@ -249,6 +255,30 @@
                     });  
                 } 
                 fetch_data();
+                
+                //Выполняем действие (синхронизация) при нажатии на кнопку
+                $(document).on('click', '#synch', function(){
+                    if (confirm("Выполнить синхронизацию между годами?")) {
+                        $.ajax({
+                            url:"/portal/public/budget/admin/synch",  
+                            method:"patch",
+                            data:{
+                                "_token": "{{ csrf_token() }}",
+                            },
+                            dataType: "json", // Ждем JSON, а не просто текст
+                            success: function(response) {  
+                                // response — это теперь объект { "message": "..." }
+                                alert(response.message);
+                                fetch_data();  
+                            },
+                            error: function(xhr) {
+                                // Если сервер вернул ошибку (400, 422, 500), попадем сюда
+                                let errorMessage = xhr.responseJSON ? xhr.responseJSON.message : 'Ошибка сервера';
+                                alert(errorMessage);
+                            }
+                        })  
+                    }    
+                })
 
             });
         </script>

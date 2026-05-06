@@ -141,6 +141,7 @@ Route::patch('/ofs26/admin/status', [Ofs26AdminController::class, 'updateStatus'
 //Группа адресов для модуля "Бюджет"
 Route::get('/budget/admin/table', [BudgetAdminController::class, 'showTable'])->middleware('auth', 'admin');
 Route::patch('/budget/admin/update', [BudgetAdminController::class, 'updateBudget'])->middleware('auth', 'admin');
+Route::patch('/budget/admin/synch', [BudgetAdminController::class, 'synchBudget'])->middleware('auth', 'admin');
 Route::get('/budget/admin', [BudgetAdminController::class, 'frontView'])->middleware('auth', 'admin')->name('budget-admin');
 Route::get('/budget/admin/archive', [BudgetArchiveAdminController::class, 'frontView'])->middleware('auth', 'admin')->name('budget-archive-admin');
 Route::get('/budget/admin/archive/export', [BudgetArchiveAdminController::class, 'exportTable'])->middleware('auth')->name('budget-archive-admin-export');

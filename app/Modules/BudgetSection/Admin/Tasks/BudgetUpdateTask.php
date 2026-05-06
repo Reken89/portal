@@ -94,7 +94,26 @@ class BudgetUpdateTask extends BaseTask
             \Log::error("Ошибка в UpdateInfo: " . $e->getMessage());
             return false;
         }    
-    }  
+    }
+    
+    /**
+     * Синхронизируем года
+     * 2029 и 2028 приравниваем к 2027
+     *
+     * @return bool
+     */
+    public function synchInfo(): bool
+    { 
+        $affected = DB::table('budget26 as target')
+        ->join('budget26 as source', function ($join) {
+            $join->on('target.ekr_id', '=', 'source.ekr_id')
+                 ->where('source.year', 2027);
+        })
+        ->whereIn('target.year', [2028, 2029])
+        ->update(['target.data' => DB::raw('source.data')]);
+
+        return $affected > 0;        
+    }
 }
 
 

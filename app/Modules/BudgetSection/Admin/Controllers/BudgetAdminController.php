@@ -82,6 +82,19 @@ class BudgetAdminController extends Controller
             ? response()->json(null, 204) 
             : response()->json(null, 500);
     }
+    
+    /**
+     * Синхронизируем года бюджета
+     *
+     * @return 
+     */
+    public function synchBudget(): JsonResponse
+    {     
+        $result = $this->action(UpdateInfoAction::class)->synchInfo();       
+        return $result 
+            ? response()->json(['message' => 'Синхронизация выполнена!'], 200) 
+            : response()->json(['message' => 'Значения уже идентичны!'], 200);
+    }
 }
 
 
