@@ -143,6 +143,7 @@ Route::get('/budget/admin/table', [BudgetAdminController::class, 'showTable'])->
 Route::patch('/budget/admin/update', [BudgetAdminController::class, 'updateBudget'])->middleware('auth', 'admin');
 Route::patch('/budget/admin/synch', [BudgetAdminController::class, 'synchBudget'])->middleware('auth', 'admin');
 Route::get('/budget/admin/fullscreen', [BudgetAdminController::class, 'fullScreen'])->middleware('auth', 'admin');
+Route::get('/budget/admin/export', [BudgetAdminController::class, 'exportTable'])->middleware('auth', 'admin');
 Route::get('/budget/admin', [BudgetAdminController::class, 'frontView'])->middleware('auth', 'admin')->name('budget-admin');
 Route::get('/budget/admin/archive', [BudgetArchiveAdminController::class, 'frontView'])->middleware('auth', 'admin')->name('budget-archive-admin');
 Route::get('/budget/admin/archive/export', [BudgetArchiveAdminController::class, 'exportTable'])->middleware('auth')->name('budget-archive-admin-export');

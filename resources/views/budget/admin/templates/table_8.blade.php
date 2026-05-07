@@ -2,7 +2,7 @@
 <table class="table2">
     <thead>
         <tr>
-            <th style="min-width: 200px; width: 200px;"><font color="White">Наименование</th>
+            <th style="min-width: 200px; width: 200px;"><font color="White">Год: {{ $info['year'] }}</br>Наименование</th>
             <th style="min-width: 70px; width: 70px;"><font color="White">ЭКР</th>
             <th style="min-width: 150px; width: 150px;"><font color="White">СВОД ФЭУ</th>
             <th style="min-width: 150px; width: 150px;"><font color="White">СВОД ЦБ</th>
@@ -20,17 +20,28 @@
                         $sum_cb += $data['sum_cb'];
                     @endphp
                 @endforeach
+                
+            {{-- 1. Скрываем строки с EKR 341-349, если это main --}}
+            @if (($value['ekr']['main'] == 'Yes') && ($value['ekr']['ekr'] >= 341 && $value['ekr']['ekr'] <= 349))
+                @continue
+            @endif
+            
+            {{-- 2. Подменяем отображение EKR для остальных случаев --}}
+            @php 
+                $displayEkr = ($value['ekr']['ekr'] >= 341 && $value['ekr']['ekr'] <= 349) ? 340 : $value['ekr']['ekr'];
+            @endphp    
+                
             @if ($value['ekr']['main'] == 'Yes')
             <tr>
                 <td style="height: 65px;" class="sticky-col"><b><p class="text-scale">{{ $value['ekr']['title'] }}</b></p></td>
-                <td><b>{{ $value['ekr']['ekr'] }}</b></td>
+                <td><b>{{ $displayEkr }}</b></td> {{-- Используем подмененную переменную --}}
                 <td><b>{{ number_format($sum_fu, 2, ',', ' ') }}</b></td>
                 <td><font color="blue"><b>{{ number_format($sum_cb, 2, ',', ' ') }}</b></td>
             </tr>
             @else
             <tr>
                 <td style="height: 65px;" class="sticky-col"><p class="text-scale">{{ $value['ekr']['title'] }}</p></td>
-                <td>{{ $value['ekr']['ekr'] }}</td>
+                <td>{{ $displayEkr }}</td> {{-- Используем подмененную переменную --}}
                 <td>{{ number_format($sum_fu, 2, ',', ' ') }}</td>
                 <td><font color="blue">{{ number_format($sum_cb, 2, ',', ' ') }}</td>
             </tr>

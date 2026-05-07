@@ -8,6 +8,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Core\Controllers\Controller;
+use App\Modules\BudgetSection\Admin\Exports\ExportTable;
 use App\Modules\BudgetSection\Admin\Dto\BudgetUpdateDto;
 use App\Modules\BudgetSection\Admin\Dto\BudgetExportDto;
 use App\Modules\BudgetSection\Admin\Requests\BudgetUpdateRequest;
@@ -18,7 +19,7 @@ use App\Modules\BudgetSection\Admin\Actions\UpdateInfoAction;
 
 class BudgetAdminController extends Controller
 {      
-    private string $day_start = "2026-05-01";
+    private string $day_start = "2026-09-30";
     private string $day_stop = "2026-12-01";
     
      /**
@@ -61,6 +62,7 @@ class BudgetAdminController extends Controller
         
         $info = [
             'status'    => true,
+            'year'      => $request->year, 
             'table'     => $request->table,
             'structure' => $structure,
             'budget'    => $budget,
@@ -114,6 +116,27 @@ class BudgetAdminController extends Controller
         ];
 
         return view('budget.admin.fullscreen', compact('info'));  
+    }
+    
+    /**
+     * Экспорт в xlsx
+     *
+     * @param BudgetExportRequest $request
+     */
+    public function exportTable(BudgetExportRequest $request)
+    {     
+        $dto = BudgetExportDto::fromRequest($request); 
+        $budget = $this->action(SelectInfoAction::class)->selectBudget($dto->year);
+        
+        $data = [
+            'export'  => 2026,
+            'variant' => $dto->variant,
+            'year'    => $dto->year,
+            'budget'  => $budget,
+            'total'   => $this->action(CalculateInfoAction::class)->selectTotal($budget),
+        ];
+        
+        return Excel::download(new ExportTable($data), 'table.xlsx');
     }
 }
 

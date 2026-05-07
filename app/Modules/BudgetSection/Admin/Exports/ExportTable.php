@@ -25,6 +25,11 @@ class ExportTable implements FromView
     public function view(): View
     {
         $info = $this->tableData;
+        
+        if($info['export'] == 2026){
+            return view('budget.admin.export26', ['info' => $info]);
+        }
+        
         return view('budget.admin.export25', ['info' => $info]);
     }
 }

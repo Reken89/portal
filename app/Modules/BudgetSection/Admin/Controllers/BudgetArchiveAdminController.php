@@ -56,6 +56,7 @@ class BudgetArchiveAdminController extends Controller
             ->selectArchive($dto->year);
         
         $data = [
+            'export'  => 2025,
             'variant' => $dto->variant,
             'year'    => $dto->year,
             'budget'  => $budget,
