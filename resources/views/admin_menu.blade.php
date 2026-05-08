@@ -16,7 +16,7 @@
     <div class="top-category text-center">
         <h3><a href="{{ route('budget-admin')}}">Бюджет</a></h3>
         <span class="icon flaticon-accounting"></span>
-        <p><span class="number"></span> <span>Модуль в разработке</span></p>
+        <p><span class="number"></span> <span>Бюджет 2027-2029 года</span></p>
     </div>
 </div>
 <div class="col-md-2">
