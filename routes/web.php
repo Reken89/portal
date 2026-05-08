@@ -142,6 +142,7 @@ Route::patch('/ofs26/admin/status', [Ofs26AdminController::class, 'updateStatus'
 Route::get('/budget/admin/table', [BudgetAdminController::class, 'showTable'])->middleware('auth', 'admin');
 Route::patch('/budget/admin/update', [BudgetAdminController::class, 'updateBudget'])->middleware('auth', 'admin');
 Route::patch('/budget/admin/synch', [BudgetAdminController::class, 'synchBudget'])->middleware('auth', 'admin');
+Route::patch('/budget/admin/synch/communal', [BudgetAdminController::class, 'synchCommunal'])->middleware('auth', 'admin');
 Route::get('/budget/admin/fullscreen', [BudgetAdminController::class, 'fullScreen'])->middleware('auth', 'admin');
 Route::get('/budget/admin/export', [BudgetAdminController::class, 'exportTable'])->middleware('auth', 'admin');
 Route::get('/budget/admin', [BudgetAdminController::class, 'frontView'])->middleware('auth', 'admin')->name('budget-admin');

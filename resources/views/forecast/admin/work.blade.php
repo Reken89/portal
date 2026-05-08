@@ -286,7 +286,7 @@
                 $(document).on('click', '#budget', function(){
                     
                     $.ajax({
-                        url:"/portal/public/forecast/admin/synch/budget",  
+                        url:"/portal/public/budget/admin/synch/communal",  
                         method:"patch",
                         data:{
                             "_token": "{{ csrf_token() }}",
@@ -302,7 +302,7 @@
                             let errorMessage = xhr.responseJSON ? xhr.responseJSON.message : 'Ошибка сервера';
                             alert(errorMessage);
                         }
-                    })             
+                    })              
                 })
                 
                 //Выполняем действие (EXCEL) при нажатии на кнопку

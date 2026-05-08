@@ -138,6 +138,21 @@ class BudgetAdminController extends Controller
         
         return Excel::download(new ExportTable($data), 'table.xlsx');
     }
+    
+    /**
+     * Синхронизируем таблицы
+     * forecast_communals и budget26
+     * Только коммунальные услуги
+     *
+     * @return 
+     */
+    public function synchCommunal(): JsonResponse
+    {     
+        $result = $this->action(UpdateInfoAction::class)->synchCommunal();       
+        return $result 
+            ? response()->json(['message' => 'Синхронизация выполнена!'], 200) 
+            : response()->json(['message' => 'Значения уже идентичны!'], 200);
+    }
 }
 
 

@@ -114,6 +114,24 @@ class BudgetUpdateTask extends BaseTask
 
         return $affected > 0;        
     }
+    
+    /**
+     * Обновляем таблицу budget26
+     * Только значения коммунальных услуг
+     *
+     * @param int $ekr, int $user, float $sum
+     * @return bool
+     */
+    public function updateCommunals(int $ekr, int $user, float $sum): bool
+    { 
+        $result = Budget26::where('ekr_id', $ekr)
+            ->update([
+                "data->{$user}->sum_fu"  => $sum,
+                "data->{$user}->date_fu" => date('Y-m-d'),
+            ]);
+                
+        return $result == true ? true : false;             
+    }
 }
 
 
