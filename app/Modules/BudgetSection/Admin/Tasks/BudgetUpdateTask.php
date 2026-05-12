@@ -29,12 +29,12 @@ class BudgetUpdateTask extends BaseTask
                     ->toArray();
 
                 $number = $line['ekr']['number'];
-                $old_sum = $line['data'][$dto->user_id]['sum_fu'];
+                $old_sum = $line['data_fu'][$dto->user_id]['sum_fu'];
 
                 // Обновляем значение
                 Budget26::where('id', $dto->id)->update([
-                    "data->{$dto->user_id}->sum_fu"  => $dto->sum,
-                    "data->{$dto->user_id}->date_fu" => date('Y-m-d'),
+                    "data_fu->{$dto->user_id}->sum_fu"  => $dto->sum,
+                    "data_fu->{$dto->user_id}->date_fu" => date('Y-m-d'),
                 ]);
 
                 //Обновляем строку main
@@ -46,11 +46,11 @@ class BudgetUpdateTask extends BaseTask
                     })    
                     ->update([
                         // Обновляем дату обычным способом
-                        "data->{$dto->user_id}->date_fu" => date('Y-m-d'),
+                        "data_fu->{$dto->user_id}->date_fu" => date('Y-m-d'),
 
                         // Математика через DB::raw для JSON
-                        "data" => DB::raw("JSON_SET(data, '$.\"{$dto->user_id}\".sum_fu', 
-                            CAST(JSON_UNQUOTE(JSON_EXTRACT(data, '$.\"{$dto->user_id}\".sum_fu')) AS DECIMAL(15,2)) 
+                        "data_fu" => DB::raw("JSON_SET(data_fu, '$.\"{$dto->user_id}\".sum_fu', 
+                            CAST(JSON_UNQUOTE(JSON_EXTRACT(data_fu, '$.\"{$dto->user_id}\".sum_fu')) AS DECIMAL(15,2)) 
                             - {$old_sum} 
                             + {$dto->sum}
                         )")
@@ -76,11 +76,11 @@ class BudgetUpdateTask extends BaseTask
                     })    
                     ->update([
                         // Обновляем дату обычным способом
-                        "data->{$dto->user_id}->date_fu" => date('Y-m-d'),
+                        "data_fu->{$dto->user_id}->date_fu" => date('Y-m-d'),
 
                         // Математика через DB::raw для JSON
-                        "data" => DB::raw("JSON_SET(data, '$.\"{$dto->user_id}\".sum_fu', 
-                            CAST(JSON_UNQUOTE(JSON_EXTRACT(data, '$.\"{$dto->user_id}\".sum_fu')) AS DECIMAL(15,2)) 
+                        "data_fu" => DB::raw("JSON_SET(data_fu, '$.\"{$dto->user_id}\".sum_fu', 
+                            CAST(JSON_UNQUOTE(JSON_EXTRACT(data_fu, '$.\"{$dto->user_id}\".sum_fu')) AS DECIMAL(15,2)) 
                             - {$old_sum} 
                             + {$dto->sum}
                         )")
@@ -110,7 +110,7 @@ class BudgetUpdateTask extends BaseTask
                  ->where('source.year', 2027);
         })
         ->whereIn('target.year', [2028, 2029])
-        ->update(['target.data' => DB::raw('source.data')]);
+        ->update(['target.data_fu' => DB::raw('source.data_fu')]);
 
         return $affected > 0;        
     }
@@ -126,8 +126,8 @@ class BudgetUpdateTask extends BaseTask
     { 
         $result = Budget26::where('ekr_id', $ekr)
             ->update([
-                "data->{$user}->sum_fu"  => $sum,
-                "data->{$user}->date_fu" => date('Y-m-d'),
+                "data_fu->{$user}->sum_fu"  => $sum,
+                "data_fu->{$user}->date_fu" => date('Y-m-d'),
             ]);
                 
         return $result == true ? true : false;             

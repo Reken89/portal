@@ -20,12 +20,16 @@ class CreateBudget26Seeder extends Seeder
             68, 73, 74, 77, 78
         ];
         
-        $jsonData = [];
+        $fuData = [];
+        $cbData = [];
         foreach ($users as $user) {
-            $jsonData[$user] = [
+            $fuData[$user] = [
                 'sum_fu'  => 0,
-                'sum_cb'  => 0,
                 'date_fu' => date('Y-m-d'),
+            ];
+            
+            $cbData[$user] = [
+                'sum_cb'  => 0,
                 'date_cb' => date('Y-m-d'),
             ];
         }
@@ -33,9 +37,10 @@ class CreateBudget26Seeder extends Seeder
         for($year = 2027; $year < 2030; $year++){    
             for($ekr = 1; $ekr < 245; $ekr++){
                 $toInsert[] = [
-                    'ekr_id' => $ekr,
-                    'year'   => $year,
-                    'data'   => json_encode($jsonData),
+                    'ekr_id'  => $ekr,
+                    'year'    => $year,
+                    'data_fu' => json_encode($fuData),
+                    'data_cb' => json_encode($cbData),
                 ];
                 
                 // Чтобы не переполнить память, вставляем пачками по 100 штук

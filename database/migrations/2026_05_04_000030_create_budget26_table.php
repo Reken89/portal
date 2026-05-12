@@ -16,7 +16,8 @@ return new class extends Migration
             $table->integer('year')->index();
             
             // Поле JSON для хранения сумм и метаданных
-            $table->json('data')->nullable();         
+            $table->json('data_fu')->nullable();     
+            $table->json('data_cb')->nullable();  
         });
     }
 

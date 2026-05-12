@@ -45,6 +45,7 @@ class SelectInfoAction extends BaseAction
             ->orderBy('ekr.shared', 'desc')
             ->orderBy('ekr.title', 'asc')
             ->get()
+            ->append('data') // Добавляем наше виртуальное поле в результат
             ->toArray();
     }
 }
