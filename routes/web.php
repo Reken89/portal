@@ -153,6 +153,7 @@ Route::get('/budget/user/table', [BudgetUserController::class, 'showTable'])->mi
 Route::patch('/budget/user/update', [BudgetUserController::class, 'updateBudget'])->middleware('auth');
 Route::patch('/budget/user/synch', [BudgetUserController::class, 'synchBudget'])->middleware('auth');
 Route::get('/budget/user/fullscreen', [BudgetUserController::class, 'fullScreen'])->middleware('auth');
+Route::get('/budget/user/export', [BudgetUserController::class, 'exportTable'])->middleware('auth');
 Route::get('/budget/user', [BudgetUserController::class, 'frontView'])->middleware('auth')->name('budget-user');
 Route::get('/budget/user/archive', [BudgetArchiveUserController::class, 'frontView'])->middleware('auth')->name('budget-archive-user');
 

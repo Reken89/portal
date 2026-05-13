@@ -299,6 +299,22 @@
                     let baseUrl = '/portal/public/budget/user/fullscreen';
                     window.location.href = `${baseUrl}?${params.toString()}`;
                 })
+                
+                //Выполняем действие (EXCEL) при нажатии на кнопку
+                $(document).on('click', '#xlsx', function(){
+                    let tr = this.closest('tr');
+                    let year = $('.year', tr).val();
+                    let variant = $('.variant', tr).val();
+                    
+                    // Создаем объект параметров
+                    let params = new URLSearchParams();
+                    params.append('year', year);
+                    params.append('variant', variant);
+
+                    // Переходим по ней
+                    let baseUrl = '/portal/public/budget/user/export';
+                    window.location.href = `${baseUrl}?${params.toString()}`;
+                })
             });
         </script>
     </body>

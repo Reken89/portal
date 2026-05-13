@@ -8,6 +8,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Core\Controllers\Controller;
+use App\Modules\BudgetSection\User\Exports\ExportTable;
 use App\Modules\BudgetSection\User\Dto\BudgetUpdateDto;
 use App\Modules\BudgetSection\User\Dto\BudgetExportDto;
 use App\Modules\BudgetSection\User\Requests\BudgetUpdateRequest;
@@ -114,5 +115,25 @@ class BudgetUserController extends Controller
         ];
 
         return view('budget.user.fullscreen', compact('info'));  
+    }
+    
+    /**
+     * Экспорт в xlsx
+     *
+     * @param BudgetExportRequest $request
+     */
+    public function exportTable(BudgetExportRequest $request)
+    {     
+        $dto = BudgetExportDto::fromRequest($request); 
+        $budget = $this->action(SelectInfoAction::class)->selectBudget($dto->year);
+        
+        $data = [
+            'variant' => $dto->variant,
+            'year'    => $dto->year,
+            'budget'  => $budget,
+            'total'   => $this->action(CalculateInfoAction::class)->selectTotal($budget),
+        ];
+        
+        return Excel::download(new ExportTable($data), 'table.xlsx');
     }
 }
