@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\BudgetSection\Admin\Actions;
+namespace App\Modules\BudgetSection\User\Actions;
 
 use App\Core\Actions\BaseAction;
 
@@ -40,7 +40,3 @@ class CalculateInfoAction extends BaseAction
         return $total;
     }   
 }
-
-
-
-

@@ -8,9 +8,17 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Core\Controllers\Controller;
+use App\Modules\BudgetSection\User\Dto\BudgetUpdateDto;
+use App\Modules\BudgetSection\User\Requests\BudgetUpdateRequest;
+use App\Modules\BudgetSection\User\Actions\SelectInfoAction;
+use App\Modules\BudgetSection\User\Actions\CalculateInfoAction;
+use App\Modules\BudgetSection\User\Actions\UpdateInfoAction;
 
 class BudgetUserController extends Controller
-{      
+{        
+    private string $day_start = "2026-04-16";
+    private string $day_stop = "2026-10-01";
+    
      /**
      * Front отрисовка страницы
      *
@@ -20,9 +28,9 @@ class BudgetUserController extends Controller
     public function frontView(Request $request): View
     {      
         $info = [
-            'user_id' => $request->user_id ?? null,
-            'year'    => $request->year ?? null,
-            'email'   => Auth::user()->email(),
+            'table' => $request->table ?? null,
+            'year'  => $request->year ?? null,
+            'email' => Auth::user()->email(),
         ];
 
         return view('budget.user.work', compact('info'));  
@@ -36,10 +44,43 @@ class BudgetUserController extends Controller
      */
     public function showTable(Request $request): View
     {  
+        // 1. Сразу выходим, если таблица не выбрана
+        if (!$request->table) {
+            return view('budget.user.templates.table', ['info' => ['status' => false]]);
+        }
+        
+        $budget = $this->action(SelectInfoAction::class)->selectBudget($request->year);
+        
+        $today = date('Y-m-d');
+        $isOpen = ($today > $this->day_start && $today < $this->day_stop);
+
+        $structure = $isOpen ? "open" : "close";
+        
         $info = [
+            'status'    => true,
+            'year'      => $request->year, 
+            'table'     => $request->table,
+            'structure' => $structure,
+            'budget'    => $budget,
+            'total'     => $this->action(CalculateInfoAction::class)->selectTotal($budget),
         ];
 
         return view('budget.user.templates.table', compact('info'));    
+    }
+    
+    /**
+     * Обновляем значения
+     *
+     * @param BudgetUpdateRequest $request
+     * @return 
+     */
+    public function updateBudget(BudgetUpdateRequest $request): JsonResponse
+    { 
+        $dto = BudgetUpdateDto::fromRequest($request);
+        $result = $this->action(UpdateInfoAction::class)->updateInfo($dto);       
+        return $result 
+            ? response()->json(null, 204) 
+            : response()->json(null, 500);
     }
 }
 

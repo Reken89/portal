@@ -150,6 +150,7 @@ Route::get('/budget/admin/archive', [BudgetArchiveAdminController::class, 'front
 Route::get('/budget/admin/archive/export', [BudgetArchiveAdminController::class, 'exportTable'])->middleware('auth')->name('budget-archive-admin-export');
 
 Route::get('/budget/user/table', [BudgetUserController::class, 'showTable'])->middleware('auth');
+Route::patch('/budget/user/update', [BudgetUserController::class, 'updateBudget'])->middleware('auth');
 Route::get('/budget/user', [BudgetUserController::class, 'frontView'])->middleware('auth')->name('budget-user');
 Route::get('/budget/user/archive', [BudgetArchiveUserController::class, 'frontView'])->middleware('auth')->name('budget-archive-user');
 
