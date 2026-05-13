@@ -9,14 +9,16 @@ use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Core\Controllers\Controller;
 use App\Modules\BudgetSection\User\Dto\BudgetUpdateDto;
+use App\Modules\BudgetSection\User\Dto\BudgetExportDto;
 use App\Modules\BudgetSection\User\Requests\BudgetUpdateRequest;
+use App\Modules\BudgetSection\User\Requests\BudgetExportRequest;
 use App\Modules\BudgetSection\User\Actions\SelectInfoAction;
 use App\Modules\BudgetSection\User\Actions\CalculateInfoAction;
 use App\Modules\BudgetSection\User\Actions\UpdateInfoAction;
 
 class BudgetUserController extends Controller
 {        
-    private string $day_start = "2026-04-16";
+    private string $day_start = "2026-08-16";
     private string $day_stop = "2026-10-01";
     
      /**
@@ -82,10 +84,35 @@ class BudgetUserController extends Controller
             ? response()->json(null, 204) 
             : response()->json(null, 500);
     }
+    
+    /**
+     * Синхронизируем года бюджета
+     *
+     * @return 
+     */
+    public function synchBudget(): JsonResponse
+    {     
+        $result = $this->action(UpdateInfoAction::class)->synchInfo();       
+        return $result 
+            ? response()->json(['message' => 'Синхронизация выполнена!'], 200) 
+            : response()->json(['message' => 'Значения уже идентичны!'], 200);
+    }
+    
+    /**
+     * Полноэкранный режим таблицы
+     *
+     * @param BudgetExportRequest $request
+     * @return View
+     */
+    public function fullScreen(BudgetExportRequest $request): View
+    {      
+        $dto = BudgetExportDto::fromRequest($request); 
+        $info = [
+            'table' => $dto->variant,
+            'year'  => $dto->year,
+            'email' => Auth::user()->email(),
+        ];
+
+        return view('budget.user.fullscreen', compact('info'));  
+    }
 }
-
-
-
-
-
-

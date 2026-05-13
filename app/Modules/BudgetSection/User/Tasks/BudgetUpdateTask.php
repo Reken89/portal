@@ -125,7 +125,10 @@ class BudgetUpdateTask extends BaseTask
                  ->where('source.year', 2027);
         })
         ->whereIn('target.year', [2028, 2029])
-        ->update(['target.data_fu' => DB::raw('source.data_fu')]);
+        ->update([
+            'target.data_fu' => DB::raw('source.data_fu'),
+            'target.data_cb' => DB::raw('source.data_cb')
+        ]);
 
         return $affected > 0;        
     }

@@ -126,6 +126,16 @@
                             <h3 class="h5 text-black mb-3"><font color="red">Информация:</h3>
                             <p class="mb-0 font-weight-bold"><font color="red">дата открытия таблицы: 17-08-2026</p>
                             <p class="mb-0 font-weight-bold"><font color="red">дата закрытия таблицы: 01-10-2026</p>
+                            </br>
+                            @if($info['table'] !== null)
+                            <tr>
+                                <input type="hidden" class="year" value="{{ $info['year'] }}">
+                                <input type="hidden" class="variant" value="{{ $info['table'] }}">
+                                <td style="min-width: 200px; width: 200px;"><p><a href="" onclick="return false"><img src="{{ asset('assets/icons/attention.png') }}" alt="" id="synch"></a> - Синхронизация между годами</p></td>
+                                <td style="min-width: 200px; width: 200px;"><p><a href="" onclick="return false"><img src="{{ asset('assets/icons/excel-48.png') }}" alt="" id="xlsx"></a> - Экспорт в xlsx</p></td>
+                                <td style="min-width: 200px; width: 200px;"><p><a href="" onclick="return false"><img src="{{ asset('assets/icons/laptop.png') }}" alt="" id="fullscreen"></a> - Полноэкранный режим</p></td>
+                            </tr>
+                            @endif
                         </div>   
                     </div>       
                                                          
@@ -249,7 +259,46 @@
                     });  
                 } 
                 fetch_data();
+                
+                //Выполняем действие (синхронизация) при нажатии на кнопку
+                $(document).on('click', '#synch', function(){
+                    if (confirm("Выполнить синхронизацию между годами?")) {
+                        $.ajax({
+                            url:"/portal/public/budget/user/synch",  
+                            method:"patch",
+                            data:{
+                                "_token": "{{ csrf_token() }}",
+                            },
+                            dataType: "json", // Ждем JSON, а не просто текст
+                            success: function(response) {  
+                                // response — это теперь объект { "message": "..." }
+                                alert(response.message);
+                                fetch_data();  
+                            },
+                            error: function(xhr) {
+                                // Если сервер вернул ошибку (400, 422, 500), попадем сюда
+                                let errorMessage = xhr.responseJSON ? xhr.responseJSON.message : 'Ошибка сервера';
+                                alert(errorMessage);
+                            }
+                        })  
+                    }    
+                })
+                
+                //Выполняем действие (полноэкранный режим таблицы) при нажатии на кнопку
+                $(document).on('click', '#fullscreen', function(){
+                    let tr = this.closest('tr');
+                    let year = $('.year', tr).val();
+                    let variant = $('.variant', tr).val();
+                    
+                    // Создаем объект параметров
+                    let params = new URLSearchParams();
+                    params.append('year', year);
+                    params.append('variant', variant);
 
+                    // Переходим по ссылке
+                    let baseUrl = '/portal/public/budget/user/fullscreen';
+                    window.location.href = `${baseUrl}?${params.toString()}`;
+                })
             });
         </script>
     </body>
