@@ -4,4 +4,5 @@
     <meta charset="UTF-8">
 </head>
 
-<script src="https://code.jquery.com/jquery-3.6.3.js"></script> 
+<script src="{{ asset('assets/js/jquery.min.js') }}"></script>
+<!-- <script src="https://code.jquery.com/jquery-3.6.3.js"></script> -->
