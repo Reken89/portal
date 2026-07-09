@@ -29,6 +29,7 @@ use App\Modules\BudgetSection\User\Controllers\BudgetArchiveUserController;
 use App\Modules\MailSection\Controllers\MailTestController;
 use App\Modules\MailSection\Controllers\MailCommunalController;
 use App\Modules\ForecastSection\Admin\Controllers\ForecastAdminController;
+use App\Modules\DeloSection\Controllers\DeloDspOutController;
 
 Route::get('/', function () {
     return view('auth.login');
@@ -60,6 +61,9 @@ Route::get('/delo/npa', [DeloNpaController::class, 'FrontView'])->middleware('au
 Route::get('/delo/corr', [DeloCorrController::class, 'FrontView'])->middleware('auth', 'delo');
 Route::get('/delo/in', [DeloInController::class, 'FrontView'])->middleware('auth', 'delo');
 Route::get('/delo/out', [DeloOutController::class, 'FrontView'])->middleware('auth', 'delo')->name('delo-out');
+
+Route::get('/delo/dspout/table', [DeloDspOutController::class, 'showTable'])->middleware('auth', 'dsp');
+Route::get('/delo/dspout', [DeloDspOutController::class, 'frontView'])->middleware('auth', 'dsp')->name('delo-dspout');
 
 //Группа адресов для модуля "АРХИВ (коммунальные услуги)"
 Route::get('/communal/admin/table', [CommunalAdminController::class, 'ShowTable'])->middleware('auth', 'admin');
