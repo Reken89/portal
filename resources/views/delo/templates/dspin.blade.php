@@ -231,7 +231,7 @@
                                             <div style="background-color: PaleTurquoise;" class="job-post-item p-2 d-block d-lg-flex align-items-center">
                                                 <div class="one-third mb-4 mb-md-0">
                                                     <div class="job-post-item-header align-items-center">
-                                                        <span class="subadge">№ {{ $value['number'] }} ({{ $value['npa']['title'] }}) </span>
+                                                        <span class="subadge">№ {{ $value['number'] }} ({{ $value['npa']['title'] }}) ДСП</span>
                                                         <p><b>{{ $correspondent }}</b></p>
                                                         <p class="mb-4">{{ $value['content'] }}</p>
                                                     </div>
