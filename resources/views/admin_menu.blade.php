@@ -9,7 +9,7 @@
     <div class="top-category text-center no-border-left">
         <h3><a href="{{ route('delo-dspout')}}">ДСП</a></h3>
         <span class="icon flaticon-contact"></span>
-        <p><span class="number"></span> <span>В разработке!</span></p>
+        <p><span class="number"></span> <span>Регистрация</span></p>
     </div>
 </div>
 <div class="col" style="flex: 1 1 0; width: 0; min-width: 0;">

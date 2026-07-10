@@ -28,6 +28,7 @@ class DeloDspOutController extends Controller
      */
     public function showTable(): View
     {
-        return view('delo.templates.dspout');   
+        $info = $this->action(DeloSelect::class)->SelectAll("dspout"); 
+        return view('delo.templates.dspout', ['info' => $info]);   
     }
 }
